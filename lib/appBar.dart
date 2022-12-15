@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 PreferredSize vishuAppBar({required String appBarTitle}) {
   return PreferredSize(
@@ -12,15 +13,15 @@ PreferredSize vishuAppBar({required String appBarTitle}) {
     ),
     child: ClipRRect(
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
         child: AppBar(
           systemOverlayStyle: SystemUiOverlayStyle.light,
-          backgroundColor: const Color.fromARGB(20, 200, 200, 200),
+          backgroundColor: HexColor("#171717"),
           title: Text(appBarTitle,
               style: const TextStyle(
                   fontWeight: FontWeight.bold, color: Colors.white)),
           leading: const Icon(Icons.chevron_left),
-          elevation: 0.0,
+          elevation: 10.0,
         ),
       ),
     ),

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,19 @@ class SignUpModel extends ChangeNotifier {
   final passController = TextEditingController();
   final nameController = TextEditingController();
   final birthDayController = TextEditingController();
+  final telephoneNumberController = TextEditingController();
 
-  ///signInMethod
-  Future<void> signInTransition(BuildContext context) async {
+  Future<void> registerUserInformation(User? uid) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'uid': uid,
+      'email': emailController.text,
+      'name': nameController.text,
+      'birthDay': birthDayController.text,
+    });
+  }
+
+  ///signUpMethod
+  Future<void> signUpTransition(BuildContext context) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,

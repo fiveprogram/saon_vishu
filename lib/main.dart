@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
 
 void main() {
@@ -15,10 +16,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Vishu',
       theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: const Color.fromARGB(255, 1, 1, 5),
-        colorSchemeSeed: const Color.fromARGB(255, 255, 255, 255),
-      ),
+          useMaterial3: true,
+          scaffoldBackgroundColor: HexColor("#3d3d3d"),
+          colorSchemeSeed: HexColor("#3d3d3d")),
       home: const SignInPage(),
     );
   }

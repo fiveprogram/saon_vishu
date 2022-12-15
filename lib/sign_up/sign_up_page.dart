@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:salon_vishu/appBar.dart';
 import 'package:salon_vishu/sign_up/sign_up_model.dart';
 
 import '../river_pods/river_pod.dart';
@@ -13,10 +15,7 @@ class SignUpPage extends ConsumerWidget {
     final controllerModel = ref.watch(signUpControllerProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Welcome to "Vishu"',
-            style: TextStyle(fontWeight: FontWeight.bold)),
-      ),
+      appBar: vishuAppBar(appBarTitle: 'Welcome to "vishu"'),
       body: SizedBox(
         width: width,
         child: Column(
@@ -50,11 +49,23 @@ class SignUpPage extends ConsumerWidget {
                 controller: controllerModel,
                 width: width,
                 textController: controllerModel.birthDayController),
-            const SizedBox(height: 40),
+            const SizedBox(height: 10),
+            authFormField(
+                icon: Icons.numbers,
+                hintText: '電話番号',
+                controller: controllerModel,
+                width: width,
+                textController: controllerModel.telephoneNumberController),
+            const SizedBox(height: 30),
             SizedBox(
                 width: 300,
                 child: ElevatedButton(
-                    onPressed: () {}, child: const Text('新規登録'))),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: HexColor('#676767'),
+                        foregroundColor:
+                            const Color.fromARGB(255, 255, 255, 255)),
+                    onPressed: () {},
+                    child: const Text('新規登録'))),
           ],
         ),
       ),
@@ -68,23 +79,31 @@ class SignUpPage extends ConsumerWidget {
       required IconData icon,
       required String hintText}) {
     return SizedBox(
-      width: width * 0.9,
+      height: 40,
+      width: width * 0.8,
       child: TextFormField(
         controller: textController,
         decoration: InputDecoration(
+          filled: true,
+          fillColor: HexColor('#676767'),
+          border: const OutlineInputBorder(),
           hintText: hintText,
-          icon: Icon(icon),
+          hintStyle: const TextStyle(fontSize: 10.0, color: Colors.white),
+          icon: Icon(
+            icon,
+            color: HexColor('#676767'),
+          ),
         ),
       ),
     );
   }
+}
 
-  Container vishuImage(double width) {
-    return Container(
-      height: 300,
-      width: width,
-      decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage('images/vishu_view.png'))),
-    );
-  }
+Container vishuImage(double width) {
+  return Container(
+    height: 300,
+    width: width,
+    decoration: const BoxDecoration(
+        image: DecorationImage(image: AssetImage('images/vishu_view.png'))),
+  );
 }

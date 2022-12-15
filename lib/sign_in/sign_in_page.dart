@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 
 import '../appBar.dart';
@@ -23,7 +24,7 @@ class SignInPage extends ConsumerWidget {
       body: Column(
         children: [
           vishuImage(width),
-          const SizedBox(height: 10),
+          const SizedBox(height: 30),
           authFormField(
               icon: Icons.email,
               hintText: 'メールアドレス',
@@ -40,8 +41,13 @@ class SignInPage extends ConsumerWidget {
           const SizedBox(height: 30),
           SizedBox(
               width: 300,
-              child:
-                  ElevatedButton(onPressed: () {}, child: const Text('ログイン'))),
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: HexColor('#676767'),
+                      foregroundColor:
+                          const Color.fromARGB(255, 255, 255, 255)),
+                  onPressed: () {},
+                  child: const Text('ログイン'))),
           const SizedBox(height: 30),
           const Divider(),
           const Text(
@@ -84,11 +90,14 @@ class SignInPage extends ConsumerWidget {
         controller: textController,
         decoration: InputDecoration(
           filled: true,
-          fillColor: Colors.white54,
+          fillColor: HexColor('#676767'),
           border: const OutlineInputBorder(),
           hintText: hintText,
-          hintStyle: const TextStyle(fontSize: 10.0, color: Colors.white54),
-          icon: Icon(icon, color: Colors.white54),
+          hintStyle: const TextStyle(fontSize: 10.0, color: Colors.white),
+          icon: Icon(
+            icon,
+            color: HexColor('#676767'),
+          ),
         ),
       ),
     );

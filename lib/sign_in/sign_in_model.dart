@@ -3,11 +3,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignInModel extends ChangeNotifier {
-  final emailController = TextEditingController();
-  final passController = TextEditingController();
+  final emailController =
+      TextEditingController(text: 'yuta.nanana.tennis@gmail.com');
+  final passController = TextEditingController(text: '03Yuta16');
+
+  bool isLoading = false;
+
+  void startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
 
   ///signInMethod
   Future<void> signInTransition(BuildContext context) async {
+    startLoading();
+    print(isLoading);
+    notifyListeners();
+
     try {
       //authエラーハンドリング
       if (emailController.text.isEmpty || passController.text.isEmpty) {
@@ -41,6 +58,9 @@ class SignInModel extends ChangeNotifier {
       } else if (e.code == 'user-disabled') {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
+    } finally {
+      endLoading();
+      print(isLoading);
     }
   }
 }

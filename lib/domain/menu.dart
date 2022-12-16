@@ -1,27 +1,33 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Menu {
-  bool isForAll = true;
-  List<String> outlineCutOfContentList;
-  String contentOfCut;
+  bool isTargetAllMember = true;
+  List<String> treatmentDetailList;
+  String treatmentDetail;
   String beforePrice;
   String afterPrice;
+  String menuIntroduction;
+  String menuImageUrl;
 
   Menu(
-      {required this.isForAll,
-      required this.outlineCutOfContentList,
-      required this.contentOfCut,
+      {required this.isTargetAllMember,
+      required this.treatmentDetailList,
+      required this.treatmentDetail,
       required this.beforePrice,
-      required this.afterPrice});
+      required this.afterPrice,
+      required this.menuIntroduction,
+      required this.menuImageUrl});
 
   factory Menu.fromFireStore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
     return Menu(
-        isForAll: data['isForAll'],
-        outlineCutOfContentList: data['outlineCutOfContentList'],
-        contentOfCut: data['contentOfCut'],
+        isTargetAllMember: data['isTargetAllMember'],
+        treatmentDetailList: data['treatmentDetailList'],
+        treatmentDetail: data['treatmentDetail'],
         beforePrice: data['beforePrice'],
-        afterPrice: data['afterPrice']);
+        afterPrice: data['afterPrice'],
+        menuIntroduction: data['menuIntroduction'],
+        menuImageUrl: data['menuImageUrl']);
   }
 }

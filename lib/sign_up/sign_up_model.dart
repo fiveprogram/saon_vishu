@@ -3,10 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import '../river_pods/river_pod.dart';
 
 class SignUpModel extends ChangeNotifier {
   final emailController =
@@ -16,6 +13,18 @@ class SignUpModel extends ChangeNotifier {
   final birthDayController = TextEditingController();
   final telephoneNumberController =
       TextEditingController(text: '090-1964-5524');
+
+  bool isLoading = false;
+
+  void startLoading() {
+    isLoading = true;
+    notifyListeners();
+  }
+
+  void endLoading() {
+    isLoading = false;
+    notifyListeners();
+  }
 
   DateTime? dates;
 
@@ -36,10 +45,8 @@ class SignUpModel extends ChangeNotifier {
   }
 
   ///signUpMethod
-  Future<void> signUpTransition(BuildContext context, WidgetRef ref) async {
-    final loading = ref.watch(loadingProvider.notifier).state;
-    loading.startLoading();
-    print(loading.isLoading);
+  Future<void> signUpTransition(BuildContext context) async {
+    startLoading();
     notifyListeners();
 
     try {
@@ -48,7 +55,7 @@ class SignUpModel extends ChangeNotifier {
           nameController.text.isEmpty ||
           birthDayController.text.isEmpty ||
           telephoneNumberController.text.isEmpty) {
-        showDialog(
+        await showDialog(
             context: context,
             builder: (context) {
               return CupertinoAlertDialog(
@@ -104,9 +111,7 @@ class SignUpModel extends ChangeNotifier {
         notifyListeners();
       }
     } finally {
-      loading.endLoading();
-      print(loading.isLoading);
-
+      endLoading();
       notifyListeners();
     }
   }

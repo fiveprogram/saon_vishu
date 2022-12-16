@@ -39,6 +39,7 @@ class _AuthFormFieldState extends State<AuthFormField> {
       height: 40,
       width: widget.width * 0.8,
       child: TextFormField(
+        style: const TextStyle(fontSize: 13),
         obscureText: widget.isVisivilly,
         controller: widget.textEditingController,
         onTap: widget.isPicker
@@ -56,7 +57,6 @@ class _AuthFormFieldState extends State<AuthFormField> {
                     setState(() {
                       widget.isVisivilly = !widget.isVisivilly;
                     });
-                    print(widget.isVisivilly);
                   })
               : null,
           filled: true,

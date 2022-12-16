@@ -5,11 +5,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:salon_vishu/sign_in/sign_in_model.dart';
+import 'package:salon_vishu/widget/appBar.dart';
 
-import '../appBar.dart';
 import '../river_pods/river_pod.dart';
 import '../sign_up/sign_up_page.dart';
+import '../widget/auth_form_field.dart';
 
 class SignInPage extends ConsumerWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class SignInPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final width = MediaQuery.of(context).size.width;
-    final controllerModel = ref.watch(signInControllerProvider.notifier);
+    final model = ref.watch(signInModelProvider.notifier);
 
     return Scaffold(
       appBar: vishuAppBar(appBarTitle: 'salon "vishu"'),
@@ -25,34 +25,40 @@ class SignInPage extends ConsumerWidget {
         children: [
           vishuImage(width),
           const SizedBox(height: 30),
-          authFormField(
+          AuthFormField(
+              isSuffixIcon: false,
+              isVisivilly: false,
+              isPicker: false,
+              width: width,
+              signInModel: model,
+              textEditingController: model.emailController,
               icon: Icons.email,
-              hintText: 'メールアドレス',
-              controller: controllerModel,
-              width: width,
-              textController: controllerModel.emailController),
+              hintText: 'メールアドレス'),
           const SizedBox(height: 20),
-          authFormField(
-              icon: Icons.password,
-              hintText: 'パスワード',
-              controller: controllerModel,
+          AuthFormField(
+              isSuffixIcon: false,
+              isVisivilly: false,
+              isPicker: false,
               width: width,
-              textController: controllerModel.passController),
+              signInModel: model,
+              textEditingController: model.emailController,
+              icon: Icons.password,
+              hintText: 'パスワード'),
           const SizedBox(height: 30),
           SizedBox(
-              width: 300,
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: HexColor('#676767'),
-                      foregroundColor:
-                          const Color.fromARGB(255, 255, 255, 255)),
-                  onPressed: () {},
-                  child: const Text('ログイン'))),
+            width: 300,
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: HexColor('#f0fcf8'),
+                    foregroundColor: Colors.black54),
+                onPressed: () {},
+                child: const Text('ログイン')),
+          ),
           const SizedBox(height: 30),
           const Divider(),
           const Text(
             '連携してログインされる方はこちら',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black54),
           ),
           const SizedBox(height: 20),
           SignInButton(Buttons.Apple, onPressed: () {}),
@@ -73,32 +79,6 @@ class SignInPage extends ConsumerWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  SizedBox authFormField(
-      {required double width,
-      required SignInModel controller,
-      required TextEditingController textController,
-      required IconData icon,
-      required String hintText}) {
-    return SizedBox(
-      height: 40,
-      width: width * 0.8,
-      child: TextFormField(
-        controller: textController,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: HexColor('#676767'),
-          border: const OutlineInputBorder(),
-          hintText: hintText,
-          hintStyle: const TextStyle(fontSize: 10.0, color: Colors.white),
-          icon: Icon(
-            icon,
-            color: HexColor('#676767'),
-          ),
-        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignInModel extends ChangeNotifier {
@@ -8,23 +9,36 @@ class SignInModel extends ChangeNotifier {
   ///signInMethod
   Future<void> signInTransition(BuildContext context) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      //authエラーハンドリング
+      if (emailController.text.isEmpty || passController.text.isEmpty) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return CupertinoAlertDialog(
+                title: const Text('未入力の項目があります'),
+                actions: [
+                  CupertinoButton(
+                      child: const Text('戻る'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      })
+                ],
+              );
+            });
+        return;
+      }
+
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passController.text,
       );
     } on FirebaseAuthException catch (e) {
       final snackBar = SnackBar(content: Text(e.code));
-      if (e.code == 'auth/invalid-email') {
+      if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else if (e.code == 'auth/user-disabled') {
+      } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else if (e.code == 'auth/user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else if (e.code == 'auth/wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else if (e.code == 'auth/too-many-requests') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      } else {
+      } else if (e.code == 'user-disabled') {
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
       }
     }

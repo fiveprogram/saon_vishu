@@ -16,10 +16,10 @@ PreferredSize vishuAppBar({required String appBarTitle}) {
         filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
         child: AppBar(
           systemOverlayStyle: SystemUiOverlayStyle.light,
-          backgroundColor: HexColor("#171717"),
+          backgroundColor: HexColor("#8d9895"),
           title: Text(appBarTitle,
               style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.white)),
+                  fontWeight: FontWeight.bold, color: Colors.black54)),
           leading: const Icon(Icons.chevron_left),
           elevation: 10.0,
         ),

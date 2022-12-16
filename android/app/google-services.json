@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "689319200957",
+    "project_id": "salon-vishu",
+    "storage_bucket": "salon-vishu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689319200957:android:0f33f727e1cfd31d6a4fd4",
+        "android_client_info": {
+          "package_name": "com.example.salon_vishu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689319200957-87cihn6vl3hq7sdehopdmv65qh2csu80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_6T-fkpYBs0oblu1rlP6-rEbSWdTkhA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689319200957-87cihn6vl3hq7sdehopdmv65qh2csu80.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

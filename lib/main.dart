@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/add_page.dart';
+import 'package:salon_vishu/menu/menu_model.dart';
 import 'package:salon_vishu/menu/menu_page.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => SignInModel()),
         ChangeNotifierProvider(create: (_) => SignUpModel()),
+        ChangeNotifierProvider(create: (_) => MenuModel()..fetchMenuList()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -45,7 +47,7 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasData) {
                 return const MenuPage();
               }
-              return const AddPage();
+              return const SignInPage();
             }),
       ),
     );

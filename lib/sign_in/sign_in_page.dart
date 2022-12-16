@@ -43,7 +43,7 @@ class _SignInPageState extends State<SignInPage> {
                     hintText: 'メールアドレス'),
                 const SizedBox(height: 20),
                 AuthFormField(
-                    isSuffixIcon: false,
+                    isSuffixIcon: true,
                     isVisivilly: false,
                     isPicker: false,
                     width: width,

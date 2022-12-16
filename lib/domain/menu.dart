@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Menu {
   bool isTargetAllMember = true;
-  List<String> treatmentDetailList;
+  List<dynamic> treatmentDetailList;
   String treatmentDetail;
   String beforePrice;
   String afterPrice;

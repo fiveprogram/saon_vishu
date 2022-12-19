@@ -31,9 +31,9 @@ class _MenuCardState extends State<MenuCard> {
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
-                    color: HexColor('#949886'),
+                    color: HexColor('#7e796e'),
                     border: Border.all(
-                      color: HexColor('#949886'),
+                      color: HexColor('#7e796e'),
                     ),
                   ),
                   child: Text(
@@ -54,8 +54,10 @@ class _MenuCardState extends State<MenuCard> {
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(5)),
-                  color: Colors.blue,
-                  border: Border.all(color: Colors.blue),
+                  color: HexColor('#e28e7a'),
+                  border: Border.all(
+                    color: HexColor('#e28e7a'),
+                  ),
                 ),
                 child: const Center(
                   child: Text(
@@ -69,8 +71,10 @@ class _MenuCardState extends State<MenuCard> {
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(3)),
-                  color: Colors.red,
-                  border: Border.all(color: Colors.red),
+                  color: HexColor('#7a3425'),
+                  border: Border.all(
+                    color: HexColor('#7a3425'),
+                  ),
                 ),
                 child: const Center(
                   child: Text(
@@ -157,7 +161,7 @@ class _MenuCardState extends State<MenuCard> {
                                   width: 80,
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: HexColor('#f0fcf8'),
+                                          backgroundColor: HexColor('#dfd9cd'),
                                           foregroundColor: Colors.black54),
                                       onPressed: () {},
                                       child: const Text('予約')))

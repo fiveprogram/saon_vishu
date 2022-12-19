@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/menu/menu_card.dart';
+import 'package:salon_vishu/common_widget/menu_card.dart';
 import 'package:salon_vishu/menu/menu_model.dart';
 
 class MenuPage extends StatefulWidget {
@@ -20,7 +20,6 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     return Consumer<MenuModel>(builder: (context, model, child) {
       return Scaffold(
-          extendBodyBehindAppBar: false,
           appBar: PreferredSize(
             preferredSize: const Size(
               double.infinity,
@@ -33,17 +32,19 @@ class _MenuPageState extends State<MenuPage> {
                   actions: [
                     IconButton(
                         onPressed: () {
-                          model.signOut(context);
+                          model.popUpFeeList(context);
                         },
-                        icon: const Icon(Icons.logout))
+                        icon: const Icon(Icons.monetization_on))
                   ],
                   automaticallyImplyLeading: false,
                   systemOverlayStyle: SystemUiOverlayStyle.light,
-                  backgroundColor: HexColor("#8d9895"),
+                  backgroundColor: HexColor("#7e796e"),
                   title: const Text('Menu',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black54)),
-                  leading: const Icon(Icons.chevron_left),
+                          fontSize: 40,
+                          fontFamily: 'Dancing_Script',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54)),
                   elevation: 10.0,
                 ),
               ),

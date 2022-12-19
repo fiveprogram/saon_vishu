@@ -10,12 +10,10 @@ class SignUpModel extends ChangeNotifier {
       TextEditingController(text: 'yuta.nanana.tennis@gmail.com');
   final passController = TextEditingController(text: '03Yuta16');
   final nameController = TextEditingController(text: '五影 裕太');
-  final birthDayController = TextEditingController();
-  final telephoneNumberController =
-      TextEditingController(text: '090-1964-5524');
+  final dateOfBirthController = TextEditingController();
+  final telephoneNumberController = TextEditingController(text: '09019645524');
 
   bool isLoading = false;
-
   void startLoading() {
     isLoading = true;
     notifyListeners();
@@ -26,21 +24,24 @@ class SignUpModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  DateTime? dates;
+  DateTime? registerDateOfBirth;
+  DateTime createAccountDate = DateTime.now();
 
   ///cupertinoPicker 生年月日
-  Future<void> birthDayPicker(BuildContext context) async {
+  Future<void> dateOfBirthPicker(BuildContext context) async {
     DatePicker.showDatePicker(context,
         showTitleActions: true,
         minTime: DateTime(1920, 3, 5),
         maxTime: DateTime.now(), onChanged: (date) {
       null;
     }, onConfirm: (date) {
-      birthDayController.text = '${date.year}年${date.month}月${date.day}日';
-      dates = date;
+      dateOfBirthController.text = '${date.year}年${date.month}月${date.day}日';
+      registerDateOfBirth = date;
       notifyListeners();
     },
-        currentTime: birthDayController.text.isEmpty ? DateTime.now() : dates,
+        currentTime: dateOfBirthController.text.isEmpty
+            ? DateTime.now()
+            : registerDateOfBirth,
         locale: LocaleType.jp);
   }
 
@@ -53,7 +54,7 @@ class SignUpModel extends ChangeNotifier {
       if (emailController.text.isEmpty ||
           passController.text.isEmpty ||
           nameController.text.isEmpty ||
-          birthDayController.text.isEmpty ||
+          dateOfBirthController.text.isEmpty ||
           telephoneNumberController.text.isEmpty) {
         await showDialog(
             context: context,
@@ -77,12 +78,17 @@ class SignUpModel extends ChangeNotifier {
         password: passController.text,
       );
 
-      await FirebaseFirestore.instance.collection('users').add({
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
         'uid': userCredential.user!.uid,
         'email': emailController.text,
         'name': nameController.text,
-        'birthDay': birthDayController.text,
-        'telephoneNumber': telephoneNumberController.text
+        'dateOfBirth': dateOfBirthController.text,
+        'telephoneNumber': telephoneNumberController.text,
+        'imgUrl': '',
+        'dateTime': createAccountDate
       });
     } on FirebaseAuthException catch (e) {
       ///snackBarを定義

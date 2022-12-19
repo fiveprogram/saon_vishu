@@ -6,10 +6,9 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
-import 'package:salon_vishu/widget/appBar.dart';
-
+import '../common_widget/auth_form_field.dart';
+import '../common_widget/vishu_app_bar.dart';
 import '../sign_up/sign_up_page.dart';
-import '../widget/auth_form_field.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -24,7 +23,9 @@ class _SignInPageState extends State<SignInPage> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: vishuAppBar(appBarTitle: 'salon "vishu"'),
+      appBar: vishuAppBar(
+        appBarTitle: 'salon Vishu',
+      ),
       body: Consumer<SignInModel>(builder: (context, model, child) {
         return Stack(
           children: [
@@ -56,7 +57,7 @@ class _SignInPageState extends State<SignInPage> {
                   width: 300,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: HexColor('#f0fcf8'),
+                          backgroundColor: Colors.white,
                           foregroundColor: Colors.black54),
                       onPressed: () {
                         model.signInTransition(context);
@@ -67,7 +68,7 @@ class _SignInPageState extends State<SignInPage> {
                 const Divider(),
                 const Text(
                   '連携してログインされる方はこちら',
-                  style: TextStyle(color: Colors.black54),
+                  style: TextStyle(color: Colors.black87),
                 ),
                 const SizedBox(height: 20),
                 SignInButton(Buttons.Apple, onPressed: () {}),
@@ -111,3 +112,6 @@ Container vishuImage(double width) {
         image: DecorationImage(image: AssetImage('images/LILIA-BEAUTY.jpeg'))),
   );
 }
+
+///Ballet
+///Dancing Script

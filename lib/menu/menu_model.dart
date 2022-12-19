@@ -43,4 +43,38 @@ class MenuModel extends ChangeNotifier {
           );
         });
   }
+
+  bool isFeePopUp = false;
+  void startPopUp() {
+    isFeePopUp = true;
+    notifyListeners();
+  }
+
+  void endPopUp() {
+    isFeePopUp = false;
+    notifyListeners();
+  }
+
+  void popUpFeeList(BuildContext context) {
+    showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return Material(
+          child: Container(
+            height: 100,
+            width: 300,
+            child: const Text(
+                '¥料金表\n大人カット ¥3,800\n大学生カット ¥3,500\n中学生・高校生カット ¥3,000\n幼稚園児・小学生カット ¥2,000\nフロントカット ¥5,00'),
+            // actions: [
+            //   CupertinoButton(
+            //       onPressed: () {
+            //         Navigator.pop(context);
+            //       },
+            //       child: const Text('OK'))
+            // ],
+          ),
+        );
+      },
+    );
+  }
 }

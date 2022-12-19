@@ -5,8 +5,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/sign_up/sign_up_model.dart';
 
-import '../widget/appBar.dart';
-import '../widget/auth_form_field.dart';
+import '../common_widget/auth_form_field.dart';
+import '../common_widget/vishu_app_bar.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -22,7 +22,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
     return Consumer<SignUpModel>(builder: (context, model, child) {
       return Scaffold(
-        appBar: vishuAppBar(appBarTitle: 'Welcome to "vishu"'),
+        appBar: vishuAppBar(
+          appBarTitle: 'salon Vishu',
+        ),
         body: Stack(
           children: [
             SizedBox(
@@ -66,21 +68,21 @@ class _SignUpPageState extends State<SignUpPage> {
                     width: width * 0.8,
                     child: TextFormField(
                       onTap: () {
-                        model.birthDayPicker(context);
+                        model.dateOfBirthPicker(context);
                       },
                       readOnly: true,
-                      controller: model.birthDayController,
+                      controller: model.dateOfBirthController,
                       decoration: InputDecoration(
                         suffixIcon: const Icon(Icons.arrow_drop_down),
                         filled: true,
-                        fillColor: HexColor('#f0fcf8'),
+                        fillColor: HexColor('#dfd9cd'),
                         border: const OutlineInputBorder(),
                         hintText: '生年月日',
                         hintStyle: const TextStyle(
                             fontSize: 10.0, color: Colors.black54),
                         icon: Icon(
                           Icons.calendar_month,
-                          color: HexColor('#f0fcf8'),
+                          color: HexColor('#dfd9cd'),
                         ),
                       ),
                     ),
@@ -95,14 +97,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: HexColor('#f0fcf8'),
+                        fillColor: HexColor('#dfd9cd'),
                         border: const OutlineInputBorder(),
                         hintText: '電話番号',
                         hintStyle: const TextStyle(
                             fontSize: 10.0, color: Colors.black54),
                         icon: Icon(
                           Icons.numbers,
-                          color: HexColor('#f0fcf8'),
+                          color: HexColor('#dfd9cd'),
                         ),
                       ),
                     ),
@@ -112,7 +114,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       width: 300,
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: HexColor('#f0fcf8'),
+                              backgroundColor: Colors.white,
                               foregroundColor: Colors.black54),
                           onPressed: () {
                             model.signUpTransition(context);

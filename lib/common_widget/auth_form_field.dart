@@ -44,7 +44,7 @@ class _AuthFormFieldState extends State<AuthFormField> {
         controller: widget.textEditingController,
         onTap: widget.isPicker
             ? () {
-                widget.signUpModel!.birthDayPicker(context);
+                widget.signUpModel!.dateOfBirthPicker(context);
               }
             : null,
         decoration: InputDecoration(
@@ -60,13 +60,13 @@ class _AuthFormFieldState extends State<AuthFormField> {
                   })
               : null,
           filled: true,
-          fillColor: HexColor('#f0fcf8'),
+          fillColor: HexColor('#dfd9cd'),
           border: const OutlineInputBorder(),
           hintText: widget.hintText,
           hintStyle: const TextStyle(fontSize: 10.0, color: Colors.black54),
           icon: Icon(
             widget.icon,
-            color: HexColor('#f0fcf8'),
+            color: HexColor('#dfd9cd'),
           ),
         ),
       ),

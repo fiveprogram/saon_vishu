@@ -11,15 +11,14 @@ class AddPage extends StatefulWidget {
 class _AddPageState extends State<AddPage> {
   Future<void> addMenu() async {
     await FirebaseFirestore.instance.collection('menu').add({
-      'afterPrice': '23,000',
-      'beforePrice': '¥26,000',
+      'afterPrice': '¥550',
+      'beforePrice': '',
       'isTargetAllMember': true,
-      'treatmentDetail': '★髪質改善★酸性縮毛矯正+ハーブカラー+カット+システムTR￥26000→¥23000～',
-      'treatmentDetailList': ['カット', 'カラー', '縮毛矯正', 'トリートメント'],
-      'menuIntroduction':
-          '髪質改善★酸性縮毛矯正+カラー+カット+システムTR￥23000～ロング料金別途必要。自然なストレートとシステムTRで触りたくなるツヤ髪へハーブカラーで低刺激なのでまとめて全部出来ちゃう♪',
+      'treatmentDetail': 'フロントカット(シャンプー・ブロー込) 　イメージに合わせてカットします♪',
+      'treatmentDetailList': ['カット'],
+      'menuIntroduction': 'フロントカット 　イメージに合わせてカットします♪',
       'menuImageUrl':
-          'https://firebasestorage.googleapis.com/v0/b/salon-vishu.appspot.com/o/スクリーンショット%202022-12-17%2018.36.17.png?alt=media&token=994627ae-9b18-4636-b3c2-bb47ee47c438',
+          'https://firebasestorage.googleapis.com/v0/b/salon-vishu.appspot.com/o/スクリーンショット%202022-12-19%2014.40.07.png?alt=media&token=3decbe8c-d849-4f3e-8591-bb2c0a8ccb8a',
     });
   }
 

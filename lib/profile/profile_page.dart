@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/edit/edit_page.dart';
-import 'package:salon_vishu/guid/guid_reservation_page.dart';
+import 'package:salon_vishu/guide/guid_reservation_page.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
-// import 'package:salon_vishu/widget/vishu_app_bar.dart';
 
+import '../common_widget/vishu_app_bar.dart';
 import '../domain/profile.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: vishuAppBar(appBarTitle: 'my page'),
+      appBar: vishuAppBar(appBarTitle: 'my page'),
       body: Consumer<ProfileModel>(
         builder: (context, model, child) {
           print(model.profile);
@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                   tileColor: HexColor('#dfd9cd'),
                   leading: CircleAvatar(
-                    radius: 30,
+                    radius: 25,
                     foregroundColor: Colors.black54,
                     backgroundColor: HexColor('#dfd9cd'),
                     backgroundImage: profile.imgUrl != ''
@@ -90,13 +90,16 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 10),
               myPageListTile(
-                  pageWidget: const GuidReservationPage(),
+                  pageWidget: const GuideReservationPage(),
                   tileName: 'ご予約までの流れ'),
               myPageListTile(
-                  tileName: '利用規約・ガイドライン',
-                  pageWidget: const GuidReservationPage()),
+                tileName: '利用規約・ガイドライン',
+                pageWidget: const GuideReservationPage(),
+              ),
               myPageListTile(
-                  tileName: 'よくある質問', pageWidget: const GuidReservationPage()),
+                tileName: 'よくある質問',
+                pageWidget: const GuideReservationPage(),
+              ),
               Container(
                 height: 60,
                 decoration: BoxDecoration(

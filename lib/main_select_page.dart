@@ -12,7 +12,11 @@ class MainSelectPage extends StatefulWidget {
 
 class _MainSelectPageState extends State<MainSelectPage> {
   int currentPageIndex = 0;
-  List<Widget> pageList = [const MenuPage(), Text(''), const Text('')];
+  List<Widget> pageList = [
+    const MenuPage(),
+    const AddPage(),
+    const ProfilePage()
+  ];
 
   @override
   Widget build(BuildContext context) {

@@ -3,13 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/edit/edit_model.dart';
+import 'package:salon_vishu/confirm_reservation/confirm_reservation_model.dart';
 import 'package:salon_vishu/main_select_page.dart';
 import 'package:salon_vishu/menu/menu_model.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
-import 'package:salon_vishu/profile/profile_page.dart';
+import 'package:salon_vishu/select_reservation_date/select_reservation_date_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
-import 'package:salon_vishu/sign_in/sign_in_page.dart';
 import 'package:salon_vishu/sign_up/sign_up_model.dart';
 
 import 'manager/firebase_option/firebase_options.dart';
@@ -29,10 +28,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (_) => SignInModel()),
-        // ChangeNotifierProvider(create: (_) => SignUpModel()),
+        ChangeNotifierProvider(create: (_) => SignInModel()),
+        ChangeNotifierProvider(create: (_) => SignUpModel()),
         ChangeNotifierProvider(create: (_) => MenuModel()..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => ProfileModel()..fetchProfile()),
+        ChangeNotifierProvider(create: (_) => ConfirmReservationModel()),
+        ChangeNotifierProvider(create: (_) => SelectReservationDateModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

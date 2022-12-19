@@ -53,7 +53,7 @@ class _MenuCardState extends State<MenuCard> {
                 width: 50,
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  borderRadius: const BorderRadius.all(Radius.circular(3)),
                   color: HexColor('#e28e7a'),
                   border: Border.all(
                     color: HexColor('#e28e7a'),
@@ -62,7 +62,7 @@ class _MenuCardState extends State<MenuCard> {
                 child: const Center(
                   child: Text(
                     '全員',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
               )
@@ -79,10 +79,7 @@ class _MenuCardState extends State<MenuCard> {
                 child: const Center(
                   child: Text(
                     '新規',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
+                    style: TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ),
               );
@@ -132,11 +129,12 @@ class _MenuCardState extends State<MenuCard> {
                         width: 80,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                                 image: NetworkImage(menu.menuImageUrl))),
                       ),
                       const SizedBox(width: 10),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
                             width: 233,
@@ -148,15 +146,16 @@ class _MenuCardState extends State<MenuCard> {
                           const SizedBox(height: 10),
                           Row(
                             children: [
-                              Text(
-                                menu.beforePrice,
-                                style: const TextStyle(
-                                    fontSize: 12,
-                                    decoration: TextDecoration.lineThrough),
-                              ),
+                              if (menu.beforePrice != '')
+                                Text(
+                                  menu.beforePrice,
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      decoration: TextDecoration.lineThrough),
+                                ),
                               const Text('▷'),
                               Text(menu.afterPrice),
-                              const SizedBox(width: 20),
+                              const SizedBox(width: 40),
                               SizedBox(
                                   width: 80,
                                   child: ElevatedButton(

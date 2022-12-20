@@ -7,6 +7,16 @@ import '../domain/menu.dart';
 
 class MenuModel extends ChangeNotifier {
   List<Menu> menuList = [];
+  List<Menu> filteredMenuList = [];
+  List<String> treatmentTypeList = [
+    'カット',
+    'カラー',
+    'トリートメント',
+    'パーマ',
+    'ヘッドスパ',
+    '縮毛矯正'
+  ];
+  List<String> filteredTreatmentTypeList = [];
 
   //fetchMenuList
   Future<void> fetchMenuList() async {
@@ -20,6 +30,22 @@ class MenuModel extends ChangeNotifier {
       notifyListeners();
     });
   }
+
+  //filteringMenuList
+  void filteringMenuList() {
+    if (filteredTreatmentTypeList.isNotEmpty) {
+      for (String treatment in filteredTreatmentTypeList) {
+        for (Menu menu in menuList) {
+          if (menu.treatmentDetailList.contains(treatment)) {
+            filteredMenuList.add(menu);
+          }
+        }
+      }
+    }
+    notifyListeners();
+  }
+
+  void deletingFilteringMenuList() {}
 
   Future<void> signOut(BuildContext context) async {
     showDialog(

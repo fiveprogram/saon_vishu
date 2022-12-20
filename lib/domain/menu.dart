@@ -8,6 +8,7 @@ class Menu {
   String afterPrice;
   String menuIntroduction;
   String menuImageUrl;
+  String menuId;
 
   Menu(
       {required this.isTargetAllMember,
@@ -16,18 +17,21 @@ class Menu {
       required this.beforePrice,
       required this.afterPrice,
       required this.menuIntroduction,
-      required this.menuImageUrl});
+      required this.menuImageUrl,
+      required this.menuId});
 
   factory Menu.fromFireStore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
     return Menu(
-        isTargetAllMember: data['isTargetAllMember'],
-        treatmentDetailList: data['treatmentDetailList'],
-        treatmentDetail: data['treatmentDetail'],
-        beforePrice: data['beforePrice'],
-        afterPrice: data['afterPrice'],
-        menuIntroduction: data['menuIntroduction'],
-        menuImageUrl: data['menuImageUrl']);
+      isTargetAllMember: data['isTargetAllMember'],
+      treatmentDetailList: data['treatmentDetailList'],
+      treatmentDetail: data['treatmentDetail'],
+      beforePrice: data['beforePrice'],
+      afterPrice: data['afterPrice'],
+      menuIntroduction: data['menuIntroduction'],
+      menuImageUrl: data['menuImageUrl'],
+      menuId: data['menuId'],
+    );
   }
 }

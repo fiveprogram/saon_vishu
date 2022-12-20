@@ -50,12 +50,57 @@ class _MenuPageState extends State<MenuPage> {
               ),
             ),
           ),
-          body: ListView.builder(
-              shrinkWrap: true,
-              itemCount: model.menuList.length,
-              itemBuilder: (context, index) {
-                return MenuCard(menuIndex: index);
-              }));
+          body: Consumer<MenuModel>(builder: (context, model, child) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Wrap(
+                      spacing: 5.0,
+                      children: model.treatmentTypeList.map((contents) {
+                        return FilterChip(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                          ),
+                          label: Text(contents),
+                          selected: model.filteredTreatmentTypeList
+                              .contains(contents),
+                          onSelected: (bool value) {
+                            setState(() {
+                              if (value) {
+                                if (!model.filteredTreatmentTypeList
+                                    .contains(contents)) {
+                                  model.filteredTreatmentTypeList.add(contents);
+
+                                  model.filteringMenuList();
+                                  print(model.filteredTreatmentTypeList);
+                                }
+                              } else {
+                                model.filteredTreatmentTypeList
+                                    .removeWhere((String name) {
+                                  return name == contents;
+                                });
+                              }
+                            });
+                          },
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  const Divider(),
+                  Text('全${model.menuList.length}件'),
+                  ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: model.menuList.length,
+                      itemBuilder: (context, index) {
+                        return MenuCard(menuIndex: index);
+                      }),
+                ],
+              ),
+            );
+          }));
     });
   }
 }

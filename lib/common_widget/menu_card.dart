@@ -20,6 +20,9 @@ class _MenuCardState extends State<MenuCard> {
   Widget build(BuildContext context) {
     return Consumer<MenuModel>(builder: (context, model, child) {
       Menu menu = model.menuList[widget.menuIndex];
+      if (model.filteredMenuList.isNotEmpty) {
+        menu = model.filteredMenuList[widget.menuIndex];
+      }
 
       //カット内容のリスト
       List<Widget> contentsOfHairList() {
@@ -157,12 +160,20 @@ class _MenuCardState extends State<MenuCard> {
                               Text(menu.afterPrice),
                               const SizedBox(width: 40),
                               SizedBox(
-                                  width: 80,
+                                  height: 40,
+                                  width: 70,
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: HexColor('#dfd9cd'),
                                           foregroundColor: Colors.black54),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SelectReservationDatePage(
+                                                        menu: menu)));
+                                      },
                                       child: const Text('予約')))
                             ],
                           )

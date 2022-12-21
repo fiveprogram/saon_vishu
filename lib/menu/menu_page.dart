@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/common_widget/menu_card.dart';
+import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
 import 'package:salon_vishu/menu/menu_model.dart';
 
 class MenuPage extends StatefulWidget {
@@ -18,42 +18,18 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<MenuModel>(builder: (context, model, child) {
-      return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size(
-              double.infinity,
-              56.0,
-            ),
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-                child: AppBar(
-                  actions: [
-                    IconButton(
-                        onPressed: () {
-                          model.popUpFeeList(context);
-                        },
-                        icon: const Icon(Icons.monetization_on))
-                  ],
-                  automaticallyImplyLeading: false,
-                  systemOverlayStyle: SystemUiOverlayStyle.light,
-                  backgroundColor: HexColor("#7e796e"),
-                  title: const Text('Menu',
-                      style: TextStyle(
-                          fontSize: 40,
-                          fontFamily: 'Dancing_Script',
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54)),
-                  elevation: 10.0,
-                ),
-              ),
-            ),
-          ),
-          body: Consumer<MenuModel>(builder: (context, model, child) {
-            return SingleChildScrollView(
-              child: Column(
+    return Consumer<MenuModel>(
+      builder: (context, model, child) {
+        return Scaffold(
+          appBar: vishuAppBar(appBarTitle: 'Menu'),
+          body: Consumer<MenuModel>(
+            builder: (context, model, child) {
+              return Column(
                 children: [
+                  const Text('お好みの条件を１つ選択してください',
+                      style: TextStyle(
+                          color: Colors.black54, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 10),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Wrap(
@@ -72,15 +48,16 @@ class _MenuPageState extends State<MenuPage> {
                                 if (!model.filteredTreatmentTypeList
                                     .contains(contents)) {
                                   model.filteredTreatmentTypeList.add(contents);
-
                                   model.filteringMenuList();
-                                  print(model.filteredTreatmentTypeList);
                                 }
                               } else {
+                                String? deleteContent;
                                 model.filteredTreatmentTypeList
                                     .removeWhere((String name) {
+                                  deleteContent = name;
                                   return name == contents;
                                 });
+                                model.deletingFilteringMenuList(deleteContent!);
                               }
                             });
                           },
@@ -89,18 +66,29 @@ class _MenuPageState extends State<MenuPage> {
                     ),
                   ),
                   const Divider(),
-                  Text('全${model.menuList.length}件'),
-                  ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: model.menuList.length,
-                      itemBuilder: (context, index) {
-                        return MenuCard(menuIndex: index);
-                      }),
+                  Text(
+                      '全${model.filteredMenuList.isEmpty ? model.menuList.length : model.filteredMenuList.length}件',
+                      style: const TextStyle(
+                          color: Colors.black54, fontWeight: FontWeight.bold)),
+                  Expanded(
+                    child: Scrollbar(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: model.filteredMenuList.isEmpty
+                            ? model.menuList.length
+                            : model.filteredMenuList.length,
+                        itemBuilder: (context, index) {
+                          return MenuCard(menuIndex: index);
+                        },
+                      ),
+                    ),
+                  ),
                 ],
-              ),
-            );
-          }));
-    });
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }

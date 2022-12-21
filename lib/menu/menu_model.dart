@@ -8,20 +8,22 @@ import '../domain/menu.dart';
 class MenuModel extends ChangeNotifier {
   List<Menu> menuList = [];
   List<Menu> filteredMenuList = [];
+  List<String> filteredTreatmentTypeList = [];
   List<String> treatmentTypeList = [
-    'カット',
+    // 'カット',
     'カラー',
     'トリートメント',
     'パーマ',
     'ヘッドスパ',
     '縮毛矯正'
   ];
-  List<String> filteredTreatmentTypeList = [];
 
   //fetchMenuList
   Future<void> fetchMenuList() async {
-    Stream<QuerySnapshot> menuStream =
-        FirebaseFirestore.instance.collection('menu').snapshots();
+    Stream<QuerySnapshot> menuStream = FirebaseFirestore.instance
+        .collection('menu')
+        .orderBy('treatmentDetailList', descending: false)
+        .snapshots();
 
     menuStream.listen((snapshot) {
       menuList = snapshot.docs.map((DocumentSnapshot doc) {
@@ -31,21 +33,29 @@ class MenuModel extends ChangeNotifier {
     });
   }
 
-  //filteringMenuList
+  //カット条件のフィルタリング
   void filteringMenuList() {
-    if (filteredTreatmentTypeList.isNotEmpty) {
-      for (String treatment in filteredTreatmentTypeList) {
-        for (Menu menu in menuList) {
-          if (menu.treatmentDetailList.contains(treatment)) {
-            filteredMenuList.add(menu);
-          }
+    filteredMenuList.clear();
+    for (String treatment in filteredTreatmentTypeList) {
+      for (Menu menu in menuList) {
+        if (menu.treatmentDetailList.contains(treatment) &&
+            !filteredMenuList.contains(menu)) {
+          filteredMenuList.add(menu);
         }
       }
     }
     notifyListeners();
   }
 
-  void deletingFilteringMenuList() {}
+  //delete
+  void deletingFilteringMenuList(String name) {
+    for (Menu menu in menuList) {
+      if (menu.treatmentDetailList.contains(name)) {
+        filteredMenuList.remove(menu);
+      }
+    }
+    notifyListeners();
+  }
 
   Future<void> signOut(BuildContext context) async {
     showDialog(

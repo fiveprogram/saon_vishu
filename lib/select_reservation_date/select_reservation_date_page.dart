@@ -87,56 +87,119 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
       appBar: vishuAppBar(appBarTitle: 'reservation'),
       body: Consumer<SelectReservationDateModel>(
         builder: (context, model, child) {
-          return Padding(
-            padding: const EdgeInsets.all(13.0),
+          final double deviceHeight = MediaQuery.of(context).size.height;
+          final double deviceWidth = MediaQuery.of(context).size.width;
+
+          return SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Text('予約内容',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold)),
-                const SizedBox(height: 20),
                 Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        targetCard(),
-                        const SizedBox(height: 5),
-                        Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(menu.menuImageUrl))),
-                        ),
-                        const SizedBox(height: 10),
-                        Row(
-                          children: [
-                            if (menu.beforePrice != '')
-                              Text(
-                                menu.beforePrice,
-                                style: const TextStyle(
-                                    fontSize: 12,
-                                    decoration: TextDecoration.lineThrough),
-                              ),
-                            const Text('▷'),
-                            Text(
-                              menu.afterPrice,
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(width: 40),
-                          ],
-                        )
-                      ],
-                    )
+                  children: const [
+                    SizedBox(width: 20),
+                    Text('予約内容',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.bold)),
                   ],
                 ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: 20),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          targetCard(),
+                          const SizedBox(height: 5),
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(menu.menuImageUrl))),
+                          ),
+                          const SizedBox(height: 10),
+                          //料金の横並び
+                          Row(
+                            children: [
+                              if (menu.beforePrice != '')
+                                Text(
+                                  menu.beforePrice,
+                                  style: const TextStyle(
+                                      fontSize: 12,
+                                      decoration: TextDecoration.lineThrough),
+                                ),
+                              const Text('▷'),
+                              Text(
+                                menu.afterPrice,
+                                style: const TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Wrap(
+                            children: contentsOfHairList(),
+                          ),
+                          SizedBox(
+                              width: 233, child: Text(menu.treatmentDetail)),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(),
+                const Text('予約日時を選ぶ',
+                    style: TextStyle(
+                        color: Colors.black54, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 10),
+                Container(
+                  height: deviceHeight / 15,
+                  width: deviceWidth,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black12)),
+                  child: ListTile(
+                    trailing: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.arrow_forward_ios),
+                    ),
+                    title: Center(
+                      child: Text(
+                        '${model.calendar.month}月',
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      height: deviceHeight / 15,
+                      width: deviceWidth / 8,
+                      decoration: BoxDecoration(border: Border.all()),
+                    ),
+                    Row(
+                      children: model.dateColumn(
+                          height: deviceHeight, width: deviceWidth),
+                    ),
+                  ],
+                ),
+                Column(
+                  children:
+                      model.timeList(height: deviceHeight, width: deviceWidth),
+                )
               ],
             ),
           );
@@ -145,3 +208,5 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
     );
   }
 }
+
+///1月9日以降

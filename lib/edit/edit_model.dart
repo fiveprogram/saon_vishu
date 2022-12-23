@@ -43,7 +43,6 @@ class EditModel extends ChangeNotifier {
 
   ///cupertinoPicker 生年月日
   Future<void> dateOfBirthPicker(BuildContext context) async {
-    print('happy');
     DatePicker.showDatePicker(context,
         showTitleActions: true,
         minTime: DateTime(1920, 3, 5),
@@ -58,7 +57,6 @@ class EditModel extends ChangeNotifier {
             ? DateTime.now()
             : registerDateOfBirth,
         locale: LocaleType.jp);
-    notifyListeners();
   }
 
   ///写真の選択

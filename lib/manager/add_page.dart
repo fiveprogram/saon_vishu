@@ -11,7 +11,7 @@ class AddPage extends StatefulWidget {
 class _AddPageState extends State<AddPage> {
   Future<void> addMenu() async {
     await FirebaseFirestore.instance.collection('menu').add({
-      'afterPrice': '¥550',
+      'afterPrice': 'いつもオセ❽ないなテオリマtextフォさんフォmacあんふぉなそjfんさどjfな',
       'beforePrice': '',
       'isTargetAllMember': true,
       'treatmentDetail': 'フロントカット(シャンプー・ブロー込) 　イメージに合わせてカットします♪',
@@ -19,7 +19,15 @@ class _AddPageState extends State<AddPage> {
       'menuIntroduction': 'フロントカット 　イメージに合わせてカットします♪',
       'menuImageUrl':
           'https://firebasestorage.googleapis.com/v0/b/salon-vishu.appspot.com/o/スクリーンショット%202022-12-19%2014.40.07.png?alt=media&token=3decbe8c-d849-4f3e-8591-bb2c0a8ccb8a',
+      'menuId': '',
     });
+  }
+
+  Future<void> addTime() async {
+    await FirebaseFirestore.instance
+        .collection('menu')
+        .doc('EQDGnKuaTRXFGHbj7aw7')
+        .update({'treatmentTime': '120分'});
   }
 
   @override
@@ -31,7 +39,7 @@ class _AddPageState extends State<AddPage> {
           Center(
             child: ElevatedButton(
                 onPressed: () {
-                  addMenu();
+                  addTime();
                 },
                 child: const Text('情報を追加する')),
           )

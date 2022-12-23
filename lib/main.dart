@@ -9,6 +9,7 @@ import 'package:salon_vishu/menu/menu_model.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
 import 'package:salon_vishu/select_reservation_date/select_reservation_date_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
+import 'package:salon_vishu/sign_in/sign_in_page.dart';
 import 'package:salon_vishu/sign_up/sign_up_model.dart';
 
 import 'manager/firebase_option/firebase_options.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
               if (snapshot.hasData) {
                 return const MainSelectPage();
               }
-              return MainSelectPage();
+              return const SignInPage();
             }),
       ),
     );

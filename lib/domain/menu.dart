@@ -9,29 +9,32 @@ class Menu {
   String menuIntroduction;
   String menuImageUrl;
   String menuId;
+  // String treatmentTime;
 
-  Menu(
-      {required this.isTargetAllMember,
-      required this.treatmentDetailList,
-      required this.treatmentDetail,
-      required this.beforePrice,
-      required this.afterPrice,
-      required this.menuIntroduction,
-      required this.menuImageUrl,
-      required this.menuId});
+  Menu({
+    required this.isTargetAllMember,
+    required this.treatmentDetailList,
+    required this.treatmentDetail,
+    required this.beforePrice,
+    required this.afterPrice,
+    required this.menuIntroduction,
+    required this.menuImageUrl,
+    required this.menuId,
+    // required this.treatmentTime
+  });
 
   factory Menu.fromFireStore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
     return Menu(
-      isTargetAllMember: data['isTargetAllMember'],
-      treatmentDetailList: data['treatmentDetailList'],
-      treatmentDetail: data['treatmentDetail'],
-      beforePrice: data['beforePrice'],
-      afterPrice: data['afterPrice'],
-      menuIntroduction: data['menuIntroduction'],
-      menuImageUrl: data['menuImageUrl'],
-      menuId: data['menuId'],
-    );
+        isTargetAllMember: data['isTargetAllMember'],
+        treatmentDetailList: data['treatmentDetailList'],
+        treatmentDetail: data['treatmentDetail'],
+        beforePrice: data['beforePrice'],
+        afterPrice: data['afterPrice'],
+        menuIntroduction: data['menuIntroduction'],
+        menuImageUrl: data['menuImageUrl'],
+        menuId: data['menuId']);
+    // treatmentTime: data['treatmentTime']);
   }
 }

@@ -27,7 +27,9 @@ class _AddPageState extends State<AddPage> {
     await FirebaseFirestore.instance
         .collection('menu')
         .doc('EQDGnKuaTRXFGHbj7aw7')
-        .update({'treatmentTime': '120分'});
+        .update({
+      'treatmentTime': 210,
+    });
   }
 
   @override

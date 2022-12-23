@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class SelectReservationDateModel extends ChangeNotifier {
   DateTime calendar = DateTime.now();
+
   List<String> timeTextList = [
     '9:00',
     '9:30',
@@ -23,33 +24,10 @@ class SelectReservationDateModel extends ChangeNotifier {
     '17:00',
     '17:30',
     '18:00',
-    '18:30',
-    '19:00',
   ];
 
   String weekdayText(int index) {
     switch ((calendar.weekday + index) % 7) {
-      case 1:
-        return '月';
-      case 2:
-        return '火';
-      case 3:
-        return '水';
-      case 4:
-        return '木';
-      case 5:
-        return '金';
-      case 6:
-        return '土';
-      case 7:
-        return '日';
-      default:
-        return '月';
-    }
-  }
-
-  String monthText(int index) {
-    switch ((calendar.month)) {
       case 1:
         return '月';
       case 2:
@@ -77,7 +55,8 @@ class SelectReservationDateModel extends ChangeNotifier {
           height: height / 15,
           width: width / 8,
           decoration: BoxDecoration(border: Border.all()),
-          child: Text(weekdayText(index), textAlign: TextAlign.center),
+          child: Text('${weekdayText(index)}\n${calendar.day + index}',
+              textAlign: TextAlign.center),
         );
       },
     );
@@ -85,12 +64,30 @@ class SelectReservationDateModel extends ChangeNotifier {
 
   List<Container> timeList({required double height, required double width}) {
     return List.generate(
-        timeTextList.length,
-        (index) => Container(
-              height: height / 15,
-              width: width / 8,
-              decoration: BoxDecoration(border: Border.all()),
-              child: Text(timeTextList[index], textAlign: TextAlign.center),
-            ));
+      timeTextList.length,
+      (index) => Container(
+        height: height / 15,
+        width: width / 8,
+        decoration: BoxDecoration(border: Border.all()),
+        child: Text(timeTextList[index], textAlign: TextAlign.center),
+      ),
+    );
+  }
+
+  List<Container> bookableCellList(
+      {required double height,
+      required double width,
+      required bool isBookable}) {
+    return List.generate(
+      timeTextList.length,
+      (index) => Container(
+        height: height / 15,
+        width: width / 8,
+        decoration: BoxDecoration(border: Border.all()),
+        child: Text(isBookable ? '🔴' : '✖️',
+            style: const TextStyle(fontSize: 20, color: Colors.black54),
+            textAlign: TextAlign.center),
+      ),
+    );
   }
 }

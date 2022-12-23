@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:salon_vishu/common_widget/calendar_widget.dart';
 import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
 import 'package:salon_vishu/domain/menu.dart';
 import 'package:salon_vishu/select_reservation_date/select_reservation_date_model.dart';
@@ -165,41 +166,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                     style: TextStyle(
                         color: Colors.black54, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
-                Container(
-                  height: deviceHeight / 15,
-                  width: deviceWidth,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: Colors.black12)),
-                  child: ListTile(
-                    trailing: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.arrow_forward_ios),
-                    ),
-                    title: Center(
-                      child: Text(
-                        '${model.calendar.month}月',
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      height: deviceHeight / 15,
-                      width: deviceWidth / 8,
-                      decoration: BoxDecoration(border: Border.all()),
-                    ),
-                    Row(
-                      children: model.dateColumn(
-                          height: deviceHeight, width: deviceWidth),
-                    ),
-                  ],
-                ),
-                Column(
-                  children:
-                      model.timeList(height: deviceHeight, width: deviceWidth),
-                )
+                const CalenderWidget()
               ],
             ),
           );

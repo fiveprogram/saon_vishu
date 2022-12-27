@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/common_widget/calendar_widget.dart';
 import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
 import 'package:salon_vishu/domain/menu.dart';
 import 'package:salon_vishu/select_reservation_date/select_reservation_date_model.dart';
+
+import '../common_widget/calendar_widget.dart';
 
 // ignore: must_be_immutable
 class SelectReservationDatePage extends StatefulWidget {
@@ -96,38 +97,38 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
+                SizedBox(height: deviceHeight * 0.03),
                 Row(
-                  children: const [
-                    SizedBox(width: 20),
-                    Text('予約内容',
+                  children: [
+                    SizedBox(width: deviceWidth * 0.03),
+                    const Text('予約内容',
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.black54,
                             fontWeight: FontWeight.bold)),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: deviceHeight * 0.02),
                 SizedBox(
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(width: 20),
+                      SizedBox(width: deviceWidth * 0.03),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           targetCard(),
-                          const SizedBox(height: 5),
+                          SizedBox(height: deviceHeight * 0.007),
                           Container(
-                            height: 100,
-                            width: 100,
+                            height: deviceHeight * 0.1,
+                            width: deviceWidth * 0.25,
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: NetworkImage(menu.menuImageUrl))),
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: deviceHeight * 0.01),
                           //料金の横並び
                           Row(
                             children: [
@@ -148,6 +149,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                           )
                         ],
                       ),
+                      SizedBox(width: deviceWidth * 0.02),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -155,7 +157,19 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                             children: contentsOfHairList(),
                           ),
                           SizedBox(
-                              width: 233, child: Text(menu.treatmentDetail)),
+                              height: deviceHeight * 0.11,
+                              width: deviceWidth * 0.6,
+                              child: Text(menu.treatmentDetail)),
+                          Row(
+                            children: [
+                              SizedBox(width: deviceWidth * 0.3),
+                              Text('施術時間：${menu.treatmentTime}分',
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black54,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
                         ],
                       ),
                     ],
@@ -165,8 +179,8 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                 const Text('予約日時を選ぶ',
                     style: TextStyle(
                         color: Colors.black54, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 10),
-                const CalenderWidget()
+                const Divider(),
+                const CalenderWidget(),
               ],
             ),
           );

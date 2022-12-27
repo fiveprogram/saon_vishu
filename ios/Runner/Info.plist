@@ -10,6 +10,19 @@
     <string>This app requires to add file to your photo library your microphone</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	  <key>CFBundleURLTypes</key>
+            <array>
+            	<dict>
+            		<key>CFBundleTypeRole</key>
+            		<string>Editor</string>
+            		<key>CFBundleURLSchemes</key>
+            		<array>
+            			<!-- TODO Replace this value: -->
+            			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+            			<string>com.googleusercontent.apps.689319200957-c5c2c3om3a25enmdf996hs5oip85el9r</string>
+            		</array>
+            	</dict>
+            </array>
 	<key>CFBundleDisplayName</key>
 	<string>Salon Vishu</string>
 	<key>CFBundleExecutable</key>

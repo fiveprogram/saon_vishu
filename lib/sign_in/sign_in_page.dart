@@ -20,8 +20,8 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
+    final double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: vishuAppBar(
         appBarTitle: 'salon Vishu',
@@ -31,13 +31,13 @@ class _SignInPageState extends State<SignInPage> {
           children: [
             Column(
               children: [
-                vishuImage(width),
+                vishuImage(deviceHeight * 0.25, deviceWidth),
                 const SizedBox(height: 30),
                 AuthFormField(
                     isSuffixIcon: false,
                     isVisivilly: false,
                     isPicker: false,
-                    width: width,
+                    width: deviceWidth,
                     signInModel: model,
                     textEditingController: model.emailController,
                     icon: Icons.email,
@@ -47,14 +47,14 @@ class _SignInPageState extends State<SignInPage> {
                     isSuffixIcon: true,
                     isVisivilly: false,
                     isPicker: false,
-                    width: width,
+                    width: deviceWidth,
                     signInModel: model,
                     textEditingController: model.passController,
                     icon: Icons.password,
                     hintText: 'パスワード'),
-                const SizedBox(height: 30),
+                SizedBox(height: deviceHeight * 0.03),
                 SizedBox(
-                  width: 300,
+                  width: deviceWidth * 0.7,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.white,
@@ -64,17 +64,17 @@ class _SignInPageState extends State<SignInPage> {
                       },
                       child: const Text('ログイン')),
                 ),
-                const SizedBox(height: 30),
+                SizedBox(height: deviceHeight * 0.03),
                 const Divider(),
                 const Text(
                   '連携してログインされる方はこちら',
                   style: TextStyle(color: Colors.black87),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: deviceHeight * 0.03),
                 SignInButton(Buttons.Apple, onPressed: () {}),
-                const SizedBox(height: 10),
+                SizedBox(height: deviceHeight * 0.02),
                 SignInButton(Buttons.Google, onPressed: () {}),
-                const SizedBox(height: 10),
+                SizedBox(height: deviceHeight * 0.02),
                 RichText(
                   text: TextSpan(
                     text: 'アカウントをお持ちでない方はこちら',
@@ -104,9 +104,9 @@ class _SignInPageState extends State<SignInPage> {
   }
 }
 
-Container vishuImage(double width) {
+Container vishuImage(double deviceHeight, double width) {
   return Container(
-    height: 220,
+    height: deviceHeight,
     width: width,
     decoration: const BoxDecoration(
         image: DecorationImage(image: AssetImage('images/LILIA-BEAUTY.jpeg'))),

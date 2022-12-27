@@ -10,7 +10,7 @@ class MenuModel extends ChangeNotifier {
   List<Menu> filteredMenuList = [];
   List<String> filteredTreatmentTypeList = [];
   List<String> treatmentTypeList = [
-    // 'カット',
+    'すべて',
     'カラー',
     'トリートメント',
     'パーマ',
@@ -33,13 +33,17 @@ class MenuModel extends ChangeNotifier {
     });
   }
 
+  int? treatmentListIndex = 0;
   //カット条件のフィルタリング
-  void filteringMenuList() {
+  void filteringMenuList(int index) {
+    filteredTreatmentTypeList.clear();
     filteredMenuList.clear();
+
+    filteredTreatmentTypeList.add(treatmentTypeList[index]);
+    treatmentListIndex = index;
     for (String treatment in filteredTreatmentTypeList) {
       for (Menu menu in menuList) {
-        if (menu.treatmentDetailList.contains(treatment) &&
-            !filteredMenuList.contains(menu)) {
+        if (menu.treatmentDetailList.contains(treatment)) {
           filteredMenuList.add(menu);
         }
       }
@@ -47,8 +51,8 @@ class MenuModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //delete
   void deletingFilteringMenuList(String name) {
+    treatmentListIndex = null;
     for (Menu menu in menuList) {
       if (menu.treatmentDetailList.contains(name)) {
         filteredMenuList.remove(menu);
@@ -78,39 +82,5 @@ class MenuModel extends ChangeNotifier {
             ],
           );
         });
-  }
-
-  bool isFeePopUp = false;
-  void startPopUp() {
-    isFeePopUp = true;
-    notifyListeners();
-  }
-
-  void endPopUp() {
-    isFeePopUp = false;
-    notifyListeners();
-  }
-
-  void popUpFeeList(BuildContext context) {
-    showCupertinoDialog(
-      context: context,
-      builder: (context) {
-        return Material(
-          child: Container(
-            height: 100,
-            width: 300,
-            child: const Text(
-                '¥料金表\n大人カット ¥3,800\n大学生カット ¥3,500\n中学生・高校生カット ¥3,000\n幼稚園児・小学生カット ¥2,000\nフロントカット ¥5,00'),
-            // actions: [
-            //   CupertinoButton(
-            //       onPressed: () {
-            //         Navigator.pop(context);
-            //       },
-            //       child: const Text('OK'))
-            // ],
-          ),
-        );
-      },
-    );
   }
 }

@@ -26,6 +26,7 @@ class SelectReservationDateModel extends ChangeNotifier {
     '18:00',
   ];
 
+  ///曜日
   String weekdayText(int index) {
     switch ((calendar.weekday + index) % 7) {
       case 1:
@@ -40,28 +41,31 @@ class SelectReservationDateModel extends ChangeNotifier {
         return '金';
       case 6:
         return '土';
-      case 7:
+      case 0:
         return '日';
       default:
         return '月';
     }
   }
 
+  ///予約カレンダーの日時を表す
   List<Container> dateColumn({required double height, required double width}) {
     return List.generate(
       7,
       (index) {
+        print(calendar.weekday + index);
         return Container(
           height: height / 15,
           width: width / 8,
           decoration: BoxDecoration(border: Border.all()),
-          child: Text('${weekdayText(index)}\n${calendar.day + index}',
+          child: Text('${calendar.day + index}\n(${weekdayText(index)})',
               textAlign: TextAlign.center),
         );
       },
     );
   }
 
+  ///予約カレンダーの時間区分を表す
   List<Container> timeList({required double height, required double width}) {
     return List.generate(
       timeTextList.length,
@@ -74,6 +78,7 @@ class SelectReservationDateModel extends ChangeNotifier {
     );
   }
 
+  ///予約可能か表示しているセル
   List<Container> bookableCellList(
       {required double height,
       required double width,

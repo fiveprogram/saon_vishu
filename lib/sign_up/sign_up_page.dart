@@ -18,7 +18,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final double deviceHeight = MediaQuery.of(context).size.height;
+    final double deviceWidth = MediaQuery.of(context).size.width;
 
     return Consumer<SignUpModel>(builder: (context, model, child) {
       return Scaffold(
@@ -28,44 +29,44 @@ class _SignUpPageState extends State<SignUpPage> {
         body: Stack(
           children: [
             SizedBox(
-              width: width,
+              width: deviceWidth,
               child: Column(
                 children: [
-                  vishuImage(width),
-                  const SizedBox(height: 20),
+                  vishuImage(deviceHeight * 0.34, deviceWidth),
+                  SizedBox(height: deviceHeight * 0.025),
                   AuthFormField(
                       isSuffixIcon: false,
                       isVisivilly: false,
                       isPicker: false,
-                      width: width,
+                      width: deviceWidth,
                       signUpModel: model,
                       textEditingController: model.emailController,
                       icon: Icons.email,
                       hintText: 'メールアドレス'),
-                  const SizedBox(height: 10),
+                  SizedBox(height: deviceHeight * 0.015),
                   AuthFormField(
                       isSuffixIcon: true,
                       isVisivilly: false,
                       isPicker: false,
-                      width: width,
+                      width: deviceWidth,
                       signUpModel: model,
                       textEditingController: model.passController,
                       icon: Icons.password,
                       hintText: 'パスワード'),
-                  const SizedBox(height: 10),
+                  SizedBox(height: deviceHeight * 0.015),
                   AuthFormField(
                       isSuffixIcon: false,
                       isVisivilly: false,
                       isPicker: false,
-                      width: width,
+                      width: deviceWidth,
                       signUpModel: model,
                       textEditingController: model.nameController,
                       icon: Icons.person,
                       hintText: '名前'),
-                  const SizedBox(height: 10),
+                  SizedBox(height: deviceHeight * 0.015),
                   SizedBox(
                     height: 40,
-                    width: width * 0.8,
+                    width: deviceWidth * 0.8,
                     child: TextFormField(
                       onTap: () {
                         model.dateOfBirthPicker(context);
@@ -87,10 +88,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: deviceHeight * 0.015),
                   SizedBox(
-                    height: 40,
-                    width: width * 0.8,
+                    height: deviceHeight * 0.05,
+                    width: deviceWidth * 0.8,
                     child: TextFormField(
                       controller: model.telephoneNumberController,
                       keyboardType: TextInputType.number,
@@ -109,7 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: deviceHeight * 0.03),
                   SizedBox(
                       width: 300,
                       child: ElevatedButton(
@@ -137,9 +138,9 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
-Container vishuImage(double width) {
+Container vishuImage(double deviceHeight, double width) {
   return Container(
-    height: 300,
+    height: deviceHeight,
     width: width,
     decoration: const BoxDecoration(
         image: DecorationImage(image: AssetImage('images/vishu_view.png'))),

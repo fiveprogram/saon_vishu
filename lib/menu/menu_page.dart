@@ -33,37 +33,30 @@ class _MenuPageState extends State<MenuPage> {
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Wrap(
-                      spacing: 5.0,
-                      children: model.treatmentTypeList.map((contents) {
-                        return FilterChip(
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                          ),
-                          label: Text(contents),
-                          selected: model.filteredTreatmentTypeList
-                              .contains(contents),
-                          onSelected: (bool value) {
-                            setState(() {
+                        spacing: 5.0,
+                        children: List.generate(
+                          model.treatmentTypeList.length,
+                          (index) => ChoiceChip(
+                            shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)),
+                            ),
+                            label: Text(model.treatmentTypeList[index]),
+                            selected: model.treatmentListIndex == index,
+                            onSelected: (bool value) {
                               if (value) {
-                                if (!model.filteredTreatmentTypeList
-                                    .contains(contents)) {
-                                  model.filteredTreatmentTypeList.add(contents);
-                                  model.filteringMenuList();
-                                }
-                              } else {
-                                String? deleteContent;
-                                model.filteredTreatmentTypeList
-                                    .removeWhere((String name) {
-                                  deleteContent = name;
-                                  return name == contents;
+                                setState(() {
+                                  model.filteringMenuList(index);
                                 });
-                                model.deletingFilteringMenuList(deleteContent!);
+                              } else {
+                                setState(() {
+                                  model.deletingFilteringMenuList(
+                                      model.treatmentTypeList[index]);
+                                });
                               }
-                            });
-                          },
-                        );
-                      }).toList(),
-                    ),
+                            },
+                          ),
+                        ).toList()),
                   ),
                   const Divider(),
                   Text(

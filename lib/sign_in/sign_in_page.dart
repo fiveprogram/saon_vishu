@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import '../common_widget/auth_form_field.dart';
@@ -73,7 +72,9 @@ class _SignInPageState extends State<SignInPage> {
                 SizedBox(height: deviceHeight * 0.03),
                 SignInButton(Buttons.Apple, onPressed: () {}),
                 SizedBox(height: deviceHeight * 0.02),
-                SignInButton(Buttons.Google, onPressed: () {}),
+                SignInButton(Buttons.Google, onPressed: () {
+                  model.signInWithGoogle(context);
+                }),
                 SizedBox(height: deviceHeight * 0.02),
                 RichText(
                   text: TextSpan(

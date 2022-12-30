@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
 import 'package:salon_vishu/manager/add_page.dart';
 import 'package:salon_vishu/menu/menu_page.dart';
 import 'package:salon_vishu/profile/profile_page.dart';

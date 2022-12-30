@@ -9,11 +9,15 @@ class ProfileModel extends ChangeNotifier {
   Profile? profile;
 
   Future<void> fetchProfile() async {
-    Stream<QuerySnapshot> profileStream =
-        FirebaseFirestore.instance.collection('users').limit(1).snapshots();
+    User? user = FirebaseAuth.instance.currentUser;
+
+    final profileStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .snapshots();
 
     profileStream.listen((snapshot) {
-      profile = Profile.fromFirestore(snapshot.docs[0]);
+      profile = Profile.fromFirestore(snapshot);
       notifyListeners();
     });
   }

@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AddPage extends StatefulWidget {
@@ -32,6 +34,29 @@ class _AddPageState extends State<AddPage> {
     });
   }
 
+  Future<void> signOut(BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('本当にログアウトしますか？'),
+            actions: [
+              CupertinoButton(
+                  child: const Text('いいえ'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              CupertinoButton(
+                  child: const Text('はい'),
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pop(context);
+                  }),
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +66,9 @@ class _AddPageState extends State<AddPage> {
           Center(
             child: ElevatedButton(
                 onPressed: () {
-                  addTime();
+                  signOut(context);
                 },
-                child: const Text('情報を追加する')),
+                child: const Text('ログアウト')),
           )
         ],
       ),

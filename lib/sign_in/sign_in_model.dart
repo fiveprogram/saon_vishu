@@ -1,11 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:salon_vishu/manager/firebase_option/firebase_options.dart';
 
 class SignInModel extends ChangeNotifier {
   final emailController =
       TextEditingController(text: 'yuta.nanana.tennis@gmail.com');
   final passController = TextEditingController(text: '03Yuta16');
+
+  DateTime createAccountDate = DateTime.now();
 
   bool isLoading = false;
 
@@ -19,7 +24,7 @@ class SignInModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  ///signInMethod
+  ///メールアドレスを使ってのサインイン
   Future<void> signInTransition(BuildContext context) async {
     startLoading();
     print(isLoading);
@@ -61,6 +66,46 @@ class SignInModel extends ChangeNotifier {
     } finally {
       endLoading();
       print(isLoading);
+    }
+  }
+
+  ///Google Sign in
+  GoogleSignIn googleSignIn = GoogleSignIn(
+    clientId: DefaultFirebaseOptions.currentPlatform.iosClientId,
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/contacts.readonly',
+    ],
+  );
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final result =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      final user = result.user;
+
+      await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
+        'uid': user.uid,
+        'email': user.email,
+        'name': user.displayName,
+        'dateOfBirth': '',
+        'telephoneNumber': user.phoneNumber ?? '00000000000',
+        'imgUrl': user.photoURL != '' ? user.photoURL : '',
+        'dateTime': createAccountDate
+      });
+    } catch (e) {
+      const snackBar = SnackBar(content: Text('ログインに失敗'));
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 }

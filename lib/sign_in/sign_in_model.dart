@@ -93,17 +93,21 @@ class SignInModel extends ChangeNotifier {
           await FirebaseAuth.instance.signInWithCredential(credential);
       final user = result.user;
 
-      await FirebaseFirestore.instance.collection('users').doc(user!.uid).set({
-        'uid': user.uid,
-        'email': user.email,
-        'name': user.displayName,
-        'dateOfBirth': '',
-        'telephoneNumber': user.phoneNumber ?? '00000000000',
-        'imgUrl': user.photoURL != '' ? user.photoURL : '',
-        'dateTime': createAccountDate
-      });
+      await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(
+        {
+          'uid': user.uid,
+          'email': user.email,
+          'name': user.displayName,
+          'dateOfBirth': '',
+          'telephoneNumber': user.phoneNumber ?? '00000000000',
+          'imgUrl': user.photoURL != '' ? user.photoURL : '',
+          'dateTime': createAccountDate
+        },
+      );
     } catch (e) {
-      const snackBar = SnackBar(content: Text('ログインに失敗'));
+      const snackBar = SnackBar(
+        content: Text('ログインに失敗'),
+      );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }

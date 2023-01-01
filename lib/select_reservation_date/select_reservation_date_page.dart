@@ -180,7 +180,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                     style: TextStyle(
                         color: Colors.black54, fontWeight: FontWeight.bold)),
                 const Divider(),
-                const CalenderWidget(),
+                CalenderWidget(menu: widget.menu),
               ],
             ),
           );

@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/confirm_reservation/confirm_reservation_model.dart';
 import 'package:salon_vishu/main_select_page.dart';
@@ -20,6 +21,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
+
+  initializeDateFormatting('ja');
 }
 
 class MyApp extends StatelessWidget {

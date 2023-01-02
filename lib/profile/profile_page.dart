@@ -22,7 +22,6 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: vishuAppBar(appBarTitle: 'my page'),
       body: Consumer<ProfileModel>(
         builder: (context, model, child) {
-          print(model.profile);
           if (model.profile == null) {
             return const CircularProgressIndicator();
           }

@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../domain/menu.dart';
 import 'calendar_model.dart';
 
+// ignore: must_be_immutable
 class CalenderWidget extends StatefulWidget {
   Menu menu;
   CalenderWidget({required this.menu, Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
             children: [
               Container(
                 height: height * 0.06,
-                color: Colors.black12,
+                color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -44,7 +44,8 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                     ),
                     Text(
                         '${model.weekDateList(model.currentDisplayDate())[1].month}月',
-                        style: const TextStyle(fontSize: 17)),
+                        style: const TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.bold)),
                     IconButton(
                       onPressed: () {
                         setState(() {
@@ -81,6 +82,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                             height: height * 0.06,
                             width: width * 0.157,
                             decoration: BoxDecoration(
+                              color: Colors.white,
                               border: Border.all(color: Colors.black38),
                             ),
                             child: Text(model.businessTimeFormatter
@@ -111,8 +113,14 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                                   height: height * 0.06,
                                   width: width * 0.12,
                                   decoration: BoxDecoration(
+                                    color: Colors.white,
                                     border: Border.all(color: Colors.black38),
                                   ),
+                                  child: Text(
+                                      model.isAvailable(thirtyMinute)
+                                          ? '○'
+                                          : '✖︎',
+                                      textAlign: TextAlign.center),
                                 );
                               },
                             )

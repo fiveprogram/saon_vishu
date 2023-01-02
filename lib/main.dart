@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:salon_vishu/common_widget/calendar_model.dart';
 import 'package:salon_vishu/confirm_reservation/confirm_reservation_model.dart';
 import 'package:salon_vishu/main_select_page.dart';
 import 'package:salon_vishu/menu/menu_model.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => MenuModel()..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => ProfileModel()..fetchProfile()),
         ChangeNotifierProvider(create: (_) => ConfirmReservationModel()),
-        ChangeNotifierProvider(create: (_) => SelectReservationDateModel()),
+        ChangeNotifierProvider(
+            create: (_) => CalendarModel()..fetchReservationList()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

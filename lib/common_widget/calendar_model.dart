@@ -1,12 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:salon_vishu/domain/business_hours.dart';
+import 'package:salon_vishu/domain/reservation.dart';
 
 class CalendarModel extends ChangeNotifier {
   DateTime today = DateTime.now();
 
-  int previousWeeks = -1;
+  int previousWeeks = 0;
   DateFormat dayOfWeekFormatter = DateFormat('EE', 'ja_JP');
 
   ///カレンダーを表示する上で、１週間先の日時を取得する。
@@ -91,6 +94,32 @@ class CalendarModel extends ChangeNotifier {
     if (endTime.isAfter(closeTime)) {
       return false;
     }
+
+    ///条件が難しい
+    ///既に予約が入れられているマスを✖︎の表示にしたい
+    for (var reservation in reservationList) {
+      if (startTime.isAfter(reservation.startTime) ||
+          endTime.isBefore(reservation.finishTime)) {
+        return false;
+      }
+    }
     return true;
+  }
+
+  List<Reservation> reservationList = [];
+
+  ///データベースから予約
+  ///全員の予約履歴から参照
+  Future<void> fetchReservationList() async {
+    Stream<QuerySnapshot> reservationStream =
+        FirebaseFirestore.instance.collectionGroup('reservations').snapshots();
+
+    reservationStream.listen(
+      (snapshot) {
+        reservationList = snapshot.docs
+            .map((DocumentSnapshot doc) => Reservation.fromFirestore(doc))
+            .toList();
+      },
+    );
   }
 }

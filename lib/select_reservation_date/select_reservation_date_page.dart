@@ -27,18 +27,18 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
         appBar: vishuAppBar(appBarTitle: 'reservation'),
         body: Consumer<SelectReservationDateModel>(
           builder: (context, model, child) {
-            final double deviceHeight = MediaQuery.of(context).size.height;
-            final double deviceWidth = MediaQuery.of(context).size.width;
+            final double height = MediaQuery.of(context).size.height;
+            final double width = MediaQuery.of(context).size.width;
 
             return SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: deviceHeight * 0.03),
+                  SizedBox(height: height * 0.03),
                   Row(
                     children: [
-                      SizedBox(width: deviceWidth * 0.03),
+                      SizedBox(width: width * 0.03),
                       const Text('予約内容',
                           style: TextStyle(
                               fontSize: 20,
@@ -46,27 +46,27 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  SizedBox(height: deviceHeight * 0.02),
+                  SizedBox(height: height * 0.02),
                   SizedBox(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(width: deviceWidth * 0.03),
+                        SizedBox(width: width * 0.03),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             model.targetCard(),
-                            SizedBox(height: deviceHeight * 0.007),
+                            SizedBox(height: height * 0.007),
                             Container(
-                              height: deviceHeight * 0.1,
-                              width: deviceWidth * 0.25,
+                              height: height * 0.1,
+                              width: width * 0.25,
                               decoration: BoxDecoration(
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(menu.menuImageUrl))),
                             ),
-                            SizedBox(height: deviceHeight * 0.01),
+                            SizedBox(height: height * 0.01),
                             //料金の横並び
                             Row(
                               children: [
@@ -88,7 +88,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                             )
                           ],
                         ),
-                        SizedBox(width: deviceWidth * 0.02),
+                        SizedBox(width: width * 0.02),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -96,12 +96,12 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                               children: model.contentsOfHairList(),
                             ),
                             SizedBox(
-                                height: deviceHeight * 0.11,
-                                width: deviceWidth * 0.6,
+                                height: height * 0.11,
+                                width: width * 0.6,
                                 child: Text(menu.treatmentDetail)),
                             Row(
                               children: [
-                                SizedBox(width: deviceWidth * 0.3),
+                                SizedBox(width: width * 0.3),
                                 Text('施術時間：${menu.treatmentTime}分',
                                     style: const TextStyle(
                                         fontSize: 15,
@@ -114,11 +114,23 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                       ],
                     ),
                   ),
-                  const Divider(),
-                  const Text('予約日時を選ぶ',
-                      style: TextStyle(
-                          color: Colors.black54, fontWeight: FontWeight.bold)),
-                  const Divider(),
+                  SizedBox(height: height * 0.02),
+                  Container(
+                    height: height * 0.06,
+                    width: width,
+                    alignment: Alignment.centerLeft,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black38),
+                        color: Colors.white30),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('予約日時を選ぶ',
+                          style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
                   CalenderWidget(menu: widget.menu),
                 ],
               ),

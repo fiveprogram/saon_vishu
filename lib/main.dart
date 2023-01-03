@@ -5,11 +5,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/common_widget/calendar_model.dart';
-import 'package:salon_vishu/confirm_reservation/confirm_reservation_model.dart';
+
 import 'package:salon_vishu/main_select_page.dart';
 import 'package:salon_vishu/menu/menu_model.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
-import 'package:salon_vishu/select_reservation_date/select_reservation_date_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
 import 'package:salon_vishu/sign_up/sign_up_model.dart';
@@ -37,9 +36,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SignUpModel()),
         ChangeNotifierProvider(create: (_) => MenuModel()..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => ProfileModel()..fetchProfile()),
-        ChangeNotifierProvider(create: (_) => ConfirmReservationModel()),
         ChangeNotifierProvider(
-            create: (_) => CalendarModel()..fetchReservationList()),
+            create: (_) => CalendarModel()
+              ..fetchReservationList()
+              ..fetchProfile()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

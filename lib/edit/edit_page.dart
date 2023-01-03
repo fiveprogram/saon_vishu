@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -7,6 +6,7 @@ import 'package:salon_vishu/domain/profile.dart';
 import 'package:salon_vishu/edit/edit_model.dart';
 import '../common_widget/vishu_app_bar.dart';
 
+// ignore: must_be_immutable
 class EditPage extends StatefulWidget {
   Profile profile;
   EditPage({required this.profile, Key? key}) : super(key: key);
@@ -119,8 +119,6 @@ class _EditPageState extends State<EditPage> {
               fontSize: 20,
               color: Colors.black54,
             )),
-
-        ///onTap: picker  //修正前
         title: SizedBox(
           width: 200,
           child: Row(
@@ -128,7 +126,6 @@ class _EditPageState extends State<EditPage> {
               SizedBox(width: width),
               Expanded(
                 child: TextFormField(
-                  ///onTap: picker  //修正後
                   onTap: picker,
                   readOnly: picker != null ? true : false,
                   keyboardType:

@@ -95,6 +95,7 @@ class _MenuCardState extends State<MenuCard> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
+                    fullscreenDialog: true,
                     builder: (context) =>
                         SelectReservationDatePage(menu: menu)));
           },

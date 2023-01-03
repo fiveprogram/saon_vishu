@@ -5,8 +5,27 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:salon_vishu/domain/business_hours.dart';
 import 'package:salon_vishu/domain/reservation.dart';
+import 'package:salon_vishu/domain/rest.dart';
+
+import '../domain/profile.dart';
 
 class CalendarModel extends ChangeNotifier {
+  Profile? profile;
+
+  Future<void> fetchProfile() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    final profileStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .snapshots();
+
+    profileStream.listen((snapshot) {
+      profile = Profile.fromFirestore(snapshot);
+      notifyListeners();
+    });
+  }
+
   DateTime today = DateTime.now();
 
   int previousWeeks = 0;
@@ -87,13 +106,14 @@ class CalendarModel extends ChangeNotifier {
       return false;
     }
 
-    ///②の就業時間側
-    final closeTime = DateTime(date.year, date.month, date.day,
-        businessHour.closeTimeHour, businessHour.closeTimeMinute);
-
-    if (endTime.isAfter(closeTime)) {
-      return false;
-    }
+    ///そもそも始業時間より前、終業時間よりあとはマスそのものが存在しないため、自動的にfalseな気がする
+    // ///②の終業時間側
+    // final closeTime = DateTime(date.year, date.month, date.day,
+    //     businessHour.closeTimeHour, businessHour.closeTimeMinute);
+    //
+    // if (endTime.isAfter(closeTime)) {
+    //   return false;
+    // }
 
     ///条件が難しい
     ///既に予約が入れられているマスを✖︎の表示にしたい
@@ -103,10 +123,32 @@ class CalendarModel extends ChangeNotifier {
         return false;
       }
     }
+
+    ///既に休憩が入れられているマスを✖の表示にしたい
+    for (var rest in restList) {
+      if (startTime.isAfter(rest.startTime) || endTime.isBefore(rest.endTime)) {
+        return false;
+      }
+    }
     return true;
   }
 
+  ///予約一覧
   List<Reservation> reservationList = [];
+  List<Rest> restList = [];
+
+  Future<void> fetchRestList() async {
+    Stream<QuerySnapshot> restStream =
+        FirebaseFirestore.instance.collectionGroup('rests').snapshots();
+
+    restStream.listen(
+      (snapshot) {
+        restList = snapshot.docs
+            .map((DocumentSnapshot doc) => Rest.fromFirestore(doc))
+            .toList();
+      },
+    );
+  }
 
   ///データベースから予約
   ///全員の予約履歴から参照

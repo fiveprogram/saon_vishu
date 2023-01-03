@@ -6,9 +6,9 @@ class Reservation {
   //todo: startTimeよりendTimeが早ければコンストラクタでエラーを出す
   const Reservation(this.startTime, this.finishTime, this.menuId, this.uid);
   //施術の開始時間
-  final DateTime startTime;
+  final Timestamp startTime;
   //施術の終了時間
-  final DateTime finishTime;
+  final Timestamp finishTime;
   //施術のメニュー
   final String menuId;
   //予約者のID

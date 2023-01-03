@@ -45,8 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 height: 60,
                 decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(color: HexColor('#7e796e')))),
+                    border: Border.all(color: HexColor('#989593'))),
                 child: ListTile(
                   onTap: () {
                     Navigator.push(
@@ -56,11 +55,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                   profile: profile,
                                 )));
                   },
-                  tileColor: HexColor('#dfd9cd'),
+                  tileColor: HexColor('#fcf8f6'),
                   leading: CircleAvatar(
                     radius: 25,
                     foregroundColor: Colors.black54,
-                    backgroundColor: HexColor('#dfd9cd'),
+                    backgroundColor: HexColor('#fcf8f6'),
                     backgroundImage: profile.imgUrl != ''
                         ? NetworkImage(profile.imgUrl)
                         : const NetworkImage(
@@ -101,14 +100,13 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               Container(
                 height: 60,
-                decoration: BoxDecoration(
-                    border:
-                        Border(bottom: BorderSide(color: HexColor('#7e796e')))),
+                decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black12))),
                 child: ListTile(
                   onTap: () {
                     model.signOut(context);
                   },
-                  tileColor: HexColor('#dfd9cd'),
+                  tileColor: HexColor('#fcf8f6'),
                   title: const Text('ログアウト',
                       style: TextStyle(
                         fontSize: 20,
@@ -139,14 +137,14 @@ class _ProfilePageState extends State<ProfilePage> {
       {required String tileName, required Widget pageWidget}) {
     return Container(
       height: 60,
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: HexColor('#7e796e')))),
+      decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.black26))),
       child: ListTile(
         onTap: () {
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => pageWidget));
         },
-        tileColor: HexColor('#dfd9cd'),
+        tileColor: HexColor('#fcf8f6'),
         title: Text(tileName,
             style: const TextStyle(
               fontSize: 20,

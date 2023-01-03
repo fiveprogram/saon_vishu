@@ -59,9 +59,11 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                             model.targetCard(),
                             SizedBox(height: height * 0.007),
                             Container(
-                              height: height * 0.1,
-                              width: width * 0.25,
+                              height: height * 0.12,
+                              width: width * 0.27,
                               decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black87),
+                                  borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(menu.menuImageUrl))),
@@ -121,7 +123,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                     alignment: Alignment.centerLeft,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.black38),
-                        color: Colors.white30),
+                        color: Colors.white),
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text('予約日時を選ぶ',

@@ -118,15 +118,19 @@ class CalendarModel extends ChangeNotifier {
     ///条件が難しい
     ///既に予約が入れられているマスを✖︎の表示にしたい
     for (var reservation in reservationList) {
-      if (startTime.isAfter(reservation.startTime) ||
-          endTime.isBefore(reservation.finishTime)) {
+      if (startTime.isAfter(reservation.startTime.toDate()) &&
+              endTime.isBefore(reservation.finishTime.toDate()) ||
+          startTime.isAtSameMomentAs(reservation.startTime.toDate()) ||
+          endTime.isAtSameMomentAs(reservation.finishTime.toDate())) {
         return false;
       }
     }
 
     ///既に休憩が入れられているマスを✖の表示にしたい
     for (var rest in restList) {
-      if (startTime.isAfter(rest.startTime) || endTime.isBefore(rest.endTime)) {
+      if (startTime.isAfter(rest.startTime) && endTime.isBefore(rest.endTime) ||
+          startTime.isAtSameMomentAs(rest.startTime) ||
+          endTime.isAtSameMomentAs(rest.endTime)) {
         return false;
       }
     }

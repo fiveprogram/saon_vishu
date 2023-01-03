@@ -123,16 +123,19 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                             ...model.separateThirtyMinutes(weekDay).map(
                               (thirtyMinute) {
                                 return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ConfirmReservationPage(
-                                                    menu: widget.menu,
-                                                    startTime: thirtyMinute,
-                                                    profile: profile)));
-                                  },
+                                  onTap: model.isAvailable(thirtyMinute)
+                                      ? () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ConfirmReservationPage(
+                                                          menu: widget.menu,
+                                                          startTime:
+                                                              thirtyMinute,
+                                                          profile: profile)));
+                                        }
+                                      : null,
                                   child: Container(
                                     alignment: Alignment.center,
                                     height: height * 0.06,

@@ -76,14 +76,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       decoration: InputDecoration(
                         suffixIcon: const Icon(Icons.arrow_drop_down),
                         filled: true,
-                        fillColor: HexColor('#dfd9cd'),
+                        fillColor: HexColor('#fcf8f6'),
                         border: const OutlineInputBorder(),
                         hintText: '生年月日',
                         hintStyle: const TextStyle(
                             fontSize: 10.0, color: Colors.black54),
                         icon: Icon(
                           Icons.calendar_month,
-                          color: HexColor('#dfd9cd'),
+                          color: HexColor('#fcf8f6'),
                         ),
                       ),
                     ),
@@ -98,14 +98,14 @@ class _SignUpPageState extends State<SignUpPage> {
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: HexColor('#dfd9cd'),
+                        fillColor: HexColor('#fcf8f6'),
                         border: const OutlineInputBorder(),
                         hintText: '電話番号',
                         hintStyle: const TextStyle(
                             fontSize: 10.0, color: Colors.black54),
                         icon: Icon(
                           Icons.numbers,
-                          color: HexColor('#dfd9cd'),
+                          color: HexColor('#fcf8f6'),
                         ),
                       ),
                     ),
@@ -120,7 +120,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           onPressed: () {
                             model.signUpTransition(context);
                           },
-                          child: const Text('新規登録'))),
+                          child: const Text(
+                            '新規登録',
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold),
+                          ))),
                 ],
               ),
             ),

@@ -18,6 +18,9 @@ class MenuCard extends StatefulWidget {
 class _MenuCardState extends State<MenuCard> {
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+
     return Consumer<MenuModel>(builder: (context, model, child) {
       Menu menu = model.menuList[widget.menuIndex];
       if (model.filteredMenuList.isNotEmpty) {
@@ -34,9 +37,9 @@ class _MenuCardState extends State<MenuCard> {
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
-                    color: HexColor('#7e796e'),
+                    color: HexColor('#989593'),
                     border: Border.all(
-                      color: HexColor('#7e796e'),
+                      color: HexColor('#989593'),
                     ),
                   ),
                   child: Text(
@@ -111,8 +114,8 @@ class _MenuCardState extends State<MenuCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       targetCard(),
-                      const SizedBox(
-                        width: 40,
+                      SizedBox(
+                        width: width * 0.09,
                       ),
                       Expanded(
                         child: Align(
@@ -124,14 +127,16 @@ class _MenuCardState extends State<MenuCard> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: height * 0.01),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 80,
-                        width: 80,
+                        height: height * 0.09,
+                        width: width * 0.19,
                         decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black87),
+                            borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
                                 fit: BoxFit.cover,
                                 image: NetworkImage(menu.menuImageUrl))),
@@ -165,7 +170,7 @@ class _MenuCardState extends State<MenuCard> {
                                   width: 70,
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: HexColor('#dfd9cd'),
+                                          backgroundColor: HexColor('#c9c5c3'),
                                           foregroundColor: Colors.black54),
                                       onPressed: () {
                                         Navigator.push(
@@ -175,7 +180,10 @@ class _MenuCardState extends State<MenuCard> {
                                                     SelectReservationDatePage(
                                                         menu: menu)));
                                       },
-                                      child: const Text('予約')))
+                                      child: const Text(
+                                        '予約',
+                                        style: TextStyle(color: Colors.black87),
+                                      )))
                             ],
                           )
                         ],

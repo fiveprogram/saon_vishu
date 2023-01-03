@@ -21,7 +21,7 @@ class _EditPageState extends State<EditPage> {
     return ChangeNotifierProvider<EditModel>(
       create: (_) => EditModel(profile: widget.profile),
       child: Scaffold(
-        appBar: vishuAppBar(appBarTitle: 'edit'),
+        appBar: vishuAppBar(appBarTitle: 'profile'),
         body: Consumer<EditModel>(
           builder: (context, model, child) {
             Profile profile = widget.profile;
@@ -113,7 +113,7 @@ class _EditPageState extends State<EditPage> {
       decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: HexColor('#7e796e')))),
       child: ListTile(
-        tileColor: HexColor('#dfd9cd'),
+        tileColor: HexColor('#fcf8f6'),
         leading: Text(hintText,
             style: const TextStyle(
               fontSize: 20,

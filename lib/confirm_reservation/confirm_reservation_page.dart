@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
 import 'package:salon_vishu/confirm_reservation/confirm_reservation_model.dart';
 import 'package:salon_vishu/domain/menu.dart';
-import 'package:salon_vishu/finish_reservation_page.dart';
 
 import '../domain/profile.dart';
 
@@ -42,15 +40,16 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
         appBar: vishuAppBar(appBarTitle: 'confirm'),
         body: Consumer<ConfirmReservationModel>(
           builder: (context, model, child) {
+            ///予約情報を登録するためのメソッド
             Future<void> sendFirebaseWithReservationDate() async {
-              print('a');
               await FirebaseFirestore.instance
                   .collection('users')
                   .doc(model.user!.uid)
                   .collection('reservations')
                   .add({
                 'startTime': startTime,
-                'endTime': startTime.add(Duration(minutes: menu.treatmentTime)),
+                'finishTime':
+                    startTime.add(Duration(minutes: menu.treatmentTime)),
                 'menuId': menu.menuId,
                 'uid': model.user!.uid
               });
@@ -61,11 +60,11 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: height * 0.02),
                   Container(
-                    height: height * 0.2,
-                    decoration: const BoxDecoration(
-                        border: Border(
+                    height: height * 0.24,
+                    decoration: BoxDecoration(
+                        color: HexColor('#fcf8f6'),
+                        border: const Border(
                             top: BorderSide(color: Colors.black38),
                             bottom: BorderSide(color: Colors.black38))),
                     child: Column(
@@ -81,7 +80,8 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                               height: height * 0.12,
                               width: width * 0.27,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(color: Colors.black87),
+                                  borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(menu.menuImageUrl))),
@@ -126,6 +126,17 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                     ),
                                   ],
                                 ),
+                                SizedBox(height: height * 0.01),
+                                Row(
+                                  children: [
+                                    SizedBox(width: width * 0.3),
+                                    Text('施術時間：${menu.treatmentTime}分',
+                                        style: const TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.bold)),
+                                  ],
+                                ),
                               ],
                             ),
                           ],
@@ -139,9 +150,10 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                       Container(
                         height: height * 0.3,
                         width: width * 0.3,
-                        decoration: const BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: Colors.black38)),
+                        decoration: BoxDecoration(
+                          color: HexColor('#fcf8f6'),
+                          border: const Border(
+                              bottom: BorderSide(color: Colors.black38)),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -169,17 +181,19 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                       Container(
                         height: height * 0.3,
                         width: width * 0.05,
-                        decoration: const BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: Colors.black38)),
+                        decoration: BoxDecoration(
+                          color: HexColor('#fcf8f6'),
+                          border: const Border(
+                              bottom: BorderSide(color: Colors.black38)),
                         ),
                       ),
                       Container(
                         height: height * 0.3,
                         width: width * 0.65,
-                        decoration: const BoxDecoration(
-                          border:
-                              Border(bottom: BorderSide(color: Colors.black38)),
+                        decoration: BoxDecoration(
+                          color: HexColor('#fcf8f6'),
+                          border: const Border(
+                              bottom: BorderSide(color: Colors.black38)),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,21 +240,40 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                       ),
                     ],
                   ),
-                  guidListTile(
-                      width: width * 0.05,
+                  Container(
+                    alignment: Alignment.center,
+                    height: height * 0.05,
+                    decoration: BoxDecoration(
+                        color: HexColor('#fcf8f6'),
+                        border: const Border(
+                            bottom: BorderSide(color: Colors.black26),
+                            top: BorderSide(color: Colors.black26))),
+                    child: const Text('お客様個人情報(必須)',
+                        style: TextStyle(fontSize: 18)),
+                  ),
+                  model.guidListTile(
+                      height: height * 0.07,
+                      width: width,
+                      deviceWidth: width * 0.05,
                       controller: model.nameController,
                       hintText: 'フルネーム'),
-                  guidListTile(
-                      width: width * 0.15,
+                  model.guidListTile(
+                      height: height * 0.07,
+                      width: width,
+                      deviceWidth: width * 0.15,
                       controller: model.emailController,
                       hintText: 'メール'),
-                  guidListTile(
-                      width: width * 0.10,
+                  model.guidListTile(
+                      height: height * 0.07,
+                      width: width,
+                      deviceWidth: width * 0.10,
                       isNumberOnly: true,
                       controller: model.telephoneNumberController,
                       hintText: '電話番号'),
-                  guidListTile(
-                      width: width * 0.15,
+                  model.guidListTile(
+                      height: height * 0.07,
+                      width: width,
+                      deviceWidth: width * 0.15,
                       picker: () async {
                         model.dateOfBirthPicker(context);
                       },
@@ -255,16 +288,14 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                             reservationDate:
                                 '${startTime.year}年${startTime.month}月${startTime.day}日 (${model.dayOfWeekFormatter.format(startTime)}) ${model.startMinuteFormatter.format(startTime)}',
                             sendFirestore: sendFirebaseWithReservationDate);
-
+                        print('1');
                         Future.delayed(const Duration(seconds: 3));
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const FinishReservationPage()),
-                            (route) => false);
+                        print('2');
                       },
-                      child: const Text('予約する'),
+                      child: const Text(
+                        '予約する',
+                        style: TextStyle(color: Colors.black87),
+                      ),
                     ),
                   ),
                   SizedBox(height: height * 0.07),
@@ -276,49 +307,4 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
       ),
     );
   }
-}
-
-Container guidListTile({
-  required double width,
-  required TextEditingController controller,
-  required String hintText,
-  Future<void> Function()? picker,
-  bool? isNumberOnly,
-}) {
-  return Container(
-    height: 60,
-    decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: HexColor('#7e796e')))),
-    child: ListTile(
-      tileColor: Colors.white,
-      leading: Text(hintText,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.black54,
-          )),
-      title: SizedBox(
-        width: 200,
-        child: Row(
-          children: [
-            SizedBox(width: width),
-            Expanded(
-              child: TextFormField(
-                onTap: picker,
-                readOnly: picker != null ? true : false,
-                keyboardType:
-                    isNumberOnly != null ? TextInputType.number : null,
-                inputFormatters: isNumberOnly != null
-                    ? [FilteringTextInputFormatter.digitsOnly]
-                    : null,
-                decoration: InputDecoration(
-                  hintText: hintText,
-                ),
-                controller: controller,
-              ),
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
 }

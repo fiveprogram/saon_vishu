@@ -12,7 +12,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('要予約してくれましたわ'),
+        title: const Text('要予約してくれましたわ'),
       ),
     );
   }

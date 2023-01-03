@@ -1,8 +1,4 @@
-import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/common_widget/menu_card.dart';
 import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
@@ -28,7 +24,9 @@ class _MenuPageState extends State<MenuPage> {
                 children: [
                   const Text('お好みの条件を１つ選択してください',
                       style: TextStyle(
-                          color: Colors.black54, fontWeight: FontWeight.bold)),
+                          fontSize: 17,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold)),
                   const SizedBox(height: 10),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,

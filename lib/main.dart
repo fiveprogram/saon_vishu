@@ -9,6 +9,7 @@ import 'package:salon_vishu/common_widget/calendar_model.dart';
 import 'package:salon_vishu/main_select_page.dart';
 import 'package:salon_vishu/menu/menu_model.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
+import 'package:salon_vishu/profile/profile_page.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
 import 'package:salon_vishu/sign_up/sign_up_model.dart';
@@ -46,8 +47,8 @@ class MyApp extends StatelessWidget {
         title: 'salon "Vishu"',
         theme: ThemeData(
             useMaterial3: true,
-            scaffoldBackgroundColor: HexColor("#ada89c"),
-            colorSchemeSeed: HexColor("#ada89c")),
+            scaffoldBackgroundColor: HexColor("#c9c5c3"),
+            colorSchemeSeed: HexColor("#c9c5c3")),
         home: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {

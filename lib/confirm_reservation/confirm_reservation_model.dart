@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/profile.dart';
@@ -59,6 +61,7 @@ class ConfirmReservationModel extends ChangeNotifier {
       showDialog(
         context: context,
         builder: (context) {
+          print('a');
           return CupertinoAlertDialog(
             title: const Text('未入力の項目があります'),
             actions: [
@@ -73,8 +76,8 @@ class ConfirmReservationModel extends ChangeNotifier {
         },
       );
     }
-
-    showDialog(
+    print('b');
+    await showDialog(
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
@@ -94,6 +97,54 @@ class ConfirmReservationModel extends ChangeNotifier {
           ],
         );
       },
+    );
+  }
+
+  Container guidListTile({
+    required double height,
+    required double width,
+    required double deviceWidth,
+    required TextEditingController controller,
+    required String hintText,
+    Future<void> Function()? picker,
+    bool? isNumberOnly,
+  }) {
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+          color: HexColor('#fcf8f6'),
+          border: Border(bottom: BorderSide(color: HexColor('#7e796e')))),
+      child: ListTile(
+        tileColor: Colors.white,
+        leading: Text(hintText,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.black54,
+            )),
+        title: SizedBox(
+          width: width,
+          child: Row(
+            children: [
+              SizedBox(width: deviceWidth),
+              Expanded(
+                child: TextFormField(
+                  onTap: picker,
+                  readOnly: picker != null ? true : false,
+                  keyboardType:
+                      isNumberOnly != null ? TextInputType.number : null,
+                  inputFormatters: isNumberOnly != null
+                      ? [FilteringTextInputFormatter.digitsOnly]
+                      : null,
+                  decoration: InputDecoration(
+                    hintText: hintText,
+                  ),
+                  controller: controller,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

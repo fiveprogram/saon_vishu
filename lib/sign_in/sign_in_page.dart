@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import '../common_widget/auth_form_field.dart';
@@ -56,12 +57,16 @@ class _SignInPageState extends State<SignInPage> {
                   width: deviceWidth * 0.7,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
+                          backgroundColor: HexColor('#fcf8f6'),
                           foregroundColor: Colors.black54),
                       onPressed: () {
                         model.signInTransition(context);
                       },
-                      child: const Text('ログイン')),
+                      child: const Text(
+                        'ログイン',
+                        style: TextStyle(
+                            color: Colors.black54, fontWeight: FontWeight.bold),
+                      )),
                 ),
                 SizedBox(height: deviceHeight * 0.03),
                 const Divider(),

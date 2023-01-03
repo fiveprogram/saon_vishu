@@ -79,6 +79,7 @@ class SignInModel extends ChangeNotifier {
   );
 
   Future<void> signInWithGoogle(BuildContext context) async {
+    startLoading();
     try {
       final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
@@ -89,8 +90,10 @@ class SignInModel extends ChangeNotifier {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
+
       final result =
           await FirebaseAuth.instance.signInWithCredential(credential);
+
       final user = result.user;
 
       await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(
@@ -110,6 +113,8 @@ class SignInModel extends ChangeNotifier {
       );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } finally {
+      endLoading();
     }
   }
 }

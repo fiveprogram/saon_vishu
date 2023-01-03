@@ -60,13 +60,13 @@ class _AuthFormFieldState extends State<AuthFormField> {
                   })
               : null,
           filled: true,
-          fillColor: HexColor('#dfd9cd'),
+          fillColor: HexColor('#fcf8f6'),
           border: const OutlineInputBorder(),
           hintText: widget.hintText,
           hintStyle: const TextStyle(fontSize: 10.0, color: Colors.black54),
           icon: Icon(
             widget.icon,
-            color: HexColor('#dfd9cd'),
+            color: HexColor('#fcf8f6'),
           ),
         ),
       ),

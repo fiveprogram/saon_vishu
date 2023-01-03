@@ -118,7 +118,7 @@ class ConfirmReservationModel extends ChangeNotifier {
         tileColor: Colors.white,
         leading: Text(hintText,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 16,
               color: Colors.black54,
             )),
         title: SizedBox(

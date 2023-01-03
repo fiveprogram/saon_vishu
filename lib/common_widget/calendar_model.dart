@@ -28,13 +28,13 @@ class CalendarModel extends ChangeNotifier {
 
   DateTime today = DateTime.now();
 
-  int previousWeeks = 0;
+  int thisWeek = 0;
   DateFormat dayOfWeekFormatter = DateFormat('EE', 'ja_JP');
 
   ///カレンダーを表示する上で、１週間先の日時を取得する。
   ///ページが遷移すれば、previousWeeksの値の変化に伴い、返り値が変わる。
   DateTime currentDisplayDate() {
-    return today.add(Duration(days: -7 * previousWeeks));
+    return today.add(Duration(days: 7 * thisWeek));
   }
 
   ///曜日によって色を帰るメソッド
@@ -51,12 +51,11 @@ class CalendarModel extends ChangeNotifier {
 
   ///１週間ごとの曜日を取得し、並列するlist
   List<DateTime> weekDateList(DateTime date) {
-    final weekDay = date.weekday;
-    final startDate = -weekDay;
+    final day = date.day;
     final result = <DateTime>[];
 
-    for (int i = startDate; i < startDate + 7; i++) {
-      result.add(date.add(Duration(days: i)));
+    for (int i = day; i < day + 7; i++) {
+      result.add(date.add(Duration(days: i - day)));
     }
     return result;
   }

@@ -42,7 +42,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          model.previousWeeks = model.previousWeeks + 1;
+                          model.thisWeek = model.thisWeek - 1;
                         });
                       },
                       icon: const Icon(
@@ -57,7 +57,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          model.previousWeeks = model.previousWeeks - 1;
+                          model.thisWeek = model.thisWeek + 1;
                         });
                       },
                       icon: const Icon(

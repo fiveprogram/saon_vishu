@@ -37,6 +37,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
     return ChangeNotifierProvider(
       create: (_) => ConfirmReservationModel(profile: profile),
       child: Scaffold(
+        backgroundColor: HexColor('#fcf8f6'),
         appBar: vishuAppBar(appBarTitle: 'confirm'),
         body: Consumer<ConfirmReservationModel>(
           builder: (context, model, child) {
@@ -56,250 +57,241 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
             }
 
             return SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: height * 0.24,
-                    decoration: BoxDecoration(
-                        color: HexColor('#fcf8f6'),
-                        border: const Border(
-                            top: BorderSide(color: Colors.black38),
-                            bottom: BorderSide(color: Colors.black38))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        SizedBox(height: height * 0.02),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(width: width * 0.03),
-                            Container(
-                              height: height * 0.12,
-                              width: width * 0.27,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black87),
-                                  borderRadius: BorderRadius.circular(10),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(menu.menuImageUrl))),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: height * 0.24,
+                      decoration: BoxDecoration(
+                          color: HexColor('#fcf8f6'),
+                          border: const Border(
+                              top: BorderSide(color: Colors.black38),
+                              bottom: BorderSide(color: Colors.black38))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(height: height * 0.02),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: height * 0.12,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black87),
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image:
+                                              NetworkImage(menu.menuImageUrl))),
+                                ),
+                              ),
+                              SizedBox(width: width * 0.03),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    '${startTime.year}年${startTime.month}月${startTime.day}日 (${model.dayOfWeekFormatter.format(startTime)}) ${model.startMinuteFormatter.format(startTime)}',
+                                    style: const TextStyle(
+                                        color: Colors.black87,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(height: height * 0.015),
+                                  SizedBox(
+                                    width: width * 0.66,
+                                    child: Text(
+                                      menu.treatmentDetail,
+                                      style: const TextStyle(
+                                          fontSize: 15, color: Colors.black87),
+                                    ),
+                                  ),
+                                  SizedBox(height: height * 0.015),
+                                  Row(
+                                    children: [
+                                      if (menu.beforePrice != '')
+                                        Text(
+                                          menu.beforePrice,
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              decoration:
+                                                  TextDecoration.lineThrough),
+                                        ),
+                                      const Text('▷'),
+                                      Text(
+                                        menu.afterPrice,
+                                        style: const TextStyle(
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: height * 0.01),
+                                  Row(
+                                    children: [
+                                      SizedBox(width: width * 0.3),
+                                      Text('施術時間：${menu.treatmentTime}分',
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: width * 0.3,
+                            decoration: BoxDecoration(
+                              color: HexColor('#fcf8f6'),
                             ),
-                            SizedBox(width: width * 0.03),
-                            Column(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  '${startTime.year}年${startTime.month}月${startTime.day}日 (${model.dayOfWeekFormatter.format(startTime)}) ${model.startMinuteFormatter.format(startTime)}',
-                                  style: const TextStyle(
-                                      color: Colors.black87,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                const Text(
+                                  'お支払い',
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.black54),
                                 ),
-                                SizedBox(height: height * 0.015),
-                                SizedBox(
-                                  width: width * 0.66,
-                                  child: Text(
-                                    menu.treatmentDetail,
-                                    style: const TextStyle(
-                                        fontSize: 15, color: Colors.black87),
-                                  ),
+                                SizedBox(height: height * 0.14),
+                                const Text(
+                                  'お支払い時期',
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.black54),
                                 ),
-                                SizedBox(height: height * 0.015),
-                                Row(
-                                  children: [
-                                    if (menu.beforePrice != '')
-                                      Text(
-                                        menu.beforePrice,
-                                        style: const TextStyle(
-                                            fontSize: 14,
-                                            decoration:
-                                                TextDecoration.lineThrough),
-                                      ),
-                                    const Text('▷'),
-                                    Text(
-                                      menu.afterPrice,
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: height * 0.01),
-                                Row(
-                                  children: [
-                                    SizedBox(width: width * 0.3),
-                                    Text('施術時間：${menu.treatmentTime}分',
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.bold)),
-                                  ],
+                                SizedBox(height: height * 0.03),
+                                const Text(
+                                  'キャンセル時の連絡方法',
+                                  style: TextStyle(
+                                      fontSize: 17, color: Colors.black54),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: height * 0.3,
-                        width: width * 0.3,
-                        decoration: BoxDecoration(
-                          color: HexColor('#fcf8f6'),
-                          border: const Border(
-                              bottom: BorderSide(color: Colors.black38)),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'お支払い',
-                              style: TextStyle(
-                                  fontSize: 17, color: Colors.black54),
+                          ),
+                          Expanded(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: HexColor('#fcf8f6'),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'クレジットカード',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.black87),
+                                  ),
+                                  const Text(
+                                    'Mastercard / Visa / JCB \nAmerican Express / Diners Club',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black87),
+                                  ),
+                                  SizedBox(height: height * 0.01),
+                                  const Text(
+                                    'その他決済',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        color: Colors.black87),
+                                  ),
+                                  const Text(
+                                    'PayPay / LINE Pay',
+                                    style: TextStyle(
+                                        fontSize: 16, color: Colors.black87),
+                                  ),
+                                  SizedBox(height: height * 0.02),
+                                  const Text(
+                                    '来店時支払い',
+                                    style: TextStyle(
+                                        fontSize: 17, color: Colors.black87),
+                                  ),
+                                  SizedBox(height: height * 0.03),
+                                  const Text(
+                                    'キャンセル連絡はメッセージ機能をご連絡ください。',
+                                    style: TextStyle(
+                                        fontSize: 17, color: Colors.black87),
+                                  ),
+                                ],
+                              ),
                             ),
-                            SizedBox(height: height * 0.14),
-                            const Text(
-                              'お支払い時期',
-                              style: TextStyle(
-                                  fontSize: 17, color: Colors.black54),
-                            ),
-                            SizedBox(height: height * 0.03),
-                            const Text(
-                              'キャンセル時の連絡方法',
-                              style: TextStyle(
-                                  fontSize: 17, color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: height * 0.3,
-                        width: width * 0.05,
-                        decoration: BoxDecoration(
-                          color: HexColor('#fcf8f6'),
-                          border: const Border(
-                              bottom: BorderSide(color: Colors.black38)),
-                        ),
-                      ),
-                      Container(
-                        height: height * 0.3,
-                        width: width * 0.65,
-                        decoration: BoxDecoration(
-                          color: HexColor('#fcf8f6'),
-                          border: const Border(
-                              bottom: BorderSide(color: Colors.black38)),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'クレジットカード',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.black54),
-                            ),
-                            const Text(
-                              'Mastercard / Visa / JCB \nAmerican Express / Diners Club',
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black54),
-                            ),
-                            SizedBox(height: height * 0.01),
-                            const Text(
-                              'その他決済',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.black54),
-                            ),
-                            const Text(
-                              'PayPay / LINE Pay',
-                              style: TextStyle(
-                                  fontSize: 16, color: Colors.black54),
-                            ),
-                            SizedBox(height: height * 0.02),
-                            const Text(
-                              '来店時支払い',
-                              style: TextStyle(
-                                  fontSize: 17, color: Colors.black54),
-                            ),
-                            SizedBox(height: height * 0.03),
-                            const Text(
-                              'キャンセル連絡はメッセージ機能をご連絡ください。',
-                              style: TextStyle(
-                                  fontSize: 17, color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: height * 0.05,
-                    decoration: BoxDecoration(
-                        color: HexColor('#fcf8f6'),
-                        border: const Border(
-                            bottom: BorderSide(color: Colors.black26),
-                            top: BorderSide(color: Colors.black26))),
-                    child: const Text('お客様個人情報(必須)',
-                        style: TextStyle(fontSize: 18)),
-                  ),
-                  model.guidListTile(
-                      height: height * 0.07,
-                      width: width,
-                      deviceWidth: width * 0.05,
-                      controller: model.nameController,
-                      hintText: 'フルネーム'),
-                  model.guidListTile(
-                      height: height * 0.07,
-                      width: width,
-                      deviceWidth: width * 0.15,
-                      controller: model.emailController,
-                      hintText: 'メール'),
-                  model.guidListTile(
-                      height: height * 0.07,
-                      width: width,
-                      deviceWidth: width * 0.10,
-                      isNumberOnly: true,
-                      controller: model.telephoneNumberController,
-                      hintText: '電話番号'),
-                  model.guidListTile(
-                      height: height * 0.07,
-                      width: width,
-                      deviceWidth: width * 0.15,
-                      picker: () async {
-                        model.dateOfBirthPicker(context);
-                      },
-                      controller: model.dateOfBirthController,
-                      hintText: '誕生日'),
-                  SizedBox(height: height * 0.04),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        model.registerReservationDate(
-                            context: context,
-                            reservationDate:
-                                '${startTime.year}年${startTime.month}月${startTime.day}日 (${model.dayOfWeekFormatter.format(startTime)}) ${model.startMinuteFormatter.format(startTime)}',
-                            sendFirestore: sendFirebaseWithReservationDate);
-                        print('1');
-                        Future.delayed(const Duration(seconds: 3));
-                        print('2');
-                      },
-                      child: const Text(
-                        '予約する',
-                        style: TextStyle(color: Colors.black87),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  SizedBox(height: height * 0.07),
-                ],
+                    SizedBox(height: height * 0.03),
+                    Container(
+                      alignment: Alignment.center,
+                      height: height * 0.05,
+                      decoration: BoxDecoration(
+                          color: HexColor('#fcf8f6'),
+                          border: const Border(
+                              bottom: BorderSide(color: Colors.black26),
+                              top: BorderSide(color: Colors.black26))),
+                      child: const Text('お客様個人情報(必須)',
+                          style: TextStyle(fontSize: 18)),
+                    ),
+                    model.guidListTile(
+                        height: height * 0.07,
+                        width: width,
+                        deviceWidth: width * 0.05,
+                        controller: model.nameController,
+                        hintText: 'フルネーム'),
+                    model.guidListTile(
+                        height: height * 0.07,
+                        width: width,
+                        deviceWidth: width * 0.15,
+                        controller: model.emailController,
+                        hintText: 'メール'),
+                    model.guidListTile(
+                        height: height * 0.07,
+                        width: width,
+                        deviceWidth: width * 0.10,
+                        isNumberOnly: true,
+                        controller: model.telephoneNumberController,
+                        hintText: '電話番号'),
+                    model.guidListTile(
+                        height: height * 0.07,
+                        width: width,
+                        deviceWidth: width * 0.15,
+                        picker: () async {
+                          model.dateOfBirthPicker(context);
+                        },
+                        controller: model.dateOfBirthController,
+                        hintText: '誕生日'),
+                    SizedBox(height: height * 0.04),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          model.registerReservationDate(
+                              context: context,
+                              reservationDate:
+                                  '${startTime.year}年${startTime.month}月${startTime.day}日 (${model.dayOfWeekFormatter.format(startTime)}) ${model.startMinuteFormatter.format(startTime)}',
+                              sendFirestore: sendFirebaseWithReservationDate);
+                          Future.delayed(const Duration(seconds: 3));
+                        },
+                        child: const Text(
+                          '予約する',
+                          style: TextStyle(color: Colors.black87),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.07),
+                  ],
+                ),
               ),
             );
           },

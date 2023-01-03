@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+import 'package:salon_vishu/history/history_page.dart';
 import 'package:salon_vishu/manager/add_page.dart';
 import 'package:salon_vishu/menu/menu_page.dart';
 import 'package:salon_vishu/profile/profile_page.dart';
@@ -16,7 +17,7 @@ class _MainSelectPageState extends State<MainSelectPage> {
   int currentPageIndex = 0;
   List<Widget> pageList = [
     const MenuPage(),
-    const AddPage(),
+    const HistoryPage(),
     const ProfilePage()
   ];
 

@@ -23,6 +23,7 @@ class _MenuCardState extends State<MenuCard> {
 
     return Consumer<MenuModel>(builder: (context, model, child) {
       Menu menu = model.menuList[widget.menuIndex];
+
       if (model.filteredMenuList.isNotEmpty) {
         menu = model.filteredMenuList[widget.menuIndex];
       }
@@ -31,7 +32,7 @@ class _MenuCardState extends State<MenuCard> {
       List<Widget> contentsOfHairList() {
         return menu.treatmentDetailList
             .map(
-              (e) => Padding(
+              (treatmentDetail) => Padding(
                 padding: const EdgeInsets.all(1.0),
                 child: Container(
                   padding: const EdgeInsets.all(2),
@@ -43,7 +44,7 @@ class _MenuCardState extends State<MenuCard> {
                     ),
                   ),
                   child: Text(
-                    e,
+                    treatmentDetail,
                     style: const TextStyle(fontSize: 12, color: Colors.white),
                   ),
                 ),

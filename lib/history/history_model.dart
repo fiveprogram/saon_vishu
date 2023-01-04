@@ -19,16 +19,17 @@ class HistoryModel extends ChangeNotifier {
         return Menu.fromFireStore(doc);
       }).toList();
     });
+    notifyListeners();
+  }
 
+  Future<void> addHistory() async {
     for (var menu in menuList) {
       for (var reservation in reservationList) {
         if (menu.menuId == reservation.menuId) {
           myHistoryList.add(menu);
-          break;
         }
       }
     }
-    notifyListeners();
   }
 
   Future<void> fetchReservationList() async {
@@ -38,7 +39,6 @@ class HistoryModel extends ChangeNotifier {
         .doc(user!.uid)
         .collection('reservations')
         .snapshots();
-
     reservationStream.listen((snapshot) {
       reservationList = snapshot.docs
           .map((DocumentSnapshot doc) => Reservation.fromFirestore(doc))

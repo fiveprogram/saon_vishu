@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-PreferredSize vishuAppBar({required String appBarTitle}) {
+PreferredSize vishuAppBar({required String appBarTitle, isJapanese = false}) {
   return PreferredSize(
     preferredSize: const Size(
       double.infinity,
@@ -17,11 +17,17 @@ PreferredSize vishuAppBar({required String appBarTitle}) {
           systemOverlayStyle: SystemUiOverlayStyle.light,
           backgroundColor: HexColor("#989593"),
           title: Text(appBarTitle,
-              style: const TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                  fontFamily: 'Dancing_Script')),
+              style: isJapanese == false
+                  ? const TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                      fontFamily: 'Dancing_Script')
+                  : const TextStyle(
+                      fontSize: 30,
+                      color: Colors.black87,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'shokaki_sarari')),
           elevation: 10.0,
         ),
       ),

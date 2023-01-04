@@ -21,7 +21,7 @@ class _EditPageState extends State<EditPage> {
     return ChangeNotifierProvider<EditModel>(
       create: (_) => EditModel(profile: widget.profile),
       child: Scaffold(
-        appBar: vishuAppBar(appBarTitle: 'profile'),
+        appBar: vishuAppBar(appBarTitle: 'my page'),
         body: Consumer<EditModel>(
           builder: (context, model, child) {
             Profile profile = widget.profile;

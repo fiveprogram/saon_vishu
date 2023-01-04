@@ -77,6 +77,33 @@ flutter:
         - asset: assets/fonts/Dancing_Script/DancingScript-VariableFont_wght.ttf
           weight: 900
 
+    - family: shokaki_sarari
+      fonts:
+          - asset: assets/fonts/shokaki_sarari/しょかきさらり行体.ttf
+            weight: 100
+          - asset: assets/fonts/shokaki_sarari/しょかきさらり行体.ttf
+            weight: 100
+          - asset: assets/fonts/shokaki_sarari/しょかきさらり行体.ttf
+            weight: 100
+          - asset: assets/fonts/shokaki_sarari/しょかきさらり行体.ttf
+            weight: 100
+          - asset: assets/fonts/shokaki_sarari/しょかきさらり行体.ttf
+            weight: 900
+
+#    - family: Kiwi_Maru
+#      fonts:
+#         - asset: assets/fonts/Kiwi_Maru/KiwiMaru-Light.ttf
+#           weight: 100
+#         - asset: assets/fonts/Kiwi_Maru/KiwiMaru-Light.ttf
+#           weight: 100
+#         - asset: assets/fonts/Kiwi_Maru/KiwiMaru-Light.ttf
+#           weight: 100
+#         - asset: assets/fonts/Kiwi_Maru/KiwiMaru-Light.ttf
+#           weight: 100
+#         - asset: assets/fonts/Kiwi_Maru/KiwiMaru-Light.ttf
+#           weight: 900
+
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

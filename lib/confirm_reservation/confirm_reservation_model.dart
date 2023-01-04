@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -50,56 +48,6 @@ class ConfirmReservationModel extends ChangeNotifier {
         locale: LocaleType.jp);
   }
 
-  Future<void> registerReservationDate(
-      {required BuildContext context,
-      required String reservationDate,
-      required AsyncCallback sendFirestore}) async {
-    if (nameController.text == '' ||
-        emailController.text == '' ||
-        telephoneNumberController.text == '' ||
-        dateOfBirthController.text == '') {
-      showDialog(
-        context: context,
-        builder: (context) {
-          print('a');
-          return CupertinoAlertDialog(
-            title: const Text('未入力の項目があります'),
-            actions: [
-              CupertinoButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('戻る'),
-              )
-            ],
-          );
-        },
-      );
-    }
-    print('b');
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return CupertinoAlertDialog(
-          title: const Text('予約を完了しますか？'),
-          content: Text(reservationDate),
-          actions: [
-            CupertinoButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('戻る'),
-            ),
-            CupertinoButton(
-              onPressed: sendFirestore,
-              child: const Text('完了'),
-            )
-          ],
-        );
-      },
-    );
-  }
-
   Container guidListTile({
     required double height,
     required double width,
@@ -119,7 +67,7 @@ class ConfirmReservationModel extends ChangeNotifier {
         leading: Text(hintText,
             style: const TextStyle(
               fontSize: 16,
-              color: Colors.black54,
+              color: Colors.black87,
             )),
         title: SizedBox(
           width: width,

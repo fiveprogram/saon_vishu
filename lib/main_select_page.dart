@@ -1,10 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
-import 'package:salon_vishu/history/history_page.dart';
-import 'package:salon_vishu/manager/add_page.dart';
-import 'package:salon_vishu/menu/menu_page.dart';
 import 'package:salon_vishu/profile/profile_page.dart';
+
+import 'history/history_page.dart';
+import 'menu/menu_page.dart';
 
 class MainSelectPage extends StatefulWidget {
   const MainSelectPage({Key? key}) : super(key: key);

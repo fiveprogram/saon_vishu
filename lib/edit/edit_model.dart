@@ -7,7 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:salon_vishu/domain/profile.dart';
+
+import '../domain/profile.dart';
 
 class EditModel extends ChangeNotifier {
   Profile profile;
@@ -53,7 +54,7 @@ class EditModel extends ChangeNotifier {
       registerDateOfBirth = date;
       notifyListeners();
     },
-        currentTime: dateOfBirthController.text.isEmpty
+        currentTime: dateOfBirthController.text == ''
             ? DateTime.now()
             : registerDateOfBirth,
         locale: LocaleType.jp);
@@ -173,7 +174,6 @@ class EditModel extends ChangeNotifier {
           'dateTime': profile.dateTime,
           'uid': user!.uid,
         });
-        print(imgUrl);
 
         notifyListeners();
       }

@@ -1,10 +1,11 @@
+// ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
-import 'package:salon_vishu/domain/menu.dart';
 import 'package:salon_vishu/select_reservation_date/select_reservation_date_model.dart';
 
 import '../common_widget/calendar_widget.dart';
+import '../common_widget/vishu_app_bar.dart';
+import '../domain/menu.dart';
 
 // ignore: must_be_immutable
 class SelectReservationDatePage extends StatefulWidget {
@@ -24,7 +25,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
     return ChangeNotifierProvider(
       create: (_) => SelectReservationDateModel(menu),
       child: Scaffold(
-        appBar: vishuAppBar(appBarTitle: 'reservation'),
+        appBar: vishuAppBar(appBarTitle: '予約日時', isJapanese: true),
         body: Consumer<SelectReservationDateModel>(
           builder: (context, model, child) {
             final double height = MediaQuery.of(context).size.height;

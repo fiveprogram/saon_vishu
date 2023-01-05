@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/common_widget/menu_card.dart';
-import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
-import 'package:salon_vishu/menu/menu_model.dart';
+
+import '../common_widget/menu_card.dart';
+import '../common_widget/vishu_app_bar.dart';
+import 'menu_model.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({Key? key}) : super(key: key);

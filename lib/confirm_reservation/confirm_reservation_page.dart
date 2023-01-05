@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
-import 'package:salon_vishu/confirm_reservation/confirm_reservation_model.dart';
-import 'package:salon_vishu/domain/menu.dart';
 
+import '../common_widget/vishu_app_bar.dart';
+import '../domain/menu.dart';
 import '../domain/profile.dart';
-import '../finish_reservation_page.dart';
+import '../finish_reservation/finish_reservation_page.dart';
+import 'confirm_reservation_model.dart';
 
 // ignore: must_be_immutable
 class ConfirmReservationPage extends StatefulWidget {
@@ -40,12 +40,11 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
       create: (_) => ConfirmReservationModel(profile: profile),
       child: Scaffold(
         backgroundColor: HexColor('#fcf8f6'),
-        appBar: vishuAppBar(appBarTitle: 'confirm'),
+        appBar: vishuAppBar(appBarTitle: '予約確認', isJapanese: true),
         body: Consumer<ConfirmReservationModel>(
           builder: (context, model, child) {
             ///予約情報を登録するためのメソッド
             Future<void> sendFirebaseWithReservationDate() async {
-              print(5);
               await FirebaseFirestore.instance
                   .collection('users')
                   .doc(model.user!.uid)
@@ -59,6 +58,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
               });
             }
 
+            ///情報を送信するため時のダイアログを表示するためのメソッド
             Future<void> registerReservationDate(
                 {required BuildContext context,
                 required String reservationDate}) async {
@@ -66,10 +66,9 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   model.emailController.text == '' ||
                   model.telephoneNumberController.text == '' ||
                   model.dateOfBirthController.text == '') {
-                showDialog(
+                await showDialog(
                   context: context,
                   builder: (context) {
-                    print(1);
                     return CupertinoAlertDialog(
                       title: const Text('未入力の項目があります'),
                       actions: [
@@ -83,11 +82,11 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                     );
                   },
                 );
+                return;
               }
               await showDialog(
                 context: context,
                 builder: (context) {
-                  print(2);
                   return CupertinoAlertDialog(
                     title: const Text('予約を完了しますか？'),
                     content: Text(reservationDate),
@@ -100,14 +99,14 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                       ),
                       CupertinoButton(
                         onPressed: () {
-                          print(3);
                           sendFirebaseWithReservationDate();
-                          print(4);
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      const FinishReservationPage()),
+                                  builder: (context) => FinishReservationPage(
+                                      startTime: startTime,
+                                      menu: menu,
+                                      profile: profile)),
                               (route) => false);
                         },
                         child: const Text('完了'),
@@ -241,14 +240,14 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                     ),
                     SizedBox(height: height * 0.03),
                     const Text(
-                      'キャンセル連絡時',
+                      'キャンセル連絡',
                       style: TextStyle(
                           fontSize: 24,
                           color: Colors.black87,
                           fontWeight: FontWeight.bold),
                     ),
                     const Text(
-                      'キャンセル連絡はメッセージ機能をご連絡ください。',
+                      '前日17時まで→無料\n当日の場合→料金の50%を請求',
                       style: TextStyle(fontSize: 17, color: Colors.black87),
                     ),
                     SizedBox(height: height * 0.03),

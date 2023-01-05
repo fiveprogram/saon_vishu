@@ -1,8 +1,9 @@
+// ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/confirm_reservation/confirm_reservation_page.dart';
 
+import '../confirm_reservation/confirm_reservation_page.dart';
 import '../domain/menu.dart';
 import '../domain/profile.dart';
 import 'calendar_model.dart';
@@ -123,7 +124,8 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                             ...model.separateThirtyMinutes(weekDay).map(
                               (thirtyMinute) {
                                 return GestureDetector(
-                                  onTap: model.isAvailable(thirtyMinute)
+                                  onTap: model.isAvailable(
+                                          thirtyMinute, widget.menu)
                                       ? () {
                                           Navigator.push(
                                               context,
@@ -145,10 +147,12 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                                       border: Border.all(color: Colors.black38),
                                     ),
                                     child: Text(
-                                        model.isAvailable(thirtyMinute)
+                                        model.isAvailable(
+                                                thirtyMinute, widget.menu)
                                             ? '○'
                                             : '✖︎',
-                                        style: model.isAvailable(thirtyMinute)
+                                        style: model.isAvailable(
+                                                thirtyMinute, widget.menu)
                                             ? TextStyle(
                                                 color: HexColor('#fc7ea0'),
                                                 fontSize: 20,

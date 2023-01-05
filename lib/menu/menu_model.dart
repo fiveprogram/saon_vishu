@@ -62,7 +62,7 @@ class MenuModel extends ChangeNotifier {
   }
 
   Future<void> signOut(BuildContext context) async {
-    showDialog(
+    await showDialog(
         context: context,
         builder: (context) {
           return CupertinoAlertDialog(
@@ -75,8 +75,8 @@ class MenuModel extends ChangeNotifier {
                   }),
               CupertinoButton(
                   child: const Text('はい'),
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                  onPressed: () async {
+                    await FirebaseAuth.instance.signOut();
                     Navigator.pop(context);
                   }),
             ],

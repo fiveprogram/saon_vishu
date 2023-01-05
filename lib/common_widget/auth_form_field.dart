@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:salon_vishu/sign_in/sign_in_model.dart';
-import 'package:salon_vishu/sign_up/sign_up_model.dart';
+
+import '../sign_in/sign_in_model.dart';
+import '../sign_up/sign_up_model.dart';
 
 // ignore: must_be_immutable
 class AuthFormField extends StatefulWidget {

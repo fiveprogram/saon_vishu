@@ -1,10 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/domain/profile.dart';
-import 'package:salon_vishu/edit/edit_model.dart';
+
 import '../common_widget/vishu_app_bar.dart';
+import '../domain/profile.dart';
+import 'edit_model.dart';
 
 // ignore: must_be_immutable
 class EditPage extends StatefulWidget {

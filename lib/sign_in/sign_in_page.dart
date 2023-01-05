@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/button_list.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
+
 import '../common_widget/auth_form_field.dart';
 import '../common_widget/vishu_app_bar.dart';
 import '../sign_up/sign_up_page.dart';

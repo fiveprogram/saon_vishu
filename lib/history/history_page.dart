@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
-import 'package:salon_vishu/history/history_model.dart';
+
+import '../common_widget/vishu_app_bar.dart';
+import 'history_model.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _HistoryPageState extends State<HistoryPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    List<String> kari = ['カット', 'カラー', 'パーマ'];
+    List<String> contentList = ['カット', 'カラー', 'パーマ'];
 
     return Scaffold(
       appBar: vishuAppBar(appBarTitle: '予約履歴', isJapanese: true),
@@ -75,7 +76,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Wrap(
-                                        children: kari
+                                        children: contentList
                                             .map(
                                               (treatmentDetail) => Padding(
                                                 padding:

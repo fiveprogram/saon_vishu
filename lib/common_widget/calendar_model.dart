@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
-import 'package:salon_vishu/domain/business_hours.dart';
-import 'package:salon_vishu/domain/reservation.dart';
-import 'package:salon_vishu/domain/rest.dart';
 
+import '../domain/business_hours.dart';
+import '../domain/menu.dart';
 import '../domain/profile.dart';
+import '../domain/reservation.dart';
+import '../domain/rest.dart';
 
 class CalendarModel extends ChangeNotifier {
   Profile? profile;
@@ -72,6 +73,7 @@ class CalendarModel extends ChangeNotifier {
     var businessCloseTime = DateTime(date.year, date.month, date.day,
         businessHour.closeTimeHour, businessHour.closeTimeMinute);
     final result = <DateTime>[businessStartTime];
+
     while (businessStartTime != businessCloseTime) {
       businessStartTime = businessStartTime.add(const Duration(minutes: 30));
       result.add(businessStartTime);
@@ -88,7 +90,7 @@ class CalendarModel extends ChangeNotifier {
   ///③現在予約されていないこと
 
   ///引数で与えるのはweekDay
-  bool isAvailable(DateTime date) {
+  bool isAvailable(DateTime date, Menu menu) {
     final startTime = date;
     final endTime = startTime.add(const Duration(minutes: 30));
 
@@ -116,6 +118,7 @@ class CalendarModel extends ChangeNotifier {
 
     ///条件が難しい
     ///既に予約が入れられているマスを✖︎の表示にしたい
+    ///施術時間に応じて◯と✖︎が変わります。
     for (var reservation in reservationList) {
       if (startTime.isAfter(reservation.startTime.toDate()) &&
               endTime.isBefore(reservation.finishTime.toDate()) ||
@@ -133,6 +136,7 @@ class CalendarModel extends ChangeNotifier {
         return false;
       }
     }
+
     return true;
   }
 

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -148,6 +147,7 @@ Container vishuImage(double deviceHeight, double width) {
     height: deviceHeight,
     width: width,
     decoration: const BoxDecoration(
-        image: DecorationImage(image: AssetImage('images/vishu_view.png'))),
+        image: DecorationImage(
+            fit: BoxFit.cover, image: AssetImage('images/vishu_view.png'))),
   );
 }

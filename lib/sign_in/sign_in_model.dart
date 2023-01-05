@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:salon_vishu/manager/firebase_option/firebase_options.dart';
+
+import '../domain/profile.dart';
+import '../manager/firebase_option/firebase_options.dart';
 
 class SignInModel extends ChangeNotifier {
   final emailController =
@@ -24,6 +26,20 @@ class SignInModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  List<Profile> profileList = [];
+
+  Future<void> fetchProfile() async {
+    final profileStream =
+        FirebaseFirestore.instance.collection('users').snapshots();
+
+    profileStream.listen((snapshot) {
+      profileList = snapshot.docs.map((DocumentSnapshot doc) {
+        return Profile.fromFirestore(doc);
+      }).toList();
+      notifyListeners();
+    });
+  }
+
   ///メールアドレスを使ってのサインイン
   Future<void> signInTransition(BuildContext context) async {
     startLoading();
@@ -33,7 +49,7 @@ class SignInModel extends ChangeNotifier {
     try {
       //authエラーハンドリング
       if (emailController.text.isEmpty || passController.text.isEmpty) {
-        showDialog(
+        await showDialog(
             context: context,
             builder: (context) {
               return CupertinoAlertDialog(
@@ -74,6 +90,7 @@ class SignInModel extends ChangeNotifier {
     clientId: DefaultFirebaseOptions.currentPlatform.iosClientId,
     scopes: [
       'email',
+      "https://www.googleapis.com/auth/user.birthday.read",
       'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );
@@ -94,19 +111,21 @@ class SignInModel extends ChangeNotifier {
       final result =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      final user = result.user;
+      if (result.additionalUserInfo!.isNewUser) {
+        final user = result.user;
 
-      await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(
-        {
-          'uid': user.uid,
-          'email': user.email,
-          'name': user.displayName,
-          'dateOfBirth': '',
-          'telephoneNumber': user.phoneNumber ?? '00000000000',
-          'imgUrl': user.photoURL != '' ? user.photoURL : '',
-          'dateTime': createAccountDate
-        },
-      );
+        await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(
+          {
+            'uid': user.uid,
+            'email': user.email,
+            'name': user.displayName,
+            'dateOfBirth': '',
+            'telephoneNumber': user.phoneNumber ?? '00000000000',
+            'imgUrl': user.photoURL != '' ? user.photoURL : '',
+            'dateTime': createAccountDate
+          },
+        );
+      }
     } catch (e) {
       const snackBar = SnackBar(
         content: Text('ログインに失敗'),

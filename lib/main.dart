@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/common_widget/calendar_model.dart';
-import 'package:salon_vishu/history/history_model.dart';
-import 'package:salon_vishu/history/history_page.dart';
-import 'package:salon_vishu/main_select_page.dart';
-import 'package:salon_vishu/menu/menu_model.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
 import 'package:salon_vishu/sign_up/sign_up_model.dart';
 
+import 'common_widget/calendar_model.dart';
+import 'finish_reservation/finish_reservation_model.dart';
+import 'finish_reservation/finish_reservation_page.dart';
+import 'history/history_model.dart';
 import 'manager/firebase_option/firebase_options.dart';
+import 'menu/menu_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => SignInModel()),
+        ChangeNotifierProvider(create: (_) => SignInModel()..fetchProfile()),
         ChangeNotifierProvider(create: (_) => SignUpModel()),
         ChangeNotifierProvider(create: (_) => MenuModel()..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => ProfileModel()..fetchProfile()),
@@ -44,7 +44,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
             create: (_) => HistoryModel()
               ..fetchReservationList()
-              ..fetchMenuList())
+              ..fetchMenuList()),
+        ChangeNotifierProvider(create: (_) => FinishReservationModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
               return const CircularProgressIndicator();
             }
             if (snapshot.hasData) {
-              return const MainSelectPage();
+              return FinishReservationPage();
             }
             return const SignInPage();
           },

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/edit/edit_page.dart';
-import 'package:salon_vishu/guide/guid_reservation_page.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
 
 import '../common_widget/vishu_app_bar.dart';
 import '../domain/profile.dart';
+import '../edit/edit_page.dart';
+import '../guide/guid_reservation_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);

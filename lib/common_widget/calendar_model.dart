@@ -62,7 +62,7 @@ class CalendarModel extends ChangeNotifier {
   }
 
   ///営業時間の決め打ち
-  final businessHour = const BusinessHours(9, 00, 17, 30);
+  final businessHour = const BusinessHours(9, 00, 18, 00);
 
   ///引数に与えるのはcurrentDisplayDate
   List<DateTime> separateThirtyMinutes(DateTime date) {
@@ -78,6 +78,7 @@ class CalendarModel extends ChangeNotifier {
       businessStartTime = businessStartTime.add(const Duration(minutes: 30));
       result.add(businessStartTime);
     }
+    result.removeLast();
     return result;
   }
 
@@ -92,41 +93,61 @@ class CalendarModel extends ChangeNotifier {
   ///引数で与えるのはweekDay
   bool isAvailable(DateTime date, Menu menu) {
     final startTime = date;
-    final endTime = startTime.add(const Duration(minutes: 30));
+    final endTime = startTime.add(Duration(minutes: menu.treatmentTime));
 
-    ///①の条件を満たしているか
+    ///今の時間よりも前の時間のマスは全て✖︎
     if (startTime.isBefore(today)) {
       return false;
     }
 
-    ///②の始業時間の定義
+    ///毎日9時を指している
     final openTime = DateTime(date.year, date.month, date.day,
         businessHour.openTimeHour, businessHour.openTimeMinute);
 
+    ///毎日9時より前に開始されているマスは全て✖︎
     if (startTime.isBefore(openTime)) {
       return false;
     }
 
-    ///そもそも始業時間より前、終業時間よりあとはマスそのものが存在しないため、自動的にfalseな気がする
-    // ///②の終業時間側
-    // final closeTime = DateTime(date.year, date.month, date.day,
-    //     businessHour.closeTimeHour, businessHour.closeTimeMinute);
-    //
-    // if (endTime.isAfter(closeTime)) {
-    //   return false;
-    // }
+    ///毎日18時を指している
+    final closeTime = DateTime(date.year, date.month, date.day,
+        businessHour.closeTimeHour, businessHour.closeTimeMinute);
 
-    ///条件が難しい
+    ///店が終わる時間よりも後の予約はできない
+    if (endTime.isAfter(closeTime)) {
+      return false;
+    }
+
+    for (final reservation in reservationList) {
+      final a = reservation.startTime.toDate();
+      final b =
+          DateTime(a.year, a.month, a.day, startTime.hour, startTime.minute);
+
+      // if (!(endTime.isBefore(reservation.startTime.toDate()))) {
+      //   return false;
+      // }
+    }
+
     ///既に予約が入れられているマスを✖︎の表示にしたい
     ///施術時間に応じて◯と✖︎が変わります。
-    for (var reservation in reservationList) {
-      if (startTime.isAfter(reservation.startTime.toDate()) &&
-              endTime.isBefore(reservation.finishTime.toDate()) ||
-          startTime.isAtSameMomentAs(reservation.startTime.toDate()) ||
-          endTime.isAtSameMomentAs(reservation.finishTime.toDate())) {
-        return false;
-      }
-    }
+    // for (final reservation in reservationList) {
+    //   print(reservation.finishTime.toDate());
+    //
+    //   ///予約開始時間よりあとに終了時間がきてしまっている
+    //   if ((endTime.isAfter(reservation.startTime.toDate()) &&
+    //
+    //           ///予約の開始時刻と終了時刻が同時
+    //           endTime.isAtSameMomentAs(reservation.startTime.toDate()) ||
+    //
+    //       ///予約が終わる時間よりも後に開始時刻がきていない
+    //       ///開始時刻が予約の終了時間よりも前にきてしまっている。
+    //       startTime.isBefore(reservation.finishTime.toDate()) ||
+    //
+    //       ///予約の終了時刻が開始時刻と同時になってしまっている。
+    //       startTime.isAtSameMomentAs(reservation.finishTime.toDate()))) {
+    //     return false;
+    //   }
+    // }
 
     ///既に休憩が入れられているマスを✖の表示にしたい
     for (var rest in restList) {

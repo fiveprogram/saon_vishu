@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/history/history_page.dart';
 import 'package:salon_vishu/main_select_page.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
@@ -13,7 +12,6 @@ import 'package:salon_vishu/sign_up/sign_up_model.dart';
 
 import 'common_widget/calendar_model.dart';
 import 'finish_reservation/finish_reservation_model.dart';
-import 'finish_reservation/finish_reservation_page.dart';
 import 'history/history_model.dart';
 import 'manager/firebase_option/firebase_options.dart';
 import 'menu/menu_model.dart';

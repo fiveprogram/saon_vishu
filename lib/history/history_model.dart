@@ -28,10 +28,17 @@ class HistoryModel extends ChangeNotifier {
   }
 
   Future<void> addHistory() async {
+    print(1);
     for (var menu in menuList) {
+      print(2);
       for (var reservation in reservationList) {
+        print(3);
         if (menu.menuId == reservation.menuId) {
-          myHistoryList.add(menu);
+          print(4);
+          if (!myHistoryList.contains(menu)) {
+            print(5);
+            myHistoryList.add(menu);
+          }
         }
       }
     }

@@ -156,23 +156,39 @@ class _MenuCardState extends State<MenuCard> {
                           const SizedBox(height: 10),
                           Row(
                             children: [
-                              if (menu.beforePrice != '')
-                                Text(
-                                  menu.beforePrice,
-                                  style: const TextStyle(
-                                      fontSize: 12,
-                                      decoration: TextDecoration.lineThrough),
-                                ),
-                              const Text('▷'),
-                              Text(menu.afterPrice),
-                              const SizedBox(width: 40),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      if (menu.beforePrice != '')
+                                        Text(
+                                          menu.beforePrice,
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              decoration:
+                                                  TextDecoration.lineThrough),
+                                        ),
+                                      const Text('▷'),
+                                      Text(menu.afterPrice),
+                                      const SizedBox(width: 10),
+                                    ],
+                                  ),
+                                  Text('施術時間：${menu.treatmentTime}分',
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                              const SizedBox(width: 30),
                               SizedBox(
                                   height: 40,
                                   width: 70,
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                          backgroundColor: HexColor('#c9c5c3'),
-                                          foregroundColor: Colors.black54),
+                                        backgroundColor: HexColor('#443e30'),
+                                      ),
                                       onPressed: () {
                                         Navigator.push(
                                             context,
@@ -183,12 +199,14 @@ class _MenuCardState extends State<MenuCard> {
                                       },
                                       child: const Text(
                                         '予約',
-                                        style: TextStyle(color: Colors.black87),
-                                      )))
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                      ))),
                             ],
-                          )
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   )
                 ],

@@ -135,6 +135,12 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                     ),
                   ),
                   CalenderWidget(menu: widget.menu),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {}, child: const Text('オーナーと直接連絡を取る')),
+                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             );

@@ -62,7 +62,7 @@ class CalendarModel extends ChangeNotifier {
   }
 
   ///営業時間の決め打ち
-  final businessHour = const BusinessHours(9, 00, 18, 00);
+  final businessHour = const BusinessHours(9, 00, 17, 30);
 
   ///引数に与えるのはcurrentDisplayDate
   List<DateTime> separateThirtyMinutes(DateTime date) {

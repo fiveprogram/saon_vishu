@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -12,10 +10,14 @@ import 'finish_reservation_model.dart';
 
 // ignore: must_be_immutable
 class FinishReservationPage extends StatefulWidget {
-  Menu? menu;
-  DateTime? startTime;
-  Profile? profile;
-  FinishReservationPage({this.profile, this.menu, this.startTime, Key? key})
+  Menu menu;
+  DateTime startTime;
+  Profile profile;
+  FinishReservationPage(
+      {required this.profile,
+      required this.menu,
+      required this.startTime,
+      Key? key})
       : super(key: key);
 
   @override
@@ -27,34 +29,34 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
+    //
+    // widget.menu = Menu(
+    //     isTargetAllMember: true,
+    //     treatmentDetailList: ['カット,パーマ'],
+    //     treatmentDetail: '髪色でお困りの方は、ぜひこちらの美容鍼まで♪',
+    //     beforePrice: '4500円',
+    //     afterPrice: '4000円',
+    //     menuIntroduction: 'あsdf',
+    //     menuImageUrl:
+    //         'https://hair-lee.com/wp-content/uploads/2021/08/0811top.jpg',
+    //     menuId: '4',
+    //     treatmentTime: 120);
+    //
+    // widget.startTime = DateTime(2022, 3, 16, 13, 30);
+    // widget.profile = Profile(
+    //     email: 'adsf',
+    //     name: 'asdf',
+    //     dateOfBirth: 'asdf',
+    //     telephoneNumber: 'asdf',
+    //     uid: 'asdf',
+    //     imgUrl: 'asdf',
+    //     dateTime: Timestamp.fromMicrosecondsSinceEpoch(2));
+    //
+    // List<String> contentList = ['カット', 'カラー', 'パーマ'];
 
-    widget.menu = Menu(
-        isTargetAllMember: true,
-        treatmentDetailList: ['カット,パーマ'],
-        treatmentDetail: '髪色でお困りの方は、ぜひこちらの美容鍼まで♪',
-        beforePrice: '4500円',
-        afterPrice: '4000円',
-        menuIntroduction: 'あsdf',
-        menuImageUrl:
-            'https://hair-lee.com/wp-content/uploads/2021/08/0811top.jpg',
-        menuId: '4',
-        treatmentTime: 120);
-
-    widget.startTime = DateTime(2022, 3, 16, 13, 30);
-    widget.profile = Profile(
-        email: 'adsf',
-        name: 'asdf',
-        dateOfBirth: 'asdf',
-        telephoneNumber: 'asdf',
-        uid: 'asdf',
-        imgUrl: 'asdf',
-        dateTime: Timestamp.fromMicrosecondsSinceEpoch(2));
-
-    List<String> contentList = ['カット', 'カラー', 'パーマ'];
-
-    Menu menu = widget.menu!;
-    DateTime startTime = widget.startTime!;
-    Profile profile = widget.profile!;
+    Menu menu = widget.menu;
+    DateTime startTime = widget.startTime;
+    Profile profile = widget.profile;
 
     return Scaffold(
       appBar: vishuAppBar(appBarTitle: '予約完了', isJapanese: true),
@@ -77,8 +79,9 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('2021年3月16日のご来店',
-                            style: TextStyle(
+                        Text(
+                            '${model.visitStoreFormatter.format(startTime)}のご来店',
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87,
                                 fontSize: 15)),
@@ -86,25 +89,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 50,
-                              padding: const EdgeInsets.all(2),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(3)),
-                                color: HexColor('#e28e7a'),
-                                border: Border.all(
-                                  color: HexColor('#e28e7a'),
-                                ),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  '全員',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12),
-                                ),
-                              ),
-                            ),
+                            model.targetCard(menu),
                             SizedBox(
                               width: width * 0.09,
                             ),
@@ -112,7 +97,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Wrap(
-                                  children: contentList
+                                  children: widget.menu.treatmentDetailList
                                       .map(
                                         (treatmentDetail) => Padding(
                                           padding: const EdgeInsets.all(1.0),
@@ -152,30 +137,28 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black87),
                                   borderRadius: BorderRadius.circular(10),
-                                  image: const DecorationImage(
+                                  image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          'https://storage.googleapis.com/hairlog-special/2018/11/2018110503.png'))),
+                                      image: NetworkImage(menu.menuImageUrl))),
                             ),
                             const SizedBox(width: 10),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const SizedBox(
+                                SizedBox(
                                   width: 233,
                                   child: Text(
-                                    'あなたのためにこだわったこだわりカラー♪ 今だけ特価1900円',
-                                    style: TextStyle(fontSize: 13),
+                                    menu.treatmentDetail,
+                                    style: const TextStyle(fontSize: 13),
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                const Text('2900円'),
-                                const SizedBox(width: 40),
+                                Text(menu.afterPrice),
                                 Row(
                                   children: [
                                     SizedBox(width: width * 0.3),
-                                    const Text('施術時間： 120分',
-                                        style: TextStyle(
+                                    Text('施術時間： ${menu.treatmentTime}分',
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             color: Colors.black54,
                                             fontWeight: FontWeight.bold)),

@@ -5,6 +5,8 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/main_select_page.dart';
+import 'package:salon_vishu/master/master_model.dart';
+import 'package:salon_vishu/master_select_page.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
@@ -39,8 +41,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProfileModel()..fetchProfile()),
         ChangeNotifierProvider(
             create: (_) => CalendarModel()
-              ..fetchReservationList()
-              ..fetchProfile()),
+              ..fetchProfile()
+              ..fetchReservationList()),
         ChangeNotifierProvider(
             create: (_) => HistoryModel()
               ..fetchReservationList()
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
               return const CircularProgressIndicator();
             }
             if (snapshot.hasData) {
-              return const MainSelectPage();
+              return const MasterSelectPage();
             }
             return const SignInPage();
           },

@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/main_select_page.dart';
-import 'package:salon_vishu/master/master_model.dart';
+import 'package:salon_vishu/master/rest_date_register/rest_date_register_model.dart';
 import 'package:salon_vishu/master_select_page.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
@@ -16,6 +15,7 @@ import 'common_widget/calendar_model.dart';
 import 'finish_reservation/finish_reservation_model.dart';
 import 'history/history_model.dart';
 import 'manager/firebase_option/firebase_options.dart';
+import 'master/schedule/schedule_model.dart';
 import 'menu/menu_model.dart';
 
 void main() async {
@@ -48,6 +48,9 @@ class MyApp extends StatelessWidget {
               ..fetchReservationList()
               ..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => FinishReservationModel()),
+        ChangeNotifierProvider(
+            create: (_) => ScheduleModel()..fetchReservationList()),
+        ChangeNotifierProvider(create: (_) => RestDateRegisterModel())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

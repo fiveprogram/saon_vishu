@@ -43,7 +43,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          model.thisWeek = model.thisWeek - 1;
+                          model.previousWeek = model.previousWeek - 1;
                         });
                       },
                       icon: const Icon(
@@ -52,13 +52,13 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                       ),
                     ),
                     Text(
-                        '${model.weekDateList(model.currentDisplayDate())[1].month}月',
+                        '${model.weekDayList(model.currentDisplayDate())[1].month}月',
                         style: const TextStyle(
                             fontSize: 17, fontWeight: FontWeight.bold)),
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          model.thisWeek = model.thisWeek + 1;
+                          model.previousWeek = model.previousWeek + 1;
                         });
                       },
                       icon: const Icon(
@@ -106,7 +106,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                       ),
                     ],
                   ),
-                  ...model.weekDateList(model.currentDisplayDate()).map(
+                  ...model.weekDayList(model.currentDisplayDate()).map(
                         (weekDay) => Column(
                           children: [
                             Container(

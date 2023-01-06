@@ -12,7 +12,6 @@ import '../domain/rest.dart';
 
 class CalendarModel extends ChangeNotifier {
   Profile? profile;
-
   Future<void> fetchProfile() async {
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -29,14 +28,15 @@ class CalendarModel extends ChangeNotifier {
 
   DateTime today = DateTime.now();
 
-  int thisWeek = 0;
   DateFormat dayOfWeekFormatter = DateFormat('EE', 'ja_JP');
 
   ///カレンダーを表示する上で、１週間先の日時を取得する。
   ///ページが遷移すれば、previousWeeksの値の変化に伴い、返り値が変わる。
   DateTime currentDisplayDate() {
-    return today.add(Duration(days: 7 * thisWeek));
+    return today.add(Duration(days: -7 * previousWeek));
   }
+
+  int previousWeek = 0;
 
   ///曜日によって色を帰るメソッド
   HexColor dowBoxColor(String dow) {
@@ -50,21 +50,18 @@ class CalendarModel extends ChangeNotifier {
     }
   }
 
-  ///１週間ごとの曜日を取得し、並列するlist
-  List<DateTime> weekDateList(DateTime date) {
-    final day = date.day;
-    final result = <DateTime>[];
-
-    for (int i = day; i < day + 7; i++) {
-      result.add(date.add(Duration(days: i - day)));
+  ///weekDayList
+  List<DateTime> weekDayList(DateTime date) {
+    List<DateTime> weekList = [];
+    for (var i = 0; i < 7; i++) {
+      weekList.add(date.add(Duration(days: i)));
     }
-    return result;
+    return weekList;
   }
 
   ///営業時間の決め打ち
   final businessHour = const BusinessHours(9, 00, 18, 00);
 
-  ///引数に与えるのはcurrentDisplayDate
   List<DateTime> separateThirtyMinutes(DateTime date) {
     //始業開始時間
     var businessStartTime = DateTime(date.year, date.month, date.day,

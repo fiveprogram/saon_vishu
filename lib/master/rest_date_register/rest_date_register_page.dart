@@ -1,8 +1,9 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
 import 'package:salon_vishu/master/rest_date_register/rest_date_register_model.dart';
 
 class RestDateRegisterPage extends StatefulWidget {
@@ -16,131 +17,192 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      backgroundColor: HexColor('#fffffe'),
-      appBar: vishuAppBar(appBarTitle: 'Rest'),
-      body: Consumer<RestDateRegisterModel>(
-        builder: (context, model, child) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text('休憩設定',
-                  style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black54,
-                      fontWeight: FontWeight.bold)),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: height * 0.4,
-                  width: width * 0.95,
-                  decoration: BoxDecoration(border: Border.all()),
+    return Consumer<RestDateRegisterModel>(builder: (context, model, child) {
+      return WillPopScope(
+        onWillPop: () async {
+          return model.willPopCallback(context);
+        },
+        child: Scaffold(
+          backgroundColor: HexColor('#fffffe'),
+          appBar: PreferredSize(
+            preferredSize: const Size(
+              double.infinity,
+              56.0,
+            ),
+            child: ClipRRect(
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+                child: AppBar(
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          model.registerRestOwnerTime(context);
+                        },
+                        child: const Text('登録',
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)))
+                  ],
+                  systemOverlayStyle: SystemUiOverlayStyle.light,
+                  backgroundColor: HexColor("#989593"),
+                  title: const Text('Rest',
+                      style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                          fontFamily: 'Dancing_Script')),
+                  elevation: 10.0,
+                ),
+              ),
+            ),
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  height: height * 0.06,
+                  alignment: Alignment.center,
+                  child: const Text('休憩時間をタップしてください',
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold)),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white70,
+                      border: Border(top: BorderSide(color: Colors.black26))),
+                  height: height * 0.06,
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        alignment: Alignment.topCenter,
-                        height: height * 0.20,
-                        width: width * 0.06,
-                        decoration: BoxDecoration(border: Border.all()),
-                        child: const Icon(Icons.watch_later_outlined),
-                      ),
-                      SizedBox(width: width * 0.02),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        height: height * 0.20,
-                        width: width * 0.2,
-                        decoration: BoxDecoration(border: Border.all()),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              '終日',
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextFormField(
-                              onTap: () async {
-                                model.getDate(context);
-                              },
-                              readOnly: true,
-                              controller: model.startDateController,
-                              style: const TextStyle(fontSize: 18),
-                              decoration: const InputDecoration(
-                                  hintText: '開始日', border: InputBorder.none),
-                            ),
-                            TextFormField(
-                              readOnly: true,
-                              controller: model.endDateController,
-                              style: const TextStyle(fontSize: 18),
-                              decoration: const InputDecoration(
-                                  hintText: '終了日', border: InputBorder.none),
-                              onTap: () async {
-                                model.getDate(context);
-                              },
-                            ),
-                          ],
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            model.previousWeek = model.previousWeek + 1;
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black38,
                         ),
                       ),
-                      SizedBox(width: width * 0.05),
-                      Container(
-                        alignment: Alignment.topCenter,
-                        height: height * 0.20,
-                        width: width * 0.1,
-                        decoration: BoxDecoration(border: Border.all()),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Transform.scale(
-                              scale: 0.9,
-                              child: CupertinoSwitch(
-                                  value: model.isAllDay,
-                                  onChanged: (_) {
-                                    setState(() {
-                                      model.isAllDay = !model.isAllDay;
-                                    });
-                                  }),
-                            ),
-                          ],
+                      Text(
+                          '${model.weekDayList(model.currentDisplayDate())[1].month}月',
+                          style: const TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold)),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            model.previousWeek = model.previousWeek - 1;
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.black38,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
-              ),
-              SizedBox(height: height * 0.05),
-              TextFormField(
-                readOnly: true,
-                decoration: const InputDecoration(
-                    hintText: '終了時刻',
-                    suffixIcon: Icon(Icons.calendar_month),
-                    border: OutlineInputBorder(),
-                    filled: true,
-                    fillColor: Colors.white70),
-              ),
-              SizedBox(height: height * 0.05),
-              SizedBox(
-                  width: width * 0.3,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: HexColor('#a48d77')),
-                      onPressed: () {},
-                      child: const Text(
-                        '確定',
-                        style: TextStyle(
-                            color: Colors.black87, fontWeight: FontWeight.bold),
-                      )))
-            ],
-          );
-        },
-      ),
-    );
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.black26)),
+                          height: height * 0.05,
+                          width: width * 0.157,
+                        ),
+                        ...model
+                            .separateThirtyMinutes(model.currentDisplayDate())
+                            .map(
+                          (thirtyMinute) {
+                            return Container(
+                              alignment: Alignment.center,
+                              height: height * 0.06,
+                              width: width * 0.157,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.all(color: Colors.black38),
+                              ),
+                              child: Text(
+                                  model.businessTimeFormatter
+                                      .format(thirtyMinute),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    ...model.weekDayList(model.currentDisplayDate()).map(
+                          (weekDay) => Column(
+                            children: [
+                              Container(
+                                height: height * 0.05,
+                                width: width * 0.12,
+                                decoration: BoxDecoration(
+                                  color: model.dowBoxColor(
+                                      model.dayOfWeekFormatter.format(weekDay)),
+                                  border: Border.all(color: Colors.black38),
+                                ),
+                                child: Text(
+                                    '${weekDay.day}日\n${model.dayOfWeekFormatter.format(weekDay)}',
+                                    textAlign: TextAlign.center),
+                              ),
+                              ...model.separateThirtyMinutes(weekDay).map(
+                                (thirtyMinute) {
+                                  return GestureDetector(
+                                    onTap: model.isAvailable(thirtyMinute)
+                                        ? () {
+                                            model.addRestTimeList(thirtyMinute);
+                                          }
+                                        : null,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: height * 0.06,
+                                      width: width * 0.12,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        border:
+                                            Border.all(color: Colors.black38),
+                                      ),
+                                      child: Text(
+                                          model.canRestTime(thirtyMinute),
+                                          style: model.isAvailable(thirtyMinute)
+                                              ? TextStyle(
+                                                  color: HexColor('#fc7ea0'),
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold)
+                                              : TextStyle(
+                                                  color: HexColor('#8f948a'),
+                                                  fontSize: 20),
+                                          textAlign: TextAlign.center),
+                                    ),
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
   }
 }

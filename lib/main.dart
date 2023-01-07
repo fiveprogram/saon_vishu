@@ -49,8 +49,14 @@ class MyApp extends StatelessWidget {
               ..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => FinishReservationModel()),
         ChangeNotifierProvider(
-            create: (_) => ScheduleModel()..fetchReservationList()),
-        ChangeNotifierProvider(create: (_) => RestDateRegisterModel())
+            create: (_) => ScheduleModel()
+              ..fetchReservationList()
+              ..fetchRestList()),
+        ChangeNotifierProvider(
+          create: (_) => RestDateRegisterModel()
+            ..fetchReservationList()
+            ..fetchRestList(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

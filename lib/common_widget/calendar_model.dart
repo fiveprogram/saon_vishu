@@ -118,10 +118,10 @@ class CalendarModel extends ChangeNotifier {
 
     //店主の指定した休憩時間。↑と同様のロジックを使用。
     for (final rest in restList) {
-      if (!(endTime.isBefore(rest.startTime) ||
-          endTime.isAtSameMomentAs(rest.startTime) ||
-          startTime.isAfter(rest.endTime) ||
-          startTime.isAtSameMomentAs(rest.endTime))) {
+      if (!(endTime.isBefore(rest.startTime.toDate()) ||
+          endTime.isAtSameMomentAs(rest.startTime.toDate()) ||
+          startTime.isAfter(rest.endTime.toDate()) ||
+          startTime.isAtSameMomentAs(rest.endTime.toDate()))) {
         return false;
       }
     }

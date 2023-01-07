@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/master/rest_date_register/rest_date_register_page.dart';
 import 'package:salon_vishu/master/schedule/schedule_model.dart';
 
 import '../../common_widget/vishu_app_bar.dart';
+import '../rest_date_register/rest_date_register_page.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class _SchedulePageState extends State<SchedulePage> {
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            model.previousWeek = model.previousWeek - 1;
+                            model.previousWeek = model.previousWeek + 1;
                           });
                         },
                         icon: const Icon(
@@ -63,7 +63,7 @@ class _SchedulePageState extends State<SchedulePage> {
                       IconButton(
                         onPressed: () {
                           setState(() {
-                            model.previousWeek = model.previousWeek + 1;
+                            model.previousWeek = model.previousWeek - 1;
                           });
                         },
                         icon: const Icon(

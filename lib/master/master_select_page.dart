@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:salon_vishu/master/rest_edit/rest_edit_page.dart';
 
-import 'master/schedule/schedule_page.dart';
+import 'schedule/schedule_page.dart';
 
 class MasterSelectPage extends StatefulWidget {
   const MasterSelectPage({Key? key}) : super(key: key);
@@ -10,7 +11,11 @@ class MasterSelectPage extends StatefulWidget {
 }
 
 class _MasterSelectPageState extends State<MasterSelectPage> {
-  List<Widget> masterPageList = [const SchedulePage(), Text('')];
+  List<Widget> masterPageList = [
+    const SchedulePage(),
+    const RestEditPage(),
+    Text('')
+  ];
   int masterPageIndex = 0;
 
   @override
@@ -27,6 +32,7 @@ class _MasterSelectPageState extends State<MasterSelectPage> {
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month), label: '予定'),
+            BottomNavigationBarItem(icon: Icon(Icons.healing), label: '休憩情報'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: '予約者一覧')
           ]),
     );

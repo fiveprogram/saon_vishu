@@ -124,6 +124,7 @@ class ScheduleModel extends ChangeNotifier {
         restList = snapshot.docs
             .map((DocumentSnapshot doc) => Rest.fromFirestore(doc))
             .toList();
+        notifyListeners();
       },
     );
   }

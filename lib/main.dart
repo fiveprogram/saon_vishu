@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:salon_vishu/master/rest_date_register/rest_date_register_model.dart';
 import 'package:salon_vishu/master/master_select_page.dart';
 import 'package:salon_vishu/master/rest_edit/rest_edit_model.dart';
+import 'package:salon_vishu/master/rest_edit/rest_edit_page.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
             ..fetchReservationList()
             ..fetchRestList(),
         ),
-        ChangeNotifierProvider(create: (_) => RestEditModel()),
+        ChangeNotifierProvider(create: (_) => RestEditModel()..fetchRestList()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

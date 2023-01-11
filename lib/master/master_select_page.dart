@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salon_vishu/master/booker/booker_page.dart';
 import 'package:salon_vishu/master/rest_edit/rest_edit_page.dart';
 
 import 'schedule/schedule_page.dart';
@@ -14,7 +15,7 @@ class _MasterSelectPageState extends State<MasterSelectPage> {
   List<Widget> masterPageList = [
     const SchedulePage(),
     const RestEditPage(),
-    Text('')
+    const BookerPage()
   ];
   int masterPageIndex = 0;
 

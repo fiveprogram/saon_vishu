@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:salon_vishu/domain/menu.dart';
 
 import '../domain/business_hours.dart';
-import '../domain/menu.dart';
 import '../domain/profile.dart';
 import '../domain/reservation.dart';
 import '../domain/rest.dart';

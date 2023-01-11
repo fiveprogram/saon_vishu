@@ -1,11 +1,11 @@
 // ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:salon_vishu/domain/menu.dart';
 import 'package:salon_vishu/select_reservation_date/select_reservation_date_model.dart';
 
 import '../common_widget/calendar_widget.dart';
 import '../common_widget/vishu_app_bar.dart';
-import '../domain/menu.dart';
 
 // ignore: must_be_immutable
 class SelectReservationDatePage extends StatefulWidget {
@@ -75,7 +75,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                               children: [
                                 if (menu.beforePrice != '')
                                   Text(
-                                    menu.beforePrice,
+                                    menu.beforePrice!,
                                     style: const TextStyle(
                                         fontSize: 12,
                                         decoration: TextDecoration.lineThrough),
@@ -134,7 +134,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                               fontWeight: FontWeight.bold)),
                     ),
                   ),
-                  CalenderWidget(menu: widget.menu),
+                  CalenderWidget(menu: menu),
                   const SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(

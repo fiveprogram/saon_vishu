@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-
-import '../domain/menu.dart';
+import 'package:salon_vishu/domain/menu.dart';
 
 class SelectReservationDateModel extends ChangeNotifier {
   Menu menu;

@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:salon_vishu/domain/menu.dart';
 
 import '../confirm_reservation/confirm_reservation_page.dart';
-import '../domain/menu.dart';
 import '../domain/profile.dart';
 import 'calendar_model.dart';
 
@@ -43,7 +43,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          model.previousWeek = model.previousWeek - 1;
+                          model.previousWeek = model.previousWeek + 1;
                         });
                       },
                       icon: const Icon(
@@ -58,7 +58,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          model.previousWeek = model.previousWeek + 1;
+                          model.previousWeek = model.previousWeek - 1;
                         });
                       },
                       icon: const Icon(

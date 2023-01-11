@@ -16,53 +16,56 @@ class _RestEditPageState extends State<RestEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<RestEditModel>(builder: (context, model, child) {
-      return Scaffold(
-        appBar: vishuAppBar(appBarTitle: '休憩情報', isJapanese: true),
-        body: Column(
-          children: [
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: model.restTimeList.length,
-                itemBuilder: ((context, index) {
-                  Rest rest = model.restTimeList[index];
+    return Consumer<RestEditModel>(
+      builder: (context, model, child) {
+        return Scaffold(
+          appBar: vishuAppBar(appBarTitle: '休憩情報', isJapanese: true),
+          body: Column(
+            children: [
+              ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: model.restTimeList.length,
+                  itemBuilder: ((context, index) {
+                    Rest rest = model.restTimeList[index];
 
-                  return Container(
-                    decoration: const BoxDecoration(
-                        border: Border(bottom: BorderSide())),
-                    child: CheckboxListTile(
-                      selected: selectedList[index],
-                      title: Text(
-                        model.restFormatter.format(rest.startTime.toDate()),
-                        style: TextStyle(
-                            decoration: selectedList[index]
-                                ? TextDecoration.lineThrough
-                                : null,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18),
+                    return Container(
+                      decoration: const BoxDecoration(
+                          border: Border(bottom: BorderSide())),
+                      child: CheckboxListTile(
+                        selected: selectedList[index],
+                        title: Text(
+                          model.restFormatter.format(rest.startTime.toDate()),
+                          style: TextStyle(
+                              decoration: selectedList[index]
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18),
+                        ),
+                        value: selectedList[index],
+                        onChanged: (bool? value) {
+                          setState(() {
+                            selectedList[index] = value!;
+                            model.addDeleteList(rest);
+                            print(model.deleteRestList.length);
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: selectedList[index],
-                      onChanged: (bool? value) {
-                        setState(() {
-                          print(selectedList[index]);
-                          selectedList[index] = value!;
-                          print(selectedList[index]);
-                          model.addDeleteList(rest);
-                          print(model.deleteRestList.length);
-                        });
-                      },
-                      controlAffinity: ListTileControlAffinity.leading,
-                    ),
-                  );
-                })),
-            ElevatedButton(
-                onPressed: () {
-                  model.deleteRegister(context);
-                },
-                child: const Text('削除する')),
-          ],
-        ),
-      );
-    });
+                    );
+                  })),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                  onPressed: model.deleteRestList.isNotEmpty
+                      ? () {
+                          model.deleteRegister(context);
+                        }
+                      : null,
+                  child: const Text('削除する')),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

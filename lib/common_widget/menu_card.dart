@@ -163,7 +163,7 @@ class _MenuCardState extends State<MenuCard> {
                                     children: [
                                       if (menu.beforePrice != '')
                                         Text(
-                                          menu.beforePrice,
+                                          menu.beforePrice!,
                                           style: const TextStyle(
                                               fontSize: 12,
                                               decoration:

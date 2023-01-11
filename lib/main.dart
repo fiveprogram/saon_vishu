@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:salon_vishu/main_select_page.dart';
+import 'package:salon_vishu/master/booker/booker_model.dart';
 import 'package:salon_vishu/master/rest_date_register/rest_date_register_model.dart';
-import 'package:salon_vishu/master/master_select_page.dart';
 import 'package:salon_vishu/master/rest_edit/rest_edit_model.dart';
-import 'package:salon_vishu/master/rest_edit/rest_edit_page.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
@@ -46,9 +46,7 @@ class MyApp extends StatelessWidget {
               ..fetchProfile()
               ..fetchReservationList()),
         ChangeNotifierProvider(
-            create: (_) => HistoryModel()
-              ..fetchReservationList()
-              ..fetchMenuList()),
+            create: (_) => HistoryModel()..fetchReservationList()),
         ChangeNotifierProvider(create: (_) => FinishReservationModel()),
         ChangeNotifierProvider(
             create: (_) => ScheduleModel()
@@ -60,6 +58,10 @@ class MyApp extends StatelessWidget {
             ..fetchRestList(),
         ),
         ChangeNotifierProvider(create: (_) => RestEditModel()..fetchRestList()),
+        ChangeNotifierProvider(
+            create: (_) => BookerModel()
+              ..fetchMenuList()
+              ..fetchReservationList())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -75,7 +77,7 @@ class MyApp extends StatelessWidget {
               return const CircularProgressIndicator();
             }
             if (snapshot.hasData) {
-              return const MasterSelectPage();
+              return const MainSelectPage();
             }
             return const SignInPage();
           },

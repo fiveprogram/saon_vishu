@@ -62,6 +62,7 @@ class RestEditModel extends ChangeNotifier {
                           .delete();
 
                       Future.delayed(const Duration(minutes: 1));
+
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(

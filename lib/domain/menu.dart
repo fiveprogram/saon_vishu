@@ -4,7 +4,7 @@ class Menu {
   bool isTargetAllMember = true;
   List<dynamic> treatmentDetailList;
   String treatmentDetail;
-  String beforePrice;
+  String? beforePrice;
   String afterPrice;
   String menuIntroduction;
   String menuImageUrl;

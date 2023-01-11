@@ -29,30 +29,6 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    //
-    // widget.menu = Menu(
-    //     isTargetAllMember: true,
-    //     treatmentDetailList: ['カット,パーマ'],
-    //     treatmentDetail: '髪色でお困りの方は、ぜひこちらの美容鍼まで♪',
-    //     beforePrice: '4500円',
-    //     afterPrice: '4000円',
-    //     menuIntroduction: 'あsdf',
-    //     menuImageUrl:
-    //         'https://hair-lee.com/wp-content/uploads/2021/08/0811top.jpg',
-    //     menuId: '4',
-    //     treatmentTime: 120);
-    //
-    // widget.startTime = DateTime(2022, 3, 16, 13, 30);
-    // widget.profile = Profile(
-    //     email: 'adsf',
-    //     name: 'asdf',
-    //     dateOfBirth: 'asdf',
-    //     telephoneNumber: 'asdf',
-    //     uid: 'asdf',
-    //     imgUrl: 'asdf',
-    //     dateTime: Timestamp.fromMicrosecondsSinceEpoch(2));
-    //
-    // List<String> contentList = ['カット', 'カラー', 'パーマ'];
 
     Menu menu = widget.menu;
     DateTime startTime = widget.startTime;

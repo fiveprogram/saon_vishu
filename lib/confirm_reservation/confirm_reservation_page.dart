@@ -53,7 +53,15 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 'startTime': startTime,
                 'finishTime':
                     startTime.add(Duration(minutes: menu.treatmentTime)),
+                'isTargetAllMember': menu.isTargetAllMember,
+                'treatmentDetailList': menu.treatmentDetailList,
+                'beforePrice': menu.beforePrice != '' ? menu.beforePrice : '',
+                'afterPrice': menu.afterPrice,
+                'menuIntroduction': menu.menuIntroduction,
+                'menuImageUrl': menu.menuImageUrl,
                 'menuId': menu.menuId,
+                'treatmentTime': menu.treatmentTime,
+                'treatmentDetail': menu.treatmentDetail,
                 'uid': model.user!.uid
               });
             }
@@ -165,7 +173,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                               children: [
                                 if (menu.beforePrice != '')
                                   Text(
-                                    menu.beforePrice,
+                                    menu.beforePrice!,
                                     style: const TextStyle(
                                         fontSize: 14,
                                         decoration: TextDecoration.lineThrough),
@@ -268,7 +276,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                     model.guidListTile(
                         height: height * 0.07,
                         width: width,
-                        deviceWidth: width * 0.05,
+                        deviceWidth: width * 0.07,
                         controller: model.nameController,
                         hintText: 'フルネーム'),
                     model.guidListTile(
@@ -280,19 +288,19 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                     model.guidListTile(
                         height: height * 0.07,
                         width: width,
-                        deviceWidth: width * 0.10,
+                        deviceWidth: width * 0.1,
                         isNumberOnly: true,
                         controller: model.telephoneNumberController,
                         hintText: '電話番号'),
                     model.guidListTile(
                         height: height * 0.07,
                         width: width,
-                        deviceWidth: width * 0.15,
+                        deviceWidth: width * 0.1,
                         picker: () async {
                           model.dateOfBirthPicker(context);
                         },
                         controller: model.dateOfBirthController,
-                        hintText: '誕生日'),
+                        hintText: '生年月日'),
                     SizedBox(height: height * 0.04),
                     Center(
                       child: SizedBox(

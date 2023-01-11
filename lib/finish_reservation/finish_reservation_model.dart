@@ -67,5 +67,5 @@ class FinishReservationModel extends ChangeNotifier {
         .toList();
   }
 
-  final visitStoreFormatter = DateFormat('yyyy年M月d日');
+  final visitStoreFormatter = DateFormat('yyyy年M月d日 H時mm分~');
 }

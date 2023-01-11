@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -73,12 +72,12 @@ class _EditPageState extends State<EditPage> {
                         hintText: '電話番号'),
                     guidListTile(
                         model: model,
-                        width: 60,
+                        width: 40,
                         picker: () async {
                           model.dateOfBirthPicker(context);
                         },
                         controller: model.dateOfBirthController,
-                        hintText: '誕生日'),
+                        hintText: '生年月日'),
                     const SizedBox(height: 20),
                     ElevatedButton(
                         onPressed: () {

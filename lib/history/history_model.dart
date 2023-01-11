@@ -1,48 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
-import '../domain/menu.dart';
 import '../domain/reservation.dart';
 
 class HistoryModel extends ChangeNotifier {
-  List<Menu> menuList = [];
-  List<Menu> myHistoryList = [];
   List<Reservation> reservationList = [];
 
-  final historyDateFormatter = DateFormat('yyyy年M月d日');
+  ///状況を整理していきたいと思う
+  ///履歴のlistをどのように埋めているかというと、
+  ///menuListとReservationを上から照合していく
+  ///一致した順番にListに放り込んでいく
 
-  Future<void> fetchMenuList() async {
-    Stream<QuerySnapshot> menuStream =
-        FirebaseFirestore.instance.collection('menu').snapshots();
-
-    menuStream.listen((snapshot) {
-      menuList = snapshot.docs.map((DocumentSnapshot doc) {
-        return Menu.fromFireStore(doc);
-      }).toList();
-    });
-    notifyListeners();
-  }
-
-  Future<void> addHistory() async {
-    print(1);
-    for (var menu in menuList) {
-      print(2);
-      for (var reservation in reservationList) {
-        print(3);
-        if (menu.menuId == reservation.menuId) {
-          print(4);
-          if (!myHistoryList.contains(menu)) {
-            print(5);
-            myHistoryList.add(menu);
-          }
-        }
-      }
-    }
-  }
+  final historyDateFormatter = DateFormat('yyyy年M月d日 H時mm分~');
 
   Future<void> fetchReservationList() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -50,17 +22,18 @@ class HistoryModel extends ChangeNotifier {
         .collection('users')
         .doc(user!.uid)
         .collection('reservations')
+        .orderBy('startTime', descending: false)
         .snapshots();
     reservationStream.listen((snapshot) {
       reservationList = snapshot.docs
           .map((DocumentSnapshot doc) => Reservation.fromFirestore(doc))
           .toList();
+      notifyListeners();
     });
-    notifyListeners();
   }
 
-  Widget targetCard(Menu menu) {
-    return menu.isTargetAllMember
+  Widget targetCard(Reservation reservation) {
+    return reservation.isTargetAllMember
         ? Container(
             width: 50,
             padding: const EdgeInsets.all(2),

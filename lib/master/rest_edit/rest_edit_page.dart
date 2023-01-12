@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
@@ -12,7 +13,7 @@ class RestEditPage extends StatefulWidget {
 }
 
 class _RestEditPageState extends State<RestEditPage> {
-  List<bool> selectedList = [...List.generate(1000, (index) => false)];
+  List<bool> selectedList = [...List.generate(5000, (index) => false)];
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +48,6 @@ class _RestEditPageState extends State<RestEditPage> {
                           setState(() {
                             selectedList[index] = value!;
                             model.addDeleteList(rest);
-                            print(model.deleteRestList.length);
                           });
                         },
                         controlAffinity: ListTileControlAffinity.leading,
@@ -56,12 +56,20 @@ class _RestEditPageState extends State<RestEditPage> {
                   })),
               const SizedBox(height: 30),
               ElevatedButton(
-                  onPressed: model.deleteRestList.isNotEmpty
-                      ? () {
-                          model.deleteRegister(context);
-                        }
-                      : null,
-                  child: const Text('削除する')),
+                onPressed: model.deleteRestList.isNotEmpty
+                    ? () {
+                        model.deleteRegister(context);
+                      }
+                    : null,
+                child: const Text('削除する'),
+              ),
+              const SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: () async {
+                  await FirebaseAuth.instance.signOut();
+                },
+                child: const Text('ログアウト'),
+              ),
             ],
           ),
         );

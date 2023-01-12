@@ -7,7 +7,7 @@ class Reservation {
   Reservation(
       {required this.startTime,
       required this.finishTime,
-      required this.isTargetAllMember,
+      required this.targetMember,
       required this.treatmentDetailList,
       required this.treatmentDetail,
       this.beforePrice,
@@ -20,11 +20,11 @@ class Reservation {
 
   Timestamp startTime;
   Timestamp finishTime;
-  bool isTargetAllMember = true;
+  String targetMember;
   List<dynamic> treatmentDetailList;
   String treatmentDetail;
-  String? beforePrice;
-  String afterPrice;
+  int? beforePrice;
+  int afterPrice;
   String menuIntroduction;
   String menuImageUrl;
   String menuId;
@@ -36,7 +36,7 @@ class Reservation {
     return Reservation(
       startTime: data['startTime'],
       finishTime: data['finishTime'],
-      isTargetAllMember: data['isTargetAllMember'],
+      targetMember: data['targetMember'],
       treatmentDetailList: data['treatmentDetailList'],
       beforePrice: data['beforePrice'],
       afterPrice: data['afterPrice'],

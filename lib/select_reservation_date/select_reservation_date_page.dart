@@ -73,16 +73,16 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                             //料金の横並び
                             Row(
                               children: [
-                                if (menu.beforePrice != '')
+                                if (menu.beforePrice != null)
                                   Text(
-                                    menu.beforePrice!,
+                                    '${menu.beforePrice}円',
                                     style: const TextStyle(
                                         fontSize: 12,
                                         decoration: TextDecoration.lineThrough),
                                   ),
                                 const Text('▷'),
                                 Text(
-                                  menu.afterPrice,
+                                  '${menu.afterPrice}円',
                                   style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold),
@@ -92,27 +92,29 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                           ],
                         ),
                         SizedBox(width: width * 0.02),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              children: model.contentsOfHairList(),
-                            ),
-                            SizedBox(
-                                height: height * 0.11,
-                                width: width * 0.6,
-                                child: Text(menu.treatmentDetail)),
-                            Row(
-                              children: [
-                                SizedBox(width: width * 0.3),
-                                Text('施術時間：${menu.treatmentTime}分',
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black54,
-                                        fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                children: model.contentsOfHairList(),
+                              ),
+                              SizedBox(
+                                  height: height * 0.11,
+                                  width: width * 0.6,
+                                  child: Text(menu.treatmentDetail)),
+                              Row(
+                                children: [
+                                  SizedBox(width: width * 0.25),
+                                  Text('施術時間：${menu.treatmentTime}分',
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          color: Colors.black54,
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

@@ -32,7 +32,6 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
 
     Menu menu = widget.menu;
     DateTime startTime = widget.startTime;
-    Profile profile = widget.profile;
 
     return Scaffold(
       appBar: vishuAppBar(appBarTitle: '予約完了', isJapanese: true),
@@ -129,7 +128,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                Text(menu.afterPrice),
+                                Text('${menu.afterPrice}円'),
                                 Row(
                                   children: [
                                     SizedBox(width: width * 0.3),

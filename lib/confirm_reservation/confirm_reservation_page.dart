@@ -53,9 +53,10 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 'startTime': startTime,
                 'finishTime':
                     startTime.add(Duration(minutes: menu.treatmentTime)),
-                'isTargetAllMember': menu.isTargetAllMember,
+                'targetMember': menu.targetMember,
                 'treatmentDetailList': menu.treatmentDetailList,
-                'beforePrice': menu.beforePrice != '' ? menu.beforePrice : '',
+                'beforePrice':
+                    menu.beforePrice == null ? null : menu.beforePrice!,
                 'afterPrice': menu.afterPrice,
                 'menuIntroduction': menu.menuIntroduction,
                 'menuImageUrl': menu.menuImageUrl,
@@ -63,6 +64,20 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 'treatmentTime': menu.treatmentTime,
                 'treatmentDetail': menu.treatmentDetail,
                 'uid': model.user!.uid
+              });
+
+              ///Profileコレクションも更新しなくてはいけない
+              await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(model.user!.uid)
+                  .set({
+                'email': model.emailController.text,
+                'name': model.nameController.text,
+                'dateOfBirth': model.dateOfBirthController.text,
+                'telephoneNumber': model.telephoneNumberController.text,
+                'uid': model.user!.uid,
+                'imgUrl': profile.imgUrl != '' ? profile.imgUrl : '',
+                'dateTime': profile.dateTime
               });
             }
 
@@ -171,16 +186,16 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                             SizedBox(height: height * 0.015),
                             Row(
                               children: [
-                                if (menu.beforePrice != '')
+                                if (menu.beforePrice != null)
                                   Text(
-                                    menu.beforePrice!,
+                                    '${menu.beforePrice}円',
                                     style: const TextStyle(
                                         fontSize: 14,
                                         decoration: TextDecoration.lineThrough),
                                   ),
                                 const Text('▷'),
                                 Text(
-                                  menu.afterPrice,
+                                  '${menu.afterPrice}円',
                                   style: const TextStyle(
                                       fontSize: 17,
                                       fontWeight: FontWeight.bold),

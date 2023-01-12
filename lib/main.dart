@@ -5,7 +5,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/main_select_page.dart';
+import 'package:salon_vishu/master/addMenu/add_menu_model.dart';
 import 'package:salon_vishu/master/booker/booker_model.dart';
+import 'package:salon_vishu/master/master_select_page.dart';
+import 'package:salon_vishu/master/push_notification/push_notification_model.dart';
 import 'package:salon_vishu/master/rest_date_register/rest_date_register_model.dart';
 import 'package:salon_vishu/master/rest_edit/rest_edit_model.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
@@ -59,9 +62,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => RestEditModel()..fetchRestList()),
         ChangeNotifierProvider(
-            create: (_) => BookerModel()
-              ..fetchMenuList()
-              ..fetchReservationList())
+            create: (_) => BookerModel()..fetchReservationList()),
+        ChangeNotifierProvider(create: (_) => PushNotificationModel()),
+        ChangeNotifierProvider(create: (_) => AddMenuModel())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -75,8 +78,11 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
-            }
-            if (snapshot.hasData) {
+            } else if (snapshot.hasData) {
+              ///GoogleAccountでログインした時のみ
+              if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
+                return const MasterSelectPage();
+              }
               return const MainSelectPage();
             }
             return const SignInPage();

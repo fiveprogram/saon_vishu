@@ -24,7 +24,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Consumer<HistoryModel>(builder: (context, model, child) {
       return Scaffold(
-        appBar: vishuAppBar(appBarTitle: '予約履歴', isJapanese: true),
+        appBar: vishuAppBar(appBarTitle: '予約履歴', isJapanese: false),
         body: model.reservationList.isEmpty
             ? Center(
                 child: Column(
@@ -53,8 +53,7 @@ class _HistoryPageState extends State<HistoryPage> {
                             MaterialPageRoute(
                                 builder: (context) => SelectReservationDatePage(
                                     menu: Menu(
-                                        isTargetAllMember:
-                                            reservation.isTargetAllMember,
+                                        targetMember: reservation.targetMember,
                                         treatmentDetailList:
                                             reservation.treatmentDetailList,
                                         treatmentDetail:
@@ -160,16 +159,16 @@ class _HistoryPageState extends State<HistoryPage> {
                                       const SizedBox(height: 10),
                                       Row(
                                         children: [
-                                          if (reservation.beforePrice != '')
+                                          if (reservation.beforePrice != null)
                                             Text(
-                                              reservation.beforePrice!,
+                                              '${reservation.beforePrice}円',
                                               style: const TextStyle(
                                                   fontSize: 12,
                                                   decoration: TextDecoration
                                                       .lineThrough),
                                             ),
                                           const Text('▷'),
-                                          Text(reservation.afterPrice),
+                                          Text('${reservation.afterPrice}円'),
                                           const SizedBox(width: 40),
                                         ],
                                       ),

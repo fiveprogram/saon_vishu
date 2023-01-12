@@ -170,7 +170,7 @@ class EditModel extends ChangeNotifier {
           'email': emailController.text,
           'telephoneNumber': telephoneNumberController.text,
           'dateOfBirth': dateOfBirthController.text,
-          'imgUel': imgUrl,
+          'imgUrl': imgUrl,
           'dateTime': profile.dateTime,
           'uid': user!.uid,
         });

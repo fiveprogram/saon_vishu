@@ -11,6 +11,7 @@ class MenuModel extends ChangeNotifier {
   List<String> filteredTreatmentTypeList = [];
   List<String> treatmentTypeList = [
     'すべて',
+    'カット',
     'カラー',
     'トリートメント',
     'パーマ',
@@ -22,13 +23,15 @@ class MenuModel extends ChangeNotifier {
   Future<void> fetchMenuList() async {
     Stream<QuerySnapshot> menuStream = FirebaseFirestore.instance
         .collection('menu')
-        .orderBy('treatmentDetailList', descending: false)
+        .orderBy('priority', descending: false)
+        .orderBy('afterPrice', descending: false)
         .snapshots();
 
     menuStream.listen((snapshot) {
       menuList = snapshot.docs.map((DocumentSnapshot doc) {
         return Menu.fromFireStore(doc);
       }).toList();
+
       notifyListeners();
     });
   }

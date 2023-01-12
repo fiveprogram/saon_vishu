@@ -133,6 +133,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               if (model.isLoading)
                 Container(
+                  height: deviceHeight,
+                  width: deviceWidth,
                   color: Colors.black54,
                   child: const Center(
                     child: CircularProgressIndicator(),

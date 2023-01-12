@@ -47,8 +47,13 @@ class ProfileModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('はい'),
                   onPressed: () async {
-                    await googleSignOut();
+                    User? user = FirebaseAuth.instance.currentUser;
+                    if (user!.email!.contains('gmail')) {
+                      await googleSignOut();
+                    }
                     await FirebaseAuth.instance.signOut();
+                    notifyListeners();
+
                     Navigator.pop(context);
                   }),
             ],

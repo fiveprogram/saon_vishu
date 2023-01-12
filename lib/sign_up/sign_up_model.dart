@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:salon_vishu/main_select_page.dart';
 
 class SignUpModel extends ChangeNotifier {
   final emailController =
@@ -48,7 +49,6 @@ class SignUpModel extends ChangeNotifier {
   ///signUpMethod
   Future<void> signUpTransition(BuildContext context) async {
     startLoading();
-    notifyListeners();
 
     try {
       if (emailController.text.isEmpty ||
@@ -90,6 +90,7 @@ class SignUpModel extends ChangeNotifier {
         'imgUrl': '',
         'dateTime': createAccountDate
       });
+      notifyListeners();
     } on FirebaseAuthException catch (e) {
       ///snackBarを定義
       SnackBar snackBar = SnackBar(
@@ -119,6 +120,11 @@ class SignUpModel extends ChangeNotifier {
     } finally {
       endLoading();
       notifyListeners();
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainSelectPage()),
+          (route) => false);
     }
   }
 }

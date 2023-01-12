@@ -128,7 +128,7 @@ class SignInModel extends ChangeNotifier {
       }
     } catch (e) {
       const snackBar = SnackBar(
-        content: Text('ログインに失敗'),
+        content: Text('リトライ'),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

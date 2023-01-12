@@ -5,42 +5,38 @@ import 'package:intl/intl.dart';
 import '../domain/menu.dart';
 
 class FinishReservationModel extends ChangeNotifier {
+  ///menuCardの中で新規と
   Widget targetCard(Menu menu) {
-    return menu.isTargetAllMember
-        ? Container(
-            width: 50,
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(3)),
-              color: HexColor('#e28e7a'),
-              border: Border.all(
-                color: HexColor('#e28e7a'),
-              ),
-            ),
-            child: const Center(
-              child: Text(
-                '全員',
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              ),
-            ),
-          )
-        : Container(
-            width: 50,
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(3)),
-              color: HexColor('#7a3425'),
-              border: Border.all(
-                color: HexColor('#7a3425'),
-              ),
-            ),
-            child: const Center(
-              child: Text(
-                '新規',
-                style: TextStyle(color: Colors.white, fontSize: 12),
-              ),
-            ),
-          );
+    HexColor targetColor(String targetMember) {
+      switch (targetMember) {
+        case '新規':
+          return HexColor('#344eba');
+        case '再来':
+          return HexColor('#7a3425');
+        case '全員':
+          return HexColor('#e28e7a');
+        default:
+          return HexColor('#e28e7a');
+      }
+    }
+
+    return Container(
+      width: 50,
+      padding: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(3)),
+        color: targetColor(menu.targetMember!),
+        border: Border.all(
+          color: targetColor(menu.targetMember!),
+        ),
+      ),
+      child: Center(
+        child: Text(
+          menu.targetMember!,
+          style: const TextStyle(color: Colors.white, fontSize: 12),
+        ),
+      ),
+    );
   }
 
   List<Widget> contentsOfHairList(Menu menu) {

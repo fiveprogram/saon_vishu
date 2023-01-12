@@ -28,9 +28,9 @@ class _AddPageState extends State<AddPage> {
   Future<void> addTime() async {
     await FirebaseFirestore.instance
         .collection('menu')
-        .doc('EQDGnKuaTRXFGHbj7aw7')
+        .doc('6f8cBqIxDMJiN85R4OTA')
         .update({
-      'treatmentTime': 210,
+      'priority': 999,
     });
   }
 
@@ -66,9 +66,9 @@ class _AddPageState extends State<AddPage> {
           Center(
             child: ElevatedButton(
                 onPressed: () {
-                  signOut(context);
+                  addTime();
                 },
-                child: const Text('ログアウト')),
+                child: const Text('追加')),
           )
         ],
       ),

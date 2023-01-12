@@ -78,6 +78,7 @@ class RestEditModel extends ChangeNotifier {
   }
 
   Future<void> fetchRestList() async {
+    final today = DateTime.now();
     Stream<QuerySnapshot> restStream =
         FirebaseFirestore.instance.collectionGroup('rests').snapshots();
 
@@ -89,5 +90,14 @@ class RestEditModel extends ChangeNotifier {
         notifyListeners();
       },
     );
+
+    for (int i = 0; i < restTimeList.length; i++) {
+      if (restTimeList[i].startTime.toDate().isBefore(today)) {
+        await FirebaseFirestore.instance
+            .collection('rests')
+            .doc(restTimeList[i].restId)
+            .delete();
+      }
+    }
   }
 }

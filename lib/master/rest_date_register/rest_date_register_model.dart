@@ -280,7 +280,6 @@ class RestDateRegisterModel extends ChangeNotifier {
   ///Firestoreに情報を送るためのメソッド
   Future<void> registerRestTime(BuildContext context) async {
     for (int i = 0; i < restTimeList.length; i++) {
-      print(i);
       await FirebaseFirestore.instance
           .collection('rests')
           .doc(restTimeList[i].restId)

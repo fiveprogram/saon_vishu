@@ -55,41 +55,36 @@ class _MenuCardState extends State<MenuCard> {
 
       //対象者を表す
       Widget targetCard() {
-        return menu.isTargetAllMember
-            ? Container(
-                width: 50,
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(3)),
-                  color: HexColor('#e28e7a'),
-                  border: Border.all(
-                    color: HexColor('#e28e7a'),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    '全員',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-              )
-            : Container(
-                width: 50,
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(3)),
-                  color: HexColor('#7a3425'),
-                  border: Border.all(
-                    color: HexColor('#7a3425'),
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    '新規',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
-              );
+        HexColor targetColor(String targetMember) {
+          switch (targetMember) {
+            case '新規':
+              return HexColor('#344eba');
+            case '再来':
+              return HexColor('#7a3425');
+            case '全員':
+              return HexColor('#e28e7a');
+            default:
+              return HexColor('#e28e7a');
+          }
+        }
+
+        return Container(
+          width: 50,
+          padding: const EdgeInsets.all(2),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(3)),
+            color: targetColor(menu.targetMember!),
+            border: Border.all(
+              color: targetColor(menu.targetMember!),
+            ),
+          ),
+          child: Center(
+            child: Text(
+              menu.targetMember!,
+              style: const TextStyle(color: Colors.white, fontSize: 12),
+            ),
+          ),
+        );
       }
 
       return Padding(
@@ -161,16 +156,16 @@ class _MenuCardState extends State<MenuCard> {
                                 children: [
                                   Row(
                                     children: [
-                                      if (menu.beforePrice != '')
+                                      if (menu.beforePrice != null)
                                         Text(
-                                          menu.beforePrice!,
+                                          '${menu.beforePrice}円',
                                           style: const TextStyle(
                                               fontSize: 12,
                                               decoration:
                                                   TextDecoration.lineThrough),
                                         ),
                                       const Text('▷'),
-                                      Text(menu.afterPrice),
+                                      Text('${menu.afterPrice}円'),
                                       const SizedBox(width: 10),
                                     ],
                                   ),

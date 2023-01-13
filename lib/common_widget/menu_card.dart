@@ -22,6 +22,9 @@ class _MenuCardState extends State<MenuCard> {
     final width = MediaQuery.of(context).size.width;
 
     return Consumer<MenuModel>(builder: (context, model, child) {
+      if (model.menuList.isEmpty) {
+        return const CircularProgressIndicator();
+      }
       Menu menu = model.menuList[widget.menuIndex];
 
       if (model.filteredMenuList.isNotEmpty) {
@@ -73,14 +76,14 @@ class _MenuCardState extends State<MenuCard> {
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(3)),
-            color: targetColor(menu.targetMember!),
+            color: targetColor(menu.targetMember),
             border: Border.all(
-              color: targetColor(menu.targetMember!),
+              color: targetColor(menu.targetMember),
             ),
           ),
           child: Center(
             child: Text(
-              menu.targetMember!,
+              menu.targetMember,
               style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
           ),
@@ -135,7 +138,7 @@ class _MenuCardState extends State<MenuCard> {
                             borderRadius: BorderRadius.circular(10),
                             image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: NetworkImage(menu.menuImageUrl))),
+                                image: NetworkImage(menu.menuImageUrl!))),
                       ),
                       const SizedBox(width: 10),
                       Column(

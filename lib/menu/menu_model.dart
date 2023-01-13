@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -62,28 +61,5 @@ class MenuModel extends ChangeNotifier {
       }
     }
     notifyListeners();
-  }
-
-  Future<void> signOut(BuildContext context) async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: const Text('本当にログアウトしますか？'),
-            actions: [
-              CupertinoButton(
-                  child: const Text('いいえ'),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
-              CupertinoButton(
-                  child: const Text('はい'),
-                  onPressed: () async {
-                    await FirebaseAuth.instance.signOut();
-                    Navigator.pop(context);
-                  }),
-            ],
-          );
-        });
   }
 }

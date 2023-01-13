@@ -17,10 +17,12 @@ class EditModel extends ChangeNotifier {
     telephoneNumberController.text = profile.telephoneNumber;
     emailController.text = profile.email;
     dateOfBirthController.text = profile.dateOfBirth;
+    gender = profile.gender;
   }
 
   User? user = FirebaseAuth.instance.currentUser;
   String? errorText;
+  String? gender;
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -92,19 +94,19 @@ class EditModel extends ChangeNotifier {
         ),
         actions: <CupertinoActionSheetAction>[
           CupertinoActionSheetAction(
+            onPressed: () {
+              getImageFromCamera();
+              notifyListeners();
+            },
+            child: const Text('写真を撮る'),
+          ),
+          CupertinoActionSheetAction(
             isDefaultAction: true,
             onPressed: () {
               getImageFromGallery();
               notifyListeners();
             },
             child: const Text('カメラロールから選択'),
-          ),
-          CupertinoActionSheetAction(
-            onPressed: () {
-              getImageFromCamera();
-              notifyListeners();
-            },
-            child: const Text('写真を撮る'),
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
@@ -130,7 +132,8 @@ class EditModel extends ChangeNotifier {
       if (emailController.text == '' ||
           nameController.text == '' ||
           dateOfBirthController.text == '' ||
-          telephoneNumberController.text == '') {
+          telephoneNumberController.text == '' ||
+          gender == '') {
         await showDialog(
             context: context,
             builder: (context) {
@@ -155,6 +158,7 @@ class EditModel extends ChangeNotifier {
           'dateOfBirth': dateOfBirthController.text,
           'imgUrl': profile.imgUrl,
           'uid': user!.uid,
+          'gender': gender,
           'dateTime': profile.dateTime
         });
       }
@@ -172,6 +176,7 @@ class EditModel extends ChangeNotifier {
           'dateOfBirth': dateOfBirthController.text,
           'imgUrl': imgUrl,
           'dateTime': profile.dateTime,
+          'gender': gender,
           'uid': user!.uid,
         });
 

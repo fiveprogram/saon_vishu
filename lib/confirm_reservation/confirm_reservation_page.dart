@@ -29,9 +29,6 @@ class ConfirmReservationPage extends StatefulWidget {
 class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
-
     Menu menu = widget.menu;
     DateTime startTime = widget.startTime;
     Profile profile = widget.profile;
@@ -43,6 +40,9 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
         appBar: vishuAppBar(appBarTitle: '予約確認', isJapanese: true),
         body: Consumer<ConfirmReservationModel>(
           builder: (context, model, child) {
+            final height = MediaQuery.of(context).size.height;
+            final width = MediaQuery.of(context).size.width;
+
             ///予約情報を登録するためのメソッド
             Future<void> sendFirebaseWithReservationDate() async {
               await FirebaseFirestore.instance
@@ -63,6 +63,10 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 'menuId': menu.menuId,
                 'treatmentTime': menu.treatmentTime,
                 'treatmentDetail': menu.treatmentDetail,
+                'name': model.nameController.text,
+                'dateOfBirth': model.dateOfBirthController.text,
+                'telephoneNumber': model.telephoneNumberController.text,
+                'gender': model.gender,
                 'uid': model.user!.uid
               });
 
@@ -77,6 +81,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 'telephoneNumber': model.telephoneNumberController.text,
                 'uid': model.user!.uid,
                 'imgUrl': profile.imgUrl != '' ? profile.imgUrl : '',
+                'gender': model.gender,
                 'dateTime': profile.dateTime
               });
             }
@@ -88,7 +93,8 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
               if (model.nameController.text == '' ||
                   model.emailController.text == '' ||
                   model.telephoneNumberController.text == '' ||
-                  model.dateOfBirthController.text == '') {
+                  model.dateOfBirthController.text == '' ||
+                  model.gender == '') {
                 await showDialog(
                   context: context,
                   builder: (context) {
@@ -160,7 +166,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: NetworkImage(menu.menuImageUrl))),
+                                    image: NetworkImage(menu.menuImageUrl!))),
                           ),
                         ),
                         SizedBox(width: width * 0.03),
@@ -316,6 +322,50 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                         },
                         controller: model.dateOfBirthController,
                         hintText: '生年月日'),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(color: HexColor('#7e796e')))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            '性別',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          SizedBox(width: width * 0.04),
+                          SizedBox(
+                            width: width * 0.35,
+                            child: RadioListTile(
+                              title: const Text("男性"),
+                              value: "男性",
+                              groupValue: model.gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  model.gender = value.toString();
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: width * 0.35,
+                            child: RadioListTile(
+                              title: const Text("女性"),
+                              value: "女性",
+                              groupValue: model.gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  model.gender = value.toString();
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     SizedBox(height: height * 0.04),
                     Center(
                       child: SizedBox(

@@ -14,6 +14,8 @@ class SignUpModel extends ChangeNotifier {
   final dateOfBirthController = TextEditingController();
   final telephoneNumberController = TextEditingController(text: '09019645524');
 
+  String? gender;
+
   bool isLoading = false;
   void startLoading() {
     isLoading = true;
@@ -55,7 +57,8 @@ class SignUpModel extends ChangeNotifier {
           passController.text.isEmpty ||
           nameController.text.isEmpty ||
           dateOfBirthController.text.isEmpty ||
-          telephoneNumberController.text.isEmpty) {
+          telephoneNumberController.text.isEmpty ||
+          gender == null) {
         await showDialog(
             context: context,
             builder: (context) {
@@ -72,6 +75,7 @@ class SignUpModel extends ChangeNotifier {
             });
         return;
       }
+
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
@@ -88,9 +92,14 @@ class SignUpModel extends ChangeNotifier {
         'dateOfBirth': dateOfBirthController.text,
         'telephoneNumber': telephoneNumberController.text,
         'imgUrl': '',
-        'dateTime': createAccountDate
+        'gender': gender,
+        'dateTime': createAccountDate,
       });
       notifyListeners();
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => const MainSelectPage()),
+          (route) => false);
     } on FirebaseAuthException catch (e) {
       ///snackBarを定義
       SnackBar snackBar = SnackBar(
@@ -120,11 +129,6 @@ class SignUpModel extends ChangeNotifier {
     } finally {
       endLoading();
       notifyListeners();
-
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const MainSelectPage()),
-          (route) => false);
     }
   }
 }

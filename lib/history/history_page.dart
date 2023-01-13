@@ -24,7 +24,7 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Consumer<HistoryModel>(builder: (context, model, child) {
       return Scaffold(
-        appBar: vishuAppBar(appBarTitle: '予約履歴', isJapanese: false),
+        appBar: vishuAppBar(appBarTitle: '予約履歴', isJapanese: true),
         body: model.reservationList.isEmpty
             ? Center(
                 child: Column(

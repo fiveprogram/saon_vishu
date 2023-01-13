@@ -91,11 +91,11 @@ class _ProfilePageState extends State<ProfilePage> {
                   pageWidget: const GuideReservationPage(),
                   tileName: 'ご予約までの流れ'),
               myPageListTile(
-                tileName: '利用規約・ガイドライン',
+                tileName: 'オーナー自己紹介',
                 pageWidget: const GuideReservationPage(),
               ),
               myPageListTile(
-                tileName: 'よくある質問',
+                tileName: '利用規約・ガイドライン',
                 pageWidget: const GuideReservationPage(),
               ),
               Container(

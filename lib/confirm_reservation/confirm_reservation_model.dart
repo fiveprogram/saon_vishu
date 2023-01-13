@@ -14,6 +14,7 @@ class ConfirmReservationModel extends ChangeNotifier {
     telephoneNumberController.text = profile.telephoneNumber;
     emailController.text = profile.email;
     dateOfBirthController.text = profile.dateOfBirth;
+    gender = profile.gender;
   }
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -23,6 +24,7 @@ class ConfirmReservationModel extends ChangeNotifier {
   final emailController = TextEditingController();
   final telephoneNumberController = TextEditingController();
   final dateOfBirthController = TextEditingController();
+  String? gender;
 
   DateFormat dayOfWeekFormatter = DateFormat('EE', 'ja_JP');
   DateFormat startMinuteFormatter = DateFormat('HH:mm');

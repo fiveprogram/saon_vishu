@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: deviceWidth,
                 child: Column(
                   children: [
-                    vishuImage(deviceHeight * 0.34, deviceWidth),
+                    vishuImage(deviceHeight * 0.3, deviceWidth),
                     SizedBox(height: deviceHeight * 0.025),
                     AuthFormField(
                         isSuffixIcon: false,
@@ -111,6 +111,60 @@ class _SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
                       ),
+                    ),
+                    SizedBox(height: deviceHeight * 0.03),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(width: deviceWidth * 0.1),
+                        Icon(
+                          Icons.device_hub,
+                          color: HexColor('#fcf8f6'),
+                        ),
+                        SizedBox(width: deviceWidth * 0.03),
+                        Container(
+                          height: 40,
+                          width: deviceWidth * 0.7,
+                          decoration: BoxDecoration(
+                              color: HexColor('#fcf8f6'),
+                              border: Border.all(color: Colors.black54)),
+                          child: Row(
+                            children: [
+                              Radio(
+                                  value: '男性',
+                                  groupValue: model.gender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      model.gender = value;
+                                    });
+                                  }),
+                              const Text(
+                                '男性',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
+                              SizedBox(width: deviceWidth * 0.1),
+                              Radio(
+                                  value: '女性',
+                                  groupValue: model.gender,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      model.gender = value;
+                                    });
+                                  }),
+                              const Text(
+                                '女性',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: deviceHeight * 0.03),
                     SizedBox(

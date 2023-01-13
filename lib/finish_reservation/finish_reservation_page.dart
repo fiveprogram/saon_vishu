@@ -114,7 +114,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: NetworkImage(menu.menuImageUrl))),
+                                      image: NetworkImage(menu.menuImageUrl!))),
                             ),
                             const SizedBox(width: 10),
                             Column(

@@ -39,7 +39,8 @@ class _MasterSelectPageState extends State<MasterSelectPage> {
             BottomNavigationBarItem(icon: Icon(Icons.person), label: '予約者一覧'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notification_add), label: 'プッシュ通知画面'),
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: '追加ページ'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.manage_accounts), label: 'メニュー管理'),
           ]),
     );
   }

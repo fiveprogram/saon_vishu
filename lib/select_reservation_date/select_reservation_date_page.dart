@@ -67,7 +67,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                                   borderRadius: BorderRadius.circular(10),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: NetworkImage(menu.menuImageUrl))),
+                                      image: NetworkImage(menu.menuImageUrl!))),
                             ),
                             SizedBox(height: height * 0.01),
                             //料金の横並び

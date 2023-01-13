@@ -27,7 +27,7 @@ PreferredSize vishuAppBar({required String appBarTitle, isJapanese = false}) {
                       fontSize: 30,
                       color: Colors.black87,
                       fontWeight: FontWeight.bold,
-                      fontFamily: 'shokaki_sarari')),
+                    )),
           elevation: 10.0,
         ),
       ),

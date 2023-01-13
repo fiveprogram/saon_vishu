@@ -126,12 +126,6 @@ class SignInModel extends ChangeNotifier {
           },
         );
       }
-    } catch (e) {
-      const snackBar = SnackBar(
-        content: Text('リトライ'),
-      );
-
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     } finally {
       endLoading();
     }

@@ -7,8 +7,8 @@ class Menu {
   int? beforePrice;
   int afterPrice;
   String menuIntroduction;
-  String menuImageUrl;
-  String menuId;
+  String? menuImageUrl;
+  String? menuId;
   int treatmentTime;
   int? priority;
 
@@ -19,8 +19,8 @@ class Menu {
       this.beforePrice,
       required this.afterPrice,
       required this.menuIntroduction,
-      required this.menuImageUrl,
-      required this.menuId,
+      this.menuImageUrl,
+      this.menuId,
       required this.treatmentTime,
       this.priority});
 

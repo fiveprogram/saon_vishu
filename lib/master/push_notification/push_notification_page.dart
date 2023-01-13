@@ -16,7 +16,7 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
   Widget build(BuildContext context) {
     return Consumer<PushNotificationModel>(builder: (context, model, child) {
       return Scaffold(
-        appBar: vishuAppBar(appBarTitle: 'push notification'),
+        appBar: vishuAppBar(appBarTitle: 'プッシュ通知管理', isJapanese: true),
         body: Center(
           child: ElevatedButton(
               onPressed: () async {

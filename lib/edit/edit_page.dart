@@ -27,6 +27,9 @@ class _EditPageState extends State<EditPage> {
           builder: (context, model, child) {
             Profile profile = widget.profile;
 
+            final height = MediaQuery.of(context).size.height;
+            final double width = MediaQuery.of(context).size.width;
+
             return Stack(
               children: [
                 Column(
@@ -78,7 +81,46 @@ class _EditPageState extends State<EditPage> {
                         },
                         controller: model.dateOfBirthController,
                         hintText: '生年月日'),
-                    const SizedBox(height: 20),
+                    Container(
+                      height: 60,
+                      width: width,
+                      decoration: BoxDecoration(
+                          color: HexColor('#fcf8f6'),
+                          border: Border(
+                              bottom: BorderSide(color: HexColor('#7e796e')))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: width * 0.4,
+                            child: RadioListTile(
+                              title: const Text("男性"),
+                              value: "男性",
+                              groupValue: model.gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  model.gender = value.toString();
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: width * 0.4,
+                            child: RadioListTile(
+                              title: const Text("女性"),
+                              value: "女性",
+                              groupValue: model.gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  model.gender = value.toString();
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: height * 0.04),
                     ElevatedButton(
                         onPressed: () {
                           model.editProfileInformation(context);

@@ -7,6 +7,7 @@ class Profile {
   String telephoneNumber;
   String uid;
   String imgUrl;
+  String gender;
   Timestamp dateTime;
 
   Profile(
@@ -16,6 +17,7 @@ class Profile {
       required this.telephoneNumber,
       required this.uid,
       required this.imgUrl,
+      required this.gender,
       required this.dateTime});
 
   factory Profile.fromFirestore(DocumentSnapshot doc) {
@@ -27,6 +29,7 @@ class Profile {
         telephoneNumber: data['telephoneNumber'],
         uid: data['uid'],
         imgUrl: data['imgUrl'],
+        gender: data['gender'],
         dateTime: data['dateTime']);
   }
 }

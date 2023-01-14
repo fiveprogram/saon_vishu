@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:salon_vishu/cancel_reservation/cancel_reservation_page.dart';
 import 'package:salon_vishu/domain/menu.dart';
 import 'package:salon_vishu/select_reservation_date/select_reservation_date_page.dart';
 
@@ -47,26 +48,44 @@ class _HistoryPageState extends State<HistoryPage> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SelectReservationDatePage(
-                                    menu: Menu(
-                                        targetMember: reservation.targetMember,
-                                        treatmentDetailList:
-                                            reservation.treatmentDetailList,
-                                        treatmentDetail:
-                                            reservation.treatmentDetail,
-                                        beforePrice: reservation.beforePrice,
-                                        afterPrice: reservation.afterPrice,
-                                        menuIntroduction:
-                                            reservation.menuIntroduction,
-                                        menuImageUrl: reservation.menuImageUrl,
-                                        menuId: reservation.menuId,
-                                        treatmentTime:
-                                            reservation.treatmentTime))));
-                      },
+                      onTap: reservation.startTime
+                              .toDate()
+                              .isBefore(DateTime.now())
+                          ? () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SelectReservationDatePage(
+                                              menu: Menu(
+                                                  targetMember:
+                                                      reservation.targetMember,
+                                                  treatmentDetailList:
+                                                      reservation
+                                                          .treatmentDetailList,
+                                                  treatmentDetail: reservation
+                                                      .treatmentDetail,
+                                                  beforePrice:
+                                                      reservation.beforePrice,
+                                                  afterPrice:
+                                                      reservation.afterPrice,
+                                                  menuIntroduction: reservation
+                                                      .menuIntroduction,
+                                                  menuImageUrl:
+                                                      reservation.menuImageUrl,
+                                                  menuId: reservation.menuId,
+                                                  treatmentTime: reservation
+                                                      .treatmentTime))));
+                            }
+                          : () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          CancelReservationPage(
+                                            reservation: reservation,
+                                          )));
+                            },
                       child: Card(
                         surfaceTintColor: Colors.white,
                         elevation: 5,
@@ -150,7 +169,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 233,
+                                        width: width * 0.6,
                                         child: Text(
                                           reservation.treatmentDetail,
                                           style: const TextStyle(fontSize: 13),

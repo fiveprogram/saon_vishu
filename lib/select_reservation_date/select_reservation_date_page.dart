@@ -1,4 +1,3 @@
-// ignore: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/domain/menu.dart';
@@ -47,7 +46,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  SizedBox(height: height * 0.02),
+                  const Divider(),
                   SizedBox(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -31,7 +31,7 @@ class _SignInPageState extends State<SignInPage> {
           children: [
             Column(
               children: [
-                vishuImage(deviceHeight * 0.25, deviceWidth),
+                vishuImage(deviceHeight * 0.3, deviceWidth),
                 const SizedBox(height: 30),
                 AuthFormField(
                     isSuffixIcon: false,
@@ -115,7 +115,7 @@ Container vishuImage(double deviceHeight, double width) {
     height: deviceHeight,
     width: width,
     decoration: const BoxDecoration(
-        image: DecorationImage(image: AssetImage('images/LILIA-BEAUTY.jpeg'))),
+        image: DecorationImage(image: AssetImage('images/vishu_view.png'))),
   );
 }
 

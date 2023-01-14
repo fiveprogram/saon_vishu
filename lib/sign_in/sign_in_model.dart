@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../domain/profile.dart';
 import '../manager/firebase_option/firebase_options.dart';
@@ -126,8 +127,21 @@ class SignInModel extends ChangeNotifier {
           },
         );
       }
+    } catch (e) {
+      return;
     } finally {
       endLoading();
     }
+  }
+
+  Future<void> signInWithApple() async {
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+
+    print(credential);
   }
 }

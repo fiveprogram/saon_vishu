@@ -45,7 +45,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
 
             ///予約情報を登録するためのメソッド
             Future<void> sendFirebaseWithReservationDate() async {
-              await FirebaseFirestore.instance
+              final result = await FirebaseFirestore.instance
                   .collection('users')
                   .doc(model.user!.uid)
                   .collection('reservations')
@@ -69,6 +69,13 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 'gender': model.gender,
                 'uid': model.user!.uid
               });
+
+              await FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(model.user!.uid)
+                  .collection('reservations')
+                  .doc(result.id)
+                  .update({'reservationId': result.id});
 
               ///Profileコレクションも更新しなくてはいけない
               await FirebaseFirestore.instance

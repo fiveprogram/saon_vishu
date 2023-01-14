@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:provider/provider.dart';
+import 'package:salon_vishu/cancel_reservation/cancel_reservation_model.dart';
 import 'package:salon_vishu/main_select_page.dart';
 import 'package:salon_vishu/master/addMenu/add_menu_model.dart';
-import 'package:salon_vishu/master/addMenu/add_menu_page.dart';
-import 'package:salon_vishu/master/add_detail_menu/add_detail_model.dart';
+
 import 'package:salon_vishu/master/booker/booker_model.dart';
 import 'package:salon_vishu/master/master_select_page.dart';
 import 'package:salon_vishu/master/push_notification/push_notification_model.dart';
@@ -67,6 +67,7 @@ class MyApp extends StatelessWidget {
             create: (_) => BookerModel()..fetchReservationList()),
         ChangeNotifierProvider(create: (_) => PushNotificationModel()),
         ChangeNotifierProvider(create: (_) => AddMenuModel()..fetchMenuList()),
+        ChangeNotifierProvider(create: (_) => CancelReservationModel())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

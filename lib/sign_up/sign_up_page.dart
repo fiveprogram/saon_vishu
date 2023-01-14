@@ -32,8 +32,23 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: deviceWidth,
                 child: Column(
                   children: [
-                    vishuImage(deviceHeight * 0.3, deviceWidth),
-                    SizedBox(height: deviceHeight * 0.025),
+                    SizedBox(
+                      height: deviceHeight * 0.05,
+                    ),
+                    const Text('salon Vishu',
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54,
+                            fontFamily: 'Dancing_Script')),
+                    const Text(
+                      'バージョン　1.00.0',
+                      style: TextStyle(),
+                    ),
+                    SizedBox(
+                      height: deviceHeight * 0.05,
+                    ),
                     AuthFormField(
                         isSuffixIcon: false,
                         isVisivilly: false,

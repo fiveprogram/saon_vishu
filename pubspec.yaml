@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.17.0
   firebase_storage: ^11.0.8
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -114,7 +115,8 @@ flutter:
   assets:
     - images/vishu_view.png
     - images/LILIA-BEAUTY.jpeg
-  #   - images/a_dot_ham.jpeg
+    - images/スクリーンショット 2023-01-14 11.05.27.png
+    #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

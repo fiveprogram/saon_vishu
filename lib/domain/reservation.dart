@@ -10,6 +10,7 @@ class Reservation {
       required this.targetMember,
       required this.treatmentDetailList,
       required this.treatmentDetail,
+      required this.reservationId,
       this.beforePrice,
       required this.afterPrice,
       required this.menuIntroduction,
@@ -32,6 +33,7 @@ class Reservation {
   String menuIntroduction;
   String menuImageUrl;
   String menuId;
+  String? reservationId;
   int treatmentTime;
   String name;
   String dateOfBirth;
@@ -51,6 +53,7 @@ class Reservation {
       menuIntroduction: data['menuIntroduction'],
       menuImageUrl: data['menuImageUrl'],
       menuId: data['menuId'],
+      reservationId: data['reservationId'],
       treatmentTime: data['treatmentTime'],
       treatmentDetail: data['treatmentDetail'],
       name: data['name'],
@@ -61,3 +64,10 @@ class Reservation {
     );
   }
 }
+
+//
+// いつもお世話になっております。
+// 大変恐縮ではございますが、４講は既に満席となっております。
+// 申し訳ございません。
+//
+// お手数ではございますが、再度ご検討の上、ご連絡いただければと思いますので、よろしくお願いいたします。

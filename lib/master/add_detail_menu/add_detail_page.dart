@@ -270,9 +270,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
                                 '（例）大人1人と小学生迄のお子さん1人のカットです。¥5500シャンプーブロー込み。',
                             border: OutlineInputBorder()),
                       ),
-                      Divider(
-                        height: height * 0.05,
-                      ),
+                      SizedBox(height: height * 0.05),
                       const Text('・施術時間',
                           style: TextStyle(
                               fontSize: 20,
@@ -303,6 +301,22 @@ class _AddDetailPageState extends State<AddDetailPage> {
                         ],
                       ),
                       SizedBox(height: height * 0.05),
+                      const Divider(),
+                      SizedBox(height: height * 0.05),
+                      const Text('ロングヘアーの別途料金の支払いが発生しますか？'),
+                      Row(
+                        children: [
+                          Checkbox(
+                              value: model.isNeedExtraMoney,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  model.isNeedExtraMoney = value!;
+                                });
+                              }),
+                          const Text('発生する'),
+                        ],
+                      ),
+                      SizedBox(height: height * 0.02),
                       SizedBox(
                         width: width * 0.4,
                         child: ElevatedButton(
@@ -312,7 +326,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
                           child: const Text('登録する'),
                         ),
                       ),
-                      SizedBox(height: height * 0.05),
+                      SizedBox(height: height * 0.03),
                     ],
                   ),
                 ),

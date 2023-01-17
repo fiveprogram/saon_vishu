@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../domain/profile.dart';
-import '../manager/firebase_option/firebase_options.dart';
+import '../firebase_options.dart';
 
 class SignInModel extends ChangeNotifier {
   final emailController =
@@ -135,13 +135,39 @@ class SignInModel extends ChangeNotifier {
   }
 
   Future<void> signInWithApple() async {
-    final credential = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-    );
+    startLoading();
+    try {
+      final auth = FirebaseAuth.instance;
+      final appleProvider = AppleAuthProvider();
+      if (kIsWeb) {
+        print(auth.signInWithPopup(appleProvider).runtimeType);
+        await auth.signInWithPopup(appleProvider);
+      } else {
+        final result = await auth.signInWithProvider(appleProvider);
 
-    print(credential);
+        if (result.additionalUserInfo!.isNewUser) {
+          final user = result.user;
+
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(user!.uid)
+              .set(
+            {
+              'uid': user.uid,
+              'email': user.email,
+              'name': user.displayName,
+              'dateOfBirth': '',
+              'telephoneNumber': user.phoneNumber ?? '00000000000',
+              'imgUrl': user.photoURL != '' ? user.photoURL : '',
+              'dateTime': createAccountDate
+            },
+          );
+        }
+      }
+    } catch (e) {
+      return;
+    } finally {
+      endLoading();
+    }
   }
 }

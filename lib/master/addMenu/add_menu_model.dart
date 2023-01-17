@@ -14,7 +14,8 @@ class AddMenuModel extends ChangeNotifier {
     'トリートメント',
     'パーマ',
     'ヘッドスパ',
-    '縮毛矯正'
+    '縮毛矯正',
+    '着付け'
   ];
 
   //fetchMenuList

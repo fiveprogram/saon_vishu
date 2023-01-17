@@ -67,8 +67,6 @@ class CancelReservationModel extends ChangeNotifier {
                     context,
                     MaterialPageRoute(builder: (context) => MainSelectPage()),
                     (route) => false);
-
-                ///
               },
             ),
           ],

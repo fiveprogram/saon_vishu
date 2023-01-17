@@ -12,10 +12,11 @@ class MenuModel extends ChangeNotifier {
     'すべて',
     'カット',
     'カラー',
-    'トリートメント',
     'パーマ',
+    'トリートメント',
     'ヘッドスパ',
-    '縮毛矯正'
+    '縮毛矯正',
+    '着付け'
   ];
 
   //fetchMenuList

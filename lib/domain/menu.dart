@@ -11,6 +11,7 @@ class Menu {
   String? menuId;
   int treatmentTime;
   int? priority;
+  bool isNeedExtraMoney;
 
   Menu(
       {required this.targetMember,
@@ -22,7 +23,8 @@ class Menu {
       this.menuImageUrl,
       this.menuId,
       required this.treatmentTime,
-      this.priority});
+      this.priority,
+      required this.isNeedExtraMoney});
 
   factory Menu.fromFireStore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -37,6 +39,7 @@ class Menu {
         menuImageUrl: data['menuImageUrl'],
         menuId: data['menuId'],
         treatmentTime: data['treatmentTime'],
-        priority: data['priority']);
+        priority: data['priority'],
+        isNeedExtraMoney: data['isNeedExtraMoney']);
   }
 }

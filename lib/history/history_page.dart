@@ -74,8 +74,10 @@ class _HistoryPageState extends State<HistoryPage> {
                                                   menuImageUrl:
                                                       reservation.menuImageUrl,
                                                   menuId: reservation.menuId,
-                                                  treatmentTime: reservation
-                                                      .treatmentTime))));
+                                                  treatmentTime:
+                                                      reservation.treatmentTime,
+                                                  isNeedExtraMoney: reservation
+                                                      .isNeedExtraMoney))));
                             }
                           : () {
                               Navigator.push(

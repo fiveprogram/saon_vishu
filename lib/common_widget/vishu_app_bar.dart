@@ -14,6 +14,13 @@ PreferredSize vishuAppBar({required String appBarTitle, isJapanese = false}) {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
         child: AppBar(
+          // actions: [
+          //   IconButton(
+          //       onPressed: () async {
+          //         await FirebaseAuth.instance.signOut();
+          //       },
+          //       icon: const Icon(Icons.logout))
+          // ],
           systemOverlayStyle: SystemUiOverlayStyle.light,
           backgroundColor: HexColor("#989593"),
           title: Text(appBarTitle,

@@ -20,8 +20,8 @@ import 'package:salon_vishu/sign_up/sign_up_model.dart';
 
 import 'common_widget/calendar_model.dart';
 import 'finish_reservation/finish_reservation_model.dart';
+import 'firebase_options.dart';
 import 'history/history_model.dart';
-import 'manager/firebase_option/firebase_options.dart';
 import 'master/schedule/schedule_model.dart';
 import 'menu/menu_model.dart';
 

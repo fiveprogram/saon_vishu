@@ -24,6 +24,7 @@ class AddDetailModel extends ChangeNotifier {
       menuIntroductionController.text = menu.menuIntroduction;
       treatmentTimeController.text = menu.treatmentTime.toString();
       priority = menu.priority;
+      isNeedExtraMoney = menu.isNeedExtraMoney;
     }
   }
 
@@ -38,8 +39,8 @@ class AddDetailModel extends ChangeNotifier {
   String? menuId;
   int? priority;
 
+  bool isNeedExtraMoney = false;
   bool isLoading = false;
-
   void startLoading() {
     isLoading = true;
     notifyListeners();
@@ -56,7 +57,8 @@ class AddDetailModel extends ChangeNotifier {
     'トリートメント',
     'パーマ',
     'ヘッドスパ',
-    '縮毛矯正'
+    '縮毛矯正',
+    '着付け'
   ];
   List selectedTypeList = <String>[];
 
@@ -197,7 +199,8 @@ class AddDetailModel extends ChangeNotifier {
                             'priority': 999,
                             'menuIntroduction': menuIntroductionController.text,
                             'menuImageUrl': imgUrl,
-                            'menuId': menuId
+                            'menuId': menuId,
+                            'isNeedExtraMoney': isNeedExtraMoney,
                           },
                         );
                       }
@@ -224,6 +227,7 @@ class AddDetailModel extends ChangeNotifier {
                           'menuIntroduction': menuIntroductionController.text,
                           'menuImageUrl': imgUrl,
                           'priority': 999,
+                          'isNeedExtraMoney': isNeedExtraMoney,
                         });
 
                         await FirebaseFirestore.instance

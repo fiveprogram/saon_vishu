@@ -49,26 +49,30 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   .collection('users')
                   .doc(model.user!.uid)
                   .collection('reservations')
-                  .add({
-                'startTime': startTime,
-                'finishTime':
-                    startTime.add(Duration(minutes: menu.treatmentTime)),
-                'targetMember': menu.targetMember,
-                'treatmentDetailList': menu.treatmentDetailList,
-                'beforePrice':
-                    menu.beforePrice == null ? null : menu.beforePrice!,
-                'afterPrice': menu.afterPrice,
-                'menuIntroduction': menu.menuIntroduction,
-                'menuImageUrl': menu.menuImageUrl,
-                'menuId': menu.menuId,
-                'treatmentTime': menu.treatmentTime,
-                'treatmentDetail': menu.treatmentDetail,
-                'name': model.nameController.text,
-                'dateOfBirth': model.dateOfBirthController.text,
-                'telephoneNumber': model.telephoneNumberController.text,
-                'gender': model.gender,
-                'uid': model.user!.uid
-              });
+                  .add(
+                {
+                  'startTime': startTime,
+                  'finishTime':
+                      startTime.add(Duration(minutes: menu.treatmentTime)),
+                  'targetMember': menu.targetMember,
+                  'treatmentDetailList': menu.treatmentDetailList,
+                  'beforePrice':
+                      menu.beforePrice == null ? null : menu.beforePrice!,
+                  'afterPrice': menu.afterPrice,
+                  'menuIntroduction': menu.menuIntroduction,
+                  'menuImageUrl': menu.menuImageUrl,
+                  'menuId': menu.menuId,
+                  'treatmentTime': menu.treatmentTime,
+                  'treatmentDetail': menu.treatmentDetail,
+                  'priority': menu.priority,
+                  'isNeedExtraMoney': menu.isNeedExtraMoney,
+                  'name': model.nameController.text,
+                  'dateOfBirth': model.dateOfBirthController.text,
+                  'telephoneNumber': model.telephoneNumberController.text,
+                  'gender': model.gender,
+                  'uid': model.user!.uid
+                },
+              );
 
               await FirebaseFirestore.instance
                   .collection('users')
@@ -101,7 +105,10 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   model.emailController.text == '' ||
                   model.telephoneNumberController.text == '' ||
                   model.dateOfBirthController.text == '' ||
-                  model.gender == '') {
+                  model.gender == '' ||
+                  model.isChildConfirm == false ||
+                  model.isLateConfirm == false ||
+                  menu.isNeedExtraMoney && model.isLongHairConfirm == false) {
                 await showDialog(
                   context: context,
                   builder: (context) {
@@ -155,7 +162,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
 
             return SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -259,7 +266,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                           color: Colors.black87),
                     ),
                     const Text(
-                      'PayPay / LINE Pay',
+                      'PayPay/現金',
                       style: TextStyle(fontSize: 16, color: Colors.black87),
                     ),
                     SizedBox(height: height * 0.03),
@@ -287,6 +294,209 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                       style: TextStyle(fontSize: 17, color: Colors.black87),
                     ),
                     SizedBox(height: height * 0.03),
+                    Container(
+                      alignment: Alignment.center,
+                      height: height * 0.05,
+                      decoration: BoxDecoration(
+                          color: HexColor('#fcf8f6'),
+                          border: const Border(
+                              bottom: BorderSide(color: Colors.black26),
+                              top: BorderSide(color: Colors.black26))),
+                      child: const Text('サロンからお客様への確認事項',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: height * 0.01),
+                            SizedBox(
+                              width: width * 0.28,
+                              child: const Text(
+                                'ご来店に際して\nのご注意事項',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.redAccent),
+                              ),
+                              child: const Text('必須',
+                                  style: TextStyle(color: Colors.redAccent)),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: width * 0.1),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: height * 0.01),
+                            SizedBox(
+                              width: width * 0.55,
+                              child: const Text(
+                                'お客様から当日キャンセル、10分以上遅れる場合はご連絡ください。また、大幅に遅れる場合は、メニューを変更させていただく場合がございます。',
+                                style: TextStyle(
+                                    color: Colors.black87, fontSize: 13),
+                              ),
+                            ),
+                            SizedBox(height: height * 0.01),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Checkbox(
+                                    value: model.isLateConfirm,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        model.isLateConfirm = value!;
+                                      });
+                                    }),
+                                const Text(
+                                  '確認しました。',
+                                  style: TextStyle(
+                                      color: Colors.black87, fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Divider(),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: height * 0.01),
+                            SizedBox(
+                              width: width * 0.28,
+                              child: const Text(
+                                'サロンからの\n質問',
+                                style: TextStyle(
+                                    color: Colors.black54,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.redAccent),
+                              ),
+                              child: const Text('必須',
+                                  style: TextStyle(color: Colors.redAccent)),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: width * 0.1),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: height * 0.01),
+                            SizedBox(
+                              width: width * 0.55,
+                              child: const Text(
+                                '私自身子供がいて、一人サロンのため、当日やむを得ず、こちらからのキャンセルをさせていただく場合がございます。ご了承いただけました方は、確認欄をタップください。',
+                                style: TextStyle(
+                                    color: Colors.black87, fontSize: 13),
+                              ),
+                            ),
+                            SizedBox(height: height * 0.01),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Checkbox(
+                                    value: model.isChildConfirm,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        model.isChildConfirm = value!;
+                                      });
+                                    }),
+                                const Text(
+                                  '確認しました',
+                                  style: TextStyle(
+                                      color: Colors.black87, fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    if (menu.isNeedExtraMoney) const Divider(),
+                    if (menu.isNeedExtraMoney)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: height * 0.01),
+                              SizedBox(
+                                width: width * 0.28,
+                                child: const Text(
+                                  'ロング料金に\nついて',
+                                  style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.redAccent),
+                                ),
+                                child: const Text('必須',
+                                    style: TextStyle(color: Colors.redAccent)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: width * 0.1),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: height * 0.01),
+                              SizedBox(
+                                width: width * 0.55,
+                                child: const Text(
+                                  '髪の長さに応じて、パーマ剤・薬剤・その他トリートメントの使用量が変動します。ロング料金（550~円）からにご了承いただけました方は、確認欄をタップください',
+                                  style: TextStyle(
+                                      color: Colors.black87, fontSize: 13),
+                                ),
+                              ),
+                              SizedBox(height: height * 0.01),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Checkbox(
+                                      value: model.isLongHairConfirm,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          model.isLongHairConfirm = value!;
+                                        });
+                                      }),
+                                  const Text(
+                                    '確認しました。',
+                                    style: TextStyle(
+                                        color: Colors.black87, fontSize: 13),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     Container(
                       alignment: Alignment.center,
                       height: height * 0.05,

@@ -31,6 +31,11 @@ class ConfirmReservationModel extends ChangeNotifier {
 
   DateTime? registerDateOfBirth;
 
+  bool isLateConfirm = false;
+  bool isChildConfirm = false;
+  bool isLongHairConfirm = false;
+
+  ///isNeedExtraMoney
   Future<void> dateOfBirthPicker(
     BuildContext context,
   ) async {

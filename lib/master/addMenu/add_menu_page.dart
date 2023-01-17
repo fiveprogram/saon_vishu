@@ -256,7 +256,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                                         menu, context);
                                                   },
                                                   icon:
-                                                      const Icon(Icons.delete))
+                                                      const Icon(Icons.delete)),
                                             ],
                                           ),
                                         ],

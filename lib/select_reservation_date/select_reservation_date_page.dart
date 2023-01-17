@@ -118,6 +118,9 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                       ],
                     ),
                   ),
+                  const Divider(),
+                  const Text('【メニュー紹介♪】', style: TextStyle(fontSize: 17)),
+                  Text(menu.menuIntroduction),
                   SizedBox(height: height * 0.02),
                   Container(
                     height: height * 0.06,

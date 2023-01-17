@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../domain/profile.dart';
-import '../manager/firebase_option/firebase_options.dart';
+import '../firebase_options.dart';
 
 class ProfileModel extends ChangeNotifier {
   Profile? profile;
@@ -48,9 +48,8 @@ class ProfileModel extends ChangeNotifier {
                   child: const Text('はい'),
                   onPressed: () async {
                     User? user = FirebaseAuth.instance.currentUser;
-                    if (user!.email!.contains('gmail')) {
-                      await googleSignOut();
-                    }
+
+                    await googleSignOut();
                     await FirebaseAuth.instance.signOut();
                     notifyListeners();
 

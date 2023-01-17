@@ -20,8 +20,10 @@ class Reservation {
       required this.name,
       required this.dateOfBirth,
       required this.telephoneNumber,
+      required this.isNeedExtraMoney,
       required this.gender,
-      required this.uid});
+      required this.uid,
+      required this.priority});
 
   Timestamp startTime;
   Timestamp finishTime;
@@ -35,6 +37,8 @@ class Reservation {
   String menuId;
   String? reservationId;
   int treatmentTime;
+  int? priority;
+  bool isNeedExtraMoney;
   String name;
   String dateOfBirth;
   String telephoneNumber;
@@ -44,24 +48,25 @@ class Reservation {
   factory Reservation.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Reservation(
-      startTime: data['startTime'],
-      finishTime: data['finishTime'],
-      targetMember: data['targetMember'],
-      treatmentDetailList: data['treatmentDetailList'],
-      beforePrice: data['beforePrice'],
-      afterPrice: data['afterPrice'],
-      menuIntroduction: data['menuIntroduction'],
-      menuImageUrl: data['menuImageUrl'],
-      menuId: data['menuId'],
-      reservationId: data['reservationId'],
-      treatmentTime: data['treatmentTime'],
-      treatmentDetail: data['treatmentDetail'],
-      name: data['name'],
-      dateOfBirth: data['dateOfBirth'],
-      telephoneNumber: data['telephoneNumber'],
-      gender: data['gender'],
-      uid: data['uid'],
-    );
+        startTime: data['startTime'],
+        finishTime: data['finishTime'],
+        targetMember: data['targetMember'],
+        treatmentDetailList: data['treatmentDetailList'],
+        beforePrice: data['beforePrice'],
+        afterPrice: data['afterPrice'],
+        menuIntroduction: data['menuIntroduction'],
+        menuImageUrl: data['menuImageUrl'],
+        menuId: data['menuId'],
+        reservationId: data['reservationId'],
+        treatmentTime: data['treatmentTime'],
+        treatmentDetail: data['treatmentDetail'],
+        name: data['name'],
+        dateOfBirth: data['dateOfBirth'],
+        telephoneNumber: data['telephoneNumber'],
+        gender: data['gender'],
+        uid: data['uid'],
+        priority: data['priority'],
+        isNeedExtraMoney: data['isNeedExtraMoney']);
   }
 }
 

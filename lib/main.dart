@@ -11,6 +11,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/cancel_reservation/cancel_reservation_model.dart';
 import 'package:salon_vishu/main_select_page.dart';
+
 import 'package:salon_vishu/master/addMenu/add_menu_model.dart';
 
 import 'package:salon_vishu/master/booker/booker_model.dart';
@@ -47,6 +48,8 @@ class MyApp extends StatelessWidget {
   Future<void> forceUpdate(
       String iosVersion, String androidVersion, BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    ///２つのバージョンををint型のリストに変換している
     final usingVersion = packageInfo.version;
     final usingVersionStringList = usingVersion.split('.');
     final usingVersionIntList =
@@ -65,14 +68,13 @@ class MyApp extends StatelessWidget {
               CupertinoButton(
                 child: const Text('今すぐ更新'),
                 onPressed: () async {
-                  const appStoreUrl = 'https://www.apple.com/jp/app-store/';
                   if (Platform.isAndroid || Platform.isIOS) {
                     final appId = Platform.isAndroid
-                        ? 'YOUR_ANDROID_PACKAGE_ID'
-                        : 'YOUR_IOS_APP_ID';
+                        ? 'com.itsukage.salonVishu'
+                        : '1666140616';
                     final url = Uri.parse(
                       Platform.isAndroid
-                          ? "market://details?id=$appId"
+                          ? "https://play.google.com/store/apps/details?id=$appId"
                           : "https://apps.apple.com/app/id$appId",
                     );
                     launchUrl(

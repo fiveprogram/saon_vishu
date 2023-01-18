@@ -11,15 +11,17 @@ class AddMenuModel extends ChangeNotifier {
     'すべて',
     'カット',
     'カラー',
-    'トリートメント',
     'パーマ',
+    'トリートメント',
     'ヘッドスパ',
     '縮毛矯正',
+    'ヘアセット',
     '着付け'
   ];
 
   //fetchMenuList
   Future<void> fetchMenuList() async {
+    print(1);
     Stream<QuerySnapshot> menuStream = FirebaseFirestore.instance
         .collection('menu')
         .orderBy('priority', descending: false)

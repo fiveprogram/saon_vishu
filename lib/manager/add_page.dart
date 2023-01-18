@@ -10,18 +10,35 @@ class AddPage extends StatefulWidget {
   State<AddPage> createState() => _AddPageState();
 }
 
+///7カラー
+///8パーマ
+///9縮毛矯正
+///10トリートメント
+///11ワンランクアップトリートメント
+///12ヘアセット
+///13ヘッドスパ
+///14着付け
+
+///メニュー追加画面でヘアセット・着付けランを作っていない
+
 class _AddPageState extends State<AddPage> {
   Future<void> addMenu() async {
-    await FirebaseFirestore.instance.collection('menu').add({
-      'afterPrice': 'いつもオセ❽ないなテオリマtextフォさんフォmacあんふぉなそjfんさどjfな',
-      'beforePrice': '',
-      'isTargetAllMember': true,
-      'treatmentDetail': 'フロントカット(シャンプー・ブロー込) 　イメージに合わせてカットします♪',
-      'treatmentDetailList': ['カット'],
-      'menuIntroduction': 'フロントカット 　イメージに合わせてカットします♪',
+    final result = await FirebaseFirestore.instance.collection('menu').add({
+      'afterPrice': 2500,
+      'targetMember': '全員',
+      'treatmentDetail': '成人式 [ネット予約対象外]',
+      'treatmentDetailList': ['着付け'],
+      'menuIntroduction': '要予約。着付け、成人式ヘアセット、メイク。単品もございますのでお問い合わせ下さい。',
       'menuImageUrl':
-          'https://firebasestorage.googleapis.com/v0/b/salon-vishu.appspot.com/o/スクリーンショット%202022-12-19%2014.40.07.png?alt=media&token=3decbe8c-d849-4f3e-8591-bb2c0a8ccb8a',
+          'https://firebasestorage.googleapis.com/v0/b/salon-vishu.appspot.com/o/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202023-01-18%2014.22.39.png?alt=media&token=f28b363f-5631-4a5d-b44b-3224fb9f2354',
       'menuId': '',
+      'treatmentTime': 180,
+      'isNeedExtraMoney': false,
+      'priority': 14,
+    });
+
+    await FirebaseFirestore.instance.collection('menu').doc(result.id).update({
+      'menuId': result.id,
     });
   }
 
@@ -66,7 +83,7 @@ class _AddPageState extends State<AddPage> {
           Center(
             child: ElevatedButton(
                 onPressed: () {
-                  addTime();
+                  addMenu();
                 },
                 child: const Text('追加')),
           )

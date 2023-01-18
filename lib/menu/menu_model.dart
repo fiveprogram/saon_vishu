@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../domain/menu.dart';
 
@@ -17,6 +16,7 @@ class MenuModel extends ChangeNotifier {
     'トリートメント',
     'ヘッドスパ',
     '縮毛矯正',
+    'ヘアセット',
     '着付け'
   ];
 

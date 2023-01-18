@@ -58,6 +58,7 @@ class AddDetailModel extends ChangeNotifier {
     'パーマ',
     'ヘッドスパ',
     '縮毛矯正',
+    'ヘアセット',
     '着付け'
   ];
   List selectedTypeList = <String>[];
@@ -196,7 +197,7 @@ class AddDetailModel extends ChangeNotifier {
                                 : int.parse(beforePriceController.text),
                             'treatmentTime':
                                 int.parse(treatmentTimeController.text),
-                            'priority': 999,
+                            'priority': priority,
                             'menuIntroduction': menuIntroductionController.text,
                             'menuImageUrl': imgUrl,
                             'menuId': menuId,

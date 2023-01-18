@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:salon_vishu/manager/add_page.dart';
 import 'package:salon_vishu/profile/profile_page.dart';
 
 import 'history/history_page.dart';
@@ -13,11 +14,7 @@ class MainSelectPage extends StatefulWidget {
 
 class _MainSelectPageState extends State<MainSelectPage> {
   int currentPageIndex = 0;
-  List<Widget> pageList = [
-    const MenuPage(),
-    const HistoryPage(),
-    const ProfilePage()
-  ];
+  List<Widget> pageList = [const MenuPage(), AddPage(), const ProfilePage()];
 
   @override
   Widget build(BuildContext context) {

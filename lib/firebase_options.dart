@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyC_6T-fkpYBs0oblu1rlP6-rEbSWdTkhA8',
-    appId: '1:689319200957:android:c35398a65ecae16d6a4fd4',
+    appId: '1:689319200957:android:4398fc9c1ff504566a4fd4',
     messagingSenderId: '689319200957',
     projectId: 'salon-vishu',
     storageBucket: 'salon-vishu.appspot.com',
@@ -59,10 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyA_iY2RXbkEgCAmhYcTzAk1Qdz4sI_0W1Y',
-    appId: '1:689319200957:ios:cda5805f3f2fd64b6a4fd4',
+    appId: '1:689319200957:ios:ef659cc84846feae6a4fd4',
     messagingSenderId: '689319200957',
     projectId: 'salon-vishu',
     storageBucket: 'salon-vishu.appspot.com',
+    androidClientId: '689319200957-fc1mu70j5gehhj42c2iajpgu3s0qhb3i.apps.googleusercontent.com',
     iosClientId: '689319200957-o9gmfknculnag70vmgqgmnha6lhhjv7q.apps.googleusercontent.com',
     iosBundleId: 'com.itsukage.salonVishu',
   );

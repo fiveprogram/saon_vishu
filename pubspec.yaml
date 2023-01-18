@@ -46,6 +46,8 @@ dependencies:
   image_picker: ^0.8.6
   intl: ^0.17.0
   firebase_storage: ^11.0.8
+  package_info_plus: ^3.0.2
+  url_launcher: ^6.1.7
 
 
 dev_dependencies:

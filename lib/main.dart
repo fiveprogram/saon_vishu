@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/cancel_reservation/cancel_reservation_model.dart';
 import 'package:salon_vishu/main_select_page.dart';
@@ -17,6 +22,7 @@ import 'package:salon_vishu/profile/profile_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
 import 'package:salon_vishu/sign_up/sign_up_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'common_widget/calendar_model.dart';
 import 'finish_reservation/finish_reservation_model.dart';
@@ -37,6 +43,51 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  Future<void> forceUpdate(
+      String iosVersion, String androidVersion, BuildContext context) async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    final usingVersion = packageInfo.version;
+    final usingVersionStringList = usingVersion.split('.');
+    final usingVersionIntList =
+        usingVersionStringList.map((e) => int.parse(e)).toList();
+    final minAvailableVersion = Platform.isIOS ? iosVersion : androidVersion;
+    final minAvailableVersionStringList = minAvailableVersion.split('.');
+    final minAvailableVersionIntList =
+        minAvailableVersionStringList.map((e) => int.parse(e)).toList();
+    for (int i = 0; i < 3; i++) {
+      if (usingVersionIntList[i] < minAvailableVersionIntList[i]) {
+        return showDialog(
+          context: context,
+          builder: (context) => CupertinoAlertDialog(
+            title: const Text('新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。'),
+            actions: [
+              CupertinoButton(
+                child: const Text('今すぐ更新'),
+                onPressed: () async {
+                  const appStoreUrl = 'https://www.apple.com/jp/app-store/';
+                  if (Platform.isAndroid || Platform.isIOS) {
+                    final appId = Platform.isAndroid
+                        ? 'YOUR_ANDROID_PACKAGE_ID'
+                        : 'YOUR_IOS_APP_ID';
+                    final url = Uri.parse(
+                      Platform.isAndroid
+                          ? "market://details?id=$appId"
+                          : "https://apps.apple.com/app/id$appId",
+                    );
+                    launchUrl(
+                      url,
+                      mode: LaunchMode.externalApplication,
+                    );
+                  }
+                },
+              )
+            ],
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,19 +127,33 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             scaffoldBackgroundColor: HexColor("#c9c5c3"),
             colorSchemeSeed: HexColor("#c9c5c3")),
-        home: StreamBuilder<User?>(
-          stream: FirebaseAuth.instance.authStateChanges(),
+        home: StreamBuilder(
+          stream: FirebaseFirestore.instance
+              .collection('force_update')
+              .doc('uHoECUdMBarAX1H61FTC')
+              .snapshots(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasData) {
-              ///GoogleAccountでログインした時のみ
-              if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
-                return const MasterSelectPage();
-              }
-              return const MainSelectPage();
+            if (snapshot.hasData &&
+                snapshot.connectionState == ConnectionState.active) {
+              final doc = snapshot.data!;
+              forceUpdate(doc['iosMinAvailableVersion'],
+                  doc['androidMinAvailableVersion'], context);
             }
-            return const SignInPage();
+            return StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasData) {
+                  ///GoogleAccountでログインした時のみ
+                  if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
+                    return const MasterSelectPage();
+                  }
+                  return const MainSelectPage();
+                }
+                return const SignInPage();
+              },
+            );
           },
         ),
       ),

@@ -76,6 +76,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                                   menuId: reservation.menuId,
                                                   treatmentTime:
                                                       reservation.treatmentTime,
+                                                  priority:
+                                                      reservation.priority,
                                                   isNeedExtraMoney: reservation
                                                       .isNeedExtraMoney))));
                             }

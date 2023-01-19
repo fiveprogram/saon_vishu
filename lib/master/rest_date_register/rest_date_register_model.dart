@@ -159,37 +159,30 @@ class RestDateRegisterModel extends ChangeNotifier {
         }
       }
     }
-
     if (registeredRestList.isNotEmpty && removeRegisteredRestList.isNotEmpty) {
       for (final registered in registeredRestList) {
         for (final removeRegisteredRest in removeRegisteredRestList) {
-          ///まだ休憩解除されていなければ、休憩解除リストに登録
           if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute) &&
-              removeRegisteredRest.startTime
+              !removeRegisteredRest.startTime
                   .toDate()
                   .isAtSameMomentAs(thirtyMinute)) {
-            againRegistered = registered;
+            deleteRegister = registered;
             print(1);
-          } else if (registered.startTime
+          }
+
+          ///もう一度休憩リストに加えるのであれば
+          else if (registered.startTime
                   .toDate()
                   .isAtSameMomentAs(thirtyMinute) &&
               !removeRegisteredRest.startTime
                   .toDate()
                   .isAtSameMomentAs(thirtyMinute)) {
-            deleteRegister = registered;
+            againRegistered = registered;
             print(2);
           }
-
-          ///問題点
-          ///removeRegisteredRestListにすでに登録されているリストが複数干渉しあって、
-          ///
-
-          ///既に休憩解除されている時間をもう一度タップすれば
-
         }
       }
     }
-
     if (deleteRegister != null) {
       removeRegisteredRestList.add(deleteRegister);
       print(3);
@@ -219,20 +212,13 @@ class RestDateRegisterModel extends ChangeNotifier {
 
   ///表示を制御している
   String canRestTime(DateTime thirtyMinute) {
-    ///既に予約されているマスに対して✖️をつける。
-    ///データベースから引っ張り
     if (isAvailable(thirtyMinute) == false) {
       return '予';
     }
-
-    ///既に休憩が登録されているマスに対して、ローカルのリストに追加している
-    ///データベースから引っ張ります
     Rest? addRest;
     Rest? removeRest;
     Rest? registeredRest;
 
-    ///新たに休憩に加える
-    ///✖が表示されている
     if (restTimeList.isNotEmpty) {
       for (final restTime in restTimeList) {
         if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
@@ -240,9 +226,6 @@ class RestDateRegisterModel extends ChangeNotifier {
         }
       }
     }
-
-    ///削除される休憩時間
-    ///◯が表示されている
     if (removeRegisteredRestList.isNotEmpty) {
       for (final restTime in removeRegisteredRestList) {
         if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
@@ -251,8 +234,6 @@ class RestDateRegisterModel extends ChangeNotifier {
       }
     }
 
-    ///もともと休憩が登録されているリスト
-    ///❌が登録されている
     if (registeredRestList.isNotEmpty) {
       for (final registered in registeredRestList) {
         if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {

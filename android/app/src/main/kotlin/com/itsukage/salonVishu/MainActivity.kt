@@ -1,4 +1,4 @@
-package com.example.salon_vishu
+package com.itsukage.salonVishu
 
 import io.flutter.embedding.android.FlutterActivity
 

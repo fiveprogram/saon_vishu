@@ -6,7 +6,7 @@ import 'package:salon_vishu/profile/profile_model.dart';
 import '../common_widget/vishu_app_bar.dart';
 import '../domain/profile.dart';
 import '../edit/edit_page.dart';
-import '../guide/guid_reservation_page.dart';
+import 'guide/guid_reservation_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -123,7 +123,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.black54,
                       fontFamily: 'Dancing_Script')),
               const Text(
-                'バージョン　1.00.0',
+                'バージョン　1.0.0',
                 style: TextStyle(),
               ),
             ],

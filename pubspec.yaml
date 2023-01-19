@@ -47,6 +47,7 @@ dependencies:
   intl: ^0.17.0
   firebase_storage: ^11.0.8
   package_info_plus: ^3.0.2
+  carousel_slider: ^4.2.1
   url_launcher: ^6.1.7
 
 

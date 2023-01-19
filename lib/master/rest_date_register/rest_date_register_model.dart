@@ -12,10 +12,15 @@ import '../../domain/rest.dart';
 class RestDateRegisterModel extends ChangeNotifier {
   ///予約一覧
   List<Reservation> reservationList = [];
+
+  ///データベースのRest情報
   List<Rest> registeredRestList = [];
 
-  ///休みたい日時を入れるリスト
+  ///restTime
   List<Rest> restTimeList = [];
+
+  ///これからRestから削除する情報
+  List<Rest> removeRegisteredRestList = [];
 
   Future<void> fetchRestList() async {
     Stream<QuerySnapshot> restStream =
@@ -28,7 +33,6 @@ class RestDateRegisterModel extends ChangeNotifier {
             .toList();
 
         ///データベースにある情報を全てRestTimeListに放り込んでいる
-
         notifyListeners();
       },
     );
@@ -129,28 +133,86 @@ class RestDateRegisterModel extends ChangeNotifier {
   }
 
   ///restTimeListに要素を追加・削除している
+  ///タップするたびに叩くメソッド
   void addRestTimeList(DateTime thirtyMinute) {
     final idFormat = DateFormat('yyyyMMddhhmm');
 
+    ///追加・削除するRest情報の定義
     final startTime = thirtyMinute;
     final endTime = thirtyMinute.add(const Duration(minutes: 30));
     final rest = Rest(Timestamp.fromDate(startTime),
         Timestamp.fromDate(endTime), idFormat.format(thirtyMinute));
 
-    Rest? removeTargetRestTime;
+    ///registeredList（赤い❌）をタップしたときに、removeRegisteredListに入っていなければ、add
+    ///removeRegisteredListに入っていなければ、removeする
+    ///removeRegisteredListに入っていれば◯を返し、入っていなければ❌を返す
 
-    ///restTimeListに登録されている削除対象に入れられる
-    for (final restTime in restTimeList) {
-      if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
-        removeTargetRestTime = restTime;
+    Rest? deleteRegister;
+    Rest? againRegistered;
+    if (registeredRestList.isNotEmpty && removeRegisteredRestList.isEmpty) {
+      for (final registered in registeredRestList) {
+        {
+          if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
+            deleteRegister = registered;
+            print(0);
+          }
+        }
       }
     }
 
-    ///既に含まれているもの対してはremove、まだ含まれていないものに対してはaddする移行、
-    if (removeTargetRestTime == null) {
+    if (registeredRestList.isNotEmpty && removeRegisteredRestList.isNotEmpty) {
+      for (final registered in registeredRestList) {
+        for (final removeRegisteredRest in removeRegisteredRestList) {
+          ///まだ休憩解除されていなければ、休憩解除リストに登録
+          if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute) &&
+              removeRegisteredRest.startTime
+                  .toDate()
+                  .isAtSameMomentAs(thirtyMinute)) {
+            againRegistered = registered;
+            print(1);
+          } else if (registered.startTime
+                  .toDate()
+                  .isAtSameMomentAs(thirtyMinute) &&
+              !removeRegisteredRest.startTime
+                  .toDate()
+                  .isAtSameMomentAs(thirtyMinute)) {
+            deleteRegister = registered;
+            print(2);
+          }
+
+          ///問題点
+          ///removeRegisteredRestListにすでに登録されているリストが複数干渉しあって、
+          ///
+
+          ///既に休憩解除されている時間をもう一度タップすれば
+
+        }
+      }
+    }
+
+    if (deleteRegister != null) {
+      removeRegisteredRestList.add(deleteRegister);
+      print(3);
+    } else if (againRegistered != null) {
+      removeRegisteredRestList.remove(againRegistered);
+      print(4);
+    }
+
+    Rest? addRest;
+    for (final restTime in restTimeList) {
+      if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
+        addRest = restTime;
+        print(5);
+      }
+    }
+    if (addRest == null && deleteRegister == null && againRegistered == null) {
       restTimeList.add(rest);
-    } else {
-      restTimeList.remove(removeTargetRestTime);
+      print(6);
+    } else if (addRest != null &&
+        deleteRegister == null &&
+        againRegistered == null) {
+      restTimeList.remove(addRest);
+      print(7);
     }
     notifyListeners();
   }
@@ -165,29 +227,45 @@ class RestDateRegisterModel extends ChangeNotifier {
 
     ///既に休憩が登録されているマスに対して、ローカルのリストに追加している
     ///データベースから引っ張ります
-    Rest? removeTargetRestTime;
-    Rest? removeRegisteredTime;
+    Rest? addRest;
+    Rest? removeRest;
+    Rest? registeredRest;
 
+    ///新たに休憩に加える
+    ///✖が表示されている
     if (restTimeList.isNotEmpty) {
       for (final restTime in restTimeList) {
         if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
-          removeTargetRestTime = restTime;
+          addRest = restTime;
         }
       }
     }
 
+    ///削除される休憩時間
+    ///◯が表示されている
+    if (removeRegisteredRestList.isNotEmpty) {
+      for (final restTime in removeRegisteredRestList) {
+        if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
+          removeRest = restTime;
+        }
+      }
+    }
+
+    ///もともと休憩が登録されているリスト
+    ///❌が登録されている
     if (registeredRestList.isNotEmpty) {
       for (final registered in registeredRestList) {
         if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
-          removeRegisteredTime = registered;
+          registeredRest = registered;
         }
       }
     }
 
     ///ここに時間として登録されているかどうかが鍵
-    if (removeRegisteredTime != null) {
+    ///removeされるものは◯に変わる
+    if (registeredRest != null && removeRest == null) {
       return '❌';
-    } else if (removeTargetRestTime != null) {
+    } else if (addRest != null) {
       return '✖︎';
     } else {
       return '○';
@@ -265,6 +343,7 @@ class RestDateRegisterModel extends ChangeNotifier {
                   onPressed: () {
                     ///restTImeListを初期値に戻す
                     restTimeList.clear();
+                    removeRegisteredRestList.clear();
 
                     Navigator.pushAndRemoveUntil(
                         context,
@@ -291,3 +370,12 @@ class RestDateRegisterModel extends ChangeNotifier {
     }
   }
 }
+
+/// - 現行のカレンダーのセル判定ロジック
+/// - 以下の条件を満たす場合、「予」を返す。
+///     - そのセルの時刻がregisteredFireReservationListに含まれていること
+/// - 以下の条件を満たす場合、「×(赤色)」を返す。
+///     - そのセルの時刻がregisteredFireRestListに含まれていること
+/// - 以下の条件を満たす場合、「×(黒色)」を返す。
+///     - そのセルの時刻がwillAddFireRestListに含まれていること
+/// - 以上の条件のどれにも該当しない場合、「〇」を返す。

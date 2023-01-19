@@ -1,0 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class InformationSalonDetail {
+  List<dynamic> vishuImagesList = [];
+  //サロンから一言の画像
+  String vishuImage;
+  //オーナーのれき
+  String skillYear;
+  //オーナーの一言
+  String ownerWord;
+  //オーナー写真
+  String stylistImage;
+
+  InformationSalonDetail(
+      {required this.vishuImagesList,
+      required this.vishuImage,
+      required this.skillYear,
+      required this.ownerWord,
+      required this.stylistImage});
+
+  factory InformationSalonDetail.fromFirestore(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return InformationSalonDetail(
+      vishuImagesList: data['vishuImagesList'],
+      vishuImage: data['vishuImage'],
+      stylistImage: data['stylistImage'],
+      ownerWord: data['ownerWord'],
+      skillYear: data['skillYear'],
+    );
+  }
+}

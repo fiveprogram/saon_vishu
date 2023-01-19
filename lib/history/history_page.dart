@@ -3,11 +3,11 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/cancel_reservation/cancel_reservation_page.dart';
 import 'package:salon_vishu/domain/menu.dart';
-import 'package:salon_vishu/select_reservation_date/select_reservation_date_page.dart';
 
 import '../common_widget/vishu_app_bar.dart';
 
 import '../domain/reservation.dart';
+import '../menu/select_reservation_date/select_reservation_date_page.dart';
 import 'history_model.dart';
 
 class HistoryPage extends StatefulWidget {

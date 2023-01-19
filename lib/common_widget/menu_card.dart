@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../domain/menu.dart';
 import '../menu/menu_model.dart';
-import '../select_reservation_date/select_reservation_date_page.dart';
+import '../menu/select_reservation_date/select_reservation_date_page.dart';
 
 // ignore: must_be_immutable
 class MenuCard extends StatefulWidget {

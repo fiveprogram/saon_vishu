@@ -31,7 +31,7 @@ PreferredSize vishuAppBar({required String appBarTitle, isJapanese = false}) {
                       color: Colors.black87,
                       fontFamily: 'Dancing_Script')
                   : const TextStyle(
-                      fontSize: 30,
+                      fontSize: 25,
                       color: Colors.black87,
                       fontWeight: FontWeight.bold,
                     )),

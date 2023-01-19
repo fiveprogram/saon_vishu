@@ -27,6 +27,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
         return Stack(
           children: [
             Scaffold(
+              backgroundColor: HexColor('#fcf8f6'),
               appBar: vishuAppBar(appBarTitle: 'メニュー編集', isJapanese: true),
               body: SingleChildScrollView(
                 child: Padding(
@@ -320,6 +321,10 @@ class _AddDetailPageState extends State<AddDetailPage> {
                       SizedBox(
                         width: width * 0.4,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: HexColor('#b38861'),
+                          ),
                           onPressed: () {
                             model.menuAddButton(context);
                           },

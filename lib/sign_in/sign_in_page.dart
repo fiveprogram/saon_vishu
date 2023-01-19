@@ -4,7 +4,7 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:salon_vishu/pass_reset/pass_reset_page.dart';
+import 'package:salon_vishu/sign_in/pass_reset/pass_reset_page.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 
 import '../common_widget/auth_form_field.dart';

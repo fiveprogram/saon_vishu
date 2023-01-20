@@ -17,10 +17,10 @@ class RestDateRegisterModel extends ChangeNotifier {
   List<Rest> registeredRestList = [];
 
   ///restTime
-  List<Rest> restTimeList = [];
+  List<Rest> willAddRegisteredRestList = [];
 
   ///これからRestから削除する情報
-  List<Rest> removeRegisteredRestList = [];
+  List<Rest> willRemoveRegisteredRestList = [];
 
   Future<void> fetchRestList() async {
     Stream<QuerySnapshot> restStream =
@@ -33,6 +33,15 @@ class RestDateRegisterModel extends ChangeNotifier {
             .toList();
 
         ///データベースにある情報を全てRestTimeListに放り込んでいる
+        for (final registered in registeredRestList) {
+          if (registered.endTime.toDate().isBefore(today)) {
+            FirebaseFirestore.instance
+                .collection('rests')
+                .doc(registered.restId)
+                .delete();
+          }
+        }
+
         notifyListeners();
       },
     );
@@ -111,7 +120,7 @@ class RestDateRegisterModel extends ChangeNotifier {
   final businessTimeFormatter = DateFormat('HH :mm');
 
   ///引数で与えるのはweekDay
-  bool isAvailable(DateTime date) {
+  bool isNotAlreadyReserved(DateTime date) {
     final startTime = date;
     final endTime = startTime.add(const Duration(minutes: 1));
     //現在時刻より前は予約できない。
@@ -134,7 +143,7 @@ class RestDateRegisterModel extends ChangeNotifier {
 
   ///restTimeListに要素を追加・削除している
   ///タップするたびに叩くメソッド
-  void addRestTimeList(DateTime thirtyMinute) {
+  void onCellTap(DateTime thirtyMinute) {
     final idFormat = DateFormat('yyyyMMddhhmm');
 
     ///追加・削除するRest情報の定義
@@ -143,102 +152,57 @@ class RestDateRegisterModel extends ChangeNotifier {
     final rest = Rest(Timestamp.fromDate(startTime),
         Timestamp.fromDate(endTime), idFormat.format(thirtyMinute));
 
-    ///registeredList（赤い❌）をタップしたときに、removeRegisteredListに入っていなければ、add
-    ///removeRegisteredListに入っていなければ、removeする
-    ///removeRegisteredListに入っていれば◯を返し、入っていなければ❌を返す
-
-    Rest? deleteRegister;
-    Rest? againRegistered;
-    if (registeredRestList.isNotEmpty && removeRegisteredRestList.isEmpty) {
-      for (final registered in registeredRestList) {
-        {
-          if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
-            deleteRegister = registered;
-            print(0);
+    for (final registeredRest in registeredRestList) {
+      if (registeredRest.startTime.toDate().isAtSameMomentAs(startTime)) {
+        for (final willRemoveRegisteredRest in willRemoveRegisteredRestList) {
+          if (willRemoveRegisteredRest.startTime
+              .toDate()
+              .isAtSameMomentAs(startTime)) {
+            willRemoveRegisteredRestList.remove(willRemoveRegisteredRest);
+            return notifyListeners();
           }
         }
+        willRemoveRegisteredRestList.add(rest);
+        return notifyListeners();
       }
-    }
-    if (registeredRestList.isNotEmpty && removeRegisteredRestList.isNotEmpty) {
-      for (final registered in registeredRestList) {
-        for (final removeRegisteredRest in removeRegisteredRestList) {
-          if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute) &&
-              !removeRegisteredRest.startTime
-                  .toDate()
-                  .isAtSameMomentAs(thirtyMinute)) {
-            deleteRegister = registered;
-            print(1);
-          }
-
-          ///もう一度休憩リストに加えるのであれば
-          else if (registered.startTime
-                  .toDate()
-                  .isAtSameMomentAs(thirtyMinute) &&
-              !removeRegisteredRest.startTime
-                  .toDate()
-                  .isAtSameMomentAs(thirtyMinute)) {
-            againRegistered = registered;
-            print(2);
-          }
-        }
-      }
-    }
-    if (deleteRegister != null) {
-      removeRegisteredRestList.add(deleteRegister);
-      print(3);
-    } else if (againRegistered != null) {
-      removeRegisteredRestList.remove(againRegistered);
-      print(4);
     }
 
-    Rest? addRest;
-    for (final restTime in restTimeList) {
-      if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
-        addRest = restTime;
-        print(5);
+    for (final willAddRegisteredRest in willAddRegisteredRestList) {
+      if (willAddRegisteredRest.startTime
+          .toDate()
+          .isAtSameMomentAs(startTime)) {
+        willAddRegisteredRestList.remove(willAddRegisteredRest);
+        return notifyListeners();
       }
     }
-    if (addRest == null && deleteRegister == null && againRegistered == null) {
-      restTimeList.add(rest);
-      print(6);
-    } else if (addRest != null &&
-        deleteRegister == null &&
-        againRegistered == null) {
-      restTimeList.remove(addRest);
-      print(7);
-    }
-    notifyListeners();
+    willAddRegisteredRestList.add(rest);
+    return notifyListeners();
   }
 
   ///表示を制御している
-  String canRestTime(DateTime thirtyMinute) {
-    if (isAvailable(thirtyMinute) == false) {
+  String cellLabel(DateTime thirtyMinute) {
+    if (!isNotAlreadyReserved(thirtyMinute)) {
       return '予';
     }
     Rest? addRest;
     Rest? removeRest;
     Rest? registeredRest;
 
-    if (restTimeList.isNotEmpty) {
-      for (final restTime in restTimeList) {
-        if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
-          addRest = restTime;
-        }
-      }
-    }
-    if (removeRegisteredRestList.isNotEmpty) {
-      for (final restTime in removeRegisteredRestList) {
-        if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
-          removeRest = restTime;
-        }
+    for (final restTime in willAddRegisteredRestList) {
+      if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
+        addRest = restTime;
       }
     }
 
-    if (registeredRestList.isNotEmpty) {
-      for (final registered in registeredRestList) {
-        if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
-          registeredRest = registered;
-        }
+    for (final restTime in willRemoveRegisteredRestList) {
+      if (restTime.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
+        removeRest = restTime;
+      }
+    }
+
+    for (final registered in registeredRestList) {
+      if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
+        registeredRest = registered;
       }
     }
 
@@ -255,7 +219,8 @@ class RestDateRegisterModel extends ChangeNotifier {
 
   ///Registerモデル
   Future<void> registerRestOwnerTime(BuildContext context) async {
-    if (restTimeList.isEmpty) {
+    if (willAddRegisteredRestList.isEmpty &&
+        willRemoveRegisteredRestList.isEmpty) {
       await showDialog(
         context: context,
         builder: (context) {
@@ -286,7 +251,9 @@ class RestDateRegisterModel extends ChangeNotifier {
               CupertinoButton(
                 child: const Text('完了'),
                 onPressed: () async {
-                  registerRestTime(context);
+                  await registerRestTime(context);
+                  willRemoveRegisteredRestList.clear();
+                  willAddRegisteredRestList.clear();
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
@@ -304,7 +271,8 @@ class RestDateRegisterModel extends ChangeNotifier {
   ///前のページに戻る
   Future<bool> willPopCallback(BuildContext context) async {
     ///あとで、registeredRestListの要素が減っていなければっていう制御も必要
-    if (restTimeList.isEmpty) {
+    if (willAddRegisteredRestList.isEmpty &&
+        willRemoveRegisteredRestList.isEmpty) {
       return true;
     }
     return await showDialog(
@@ -320,18 +288,19 @@ class RestDateRegisterModel extends ChangeNotifier {
                     Navigator.of(context).pop(false);
                   }),
               CupertinoButton(
-                  child: const Text('はい'),
-                  onPressed: () {
-                    ///restTImeListを初期値に戻す
-                    restTimeList.clear();
-                    removeRegisteredRestList.clear();
+                child: const Text('はい'),
+                onPressed: () {
+                  ///restTImeListを初期値に戻す
+                  willAddRegisteredRestList.clear();
+                  willRemoveRegisteredRestList.clear();
 
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MasterSelectPage()),
-                        (route) => false);
-                  }),
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MasterSelectPage()),
+                      (route) => false);
+                },
+              ),
             ],
           );
         });
@@ -339,15 +308,22 @@ class RestDateRegisterModel extends ChangeNotifier {
 
   ///Firestoreに情報を送るためのメソッド
   Future<void> registerRestTime(BuildContext context) async {
-    for (int i = 0; i < restTimeList.length; i++) {
+    for (int i = 0; i < willAddRegisteredRestList.length; i++) {
       await FirebaseFirestore.instance
           .collection('rests')
-          .doc(restTimeList[i].restId)
+          .doc(willAddRegisteredRestList[i].restId)
           .set({
-        'startTime': restTimeList[i].startTime,
-        'endTime': restTimeList[i].endTime,
-        'restId': restTimeList[i].restId
+        'startTime': willAddRegisteredRestList[i].startTime,
+        'endTime': willAddRegisteredRestList[i].endTime,
+        'restId': willAddRegisteredRestList[i].restId
       });
+    }
+
+    for (int i = 0; i < willRemoveRegisteredRestList.length; i++) {
+      await FirebaseFirestore.instance
+          .collection('rests')
+          .doc(willRemoveRegisteredRestList[i].restId)
+          .delete();
     }
   }
 }

@@ -164,11 +164,12 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
                               ...model.separateThirtyMinutes(weekDay).map(
                                 (thirtyMinute) {
                                   return GestureDetector(
-                                    onTap: model.isAvailable(thirtyMinute)
-                                        ? () {
-                                            model.addRestTimeList(thirtyMinute);
-                                          }
-                                        : null,
+                                    onTap:
+                                        model.isNotAlreadyReserved(thirtyMinute)
+                                            ? () {
+                                                model.onCellTap(thirtyMinute);
+                                              }
+                                            : null,
                                     child: Container(
                                       alignment: Alignment.center,
                                       height: height * 0.06,
@@ -178,9 +179,9 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
                                         border:
                                             Border.all(color: Colors.black38),
                                       ),
-                                      child: Text(
-                                          model.canRestTime(thirtyMinute),
-                                          style: model.isAvailable(thirtyMinute)
+                                      child: Text(model.cellLabel(thirtyMinute),
+                                          style: model.isNotAlreadyReserved(
+                                                  thirtyMinute)
                                               ? TextStyle(
                                                   color: HexColor('#fc7ea0'),
                                                   fontSize: 20,

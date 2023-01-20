@@ -10,14 +10,15 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/cancel_reservation/cancel_reservation_model.dart';
-
+import 'package:salon_vishu/main_select_page.dart';
 import 'package:salon_vishu/master/addMenu/add_menu_model.dart';
-
-import 'package:salon_vishu/master/booker/booker_model.dart';
+import 'package:salon_vishu/master/booker_calendar/booker_calendar_model.dart';
+import 'package:salon_vishu/master/booker_detail/booker_detail_model.dart';
 import 'package:salon_vishu/master/master_select_page.dart';
 import 'package:salon_vishu/master/push_notification/push_notification_model.dart';
 import 'package:salon_vishu/master/rest_date_register/rest_date_register_model.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
+import 'package:salon_vishu/profile/profile_page.dart';
 import 'package:salon_vishu/profile/salon_info/salon_info_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
@@ -115,11 +116,12 @@ class MyApp extends StatelessWidget {
             ..fetchRestList(),
         ),
         ChangeNotifierProvider(
-            create: (_) => BookerModel()..fetchReservationList()),
+            create: (_) => BookerCalendarModel()..fetchReservation()),
         ChangeNotifierProvider(create: (_) => PushNotificationModel()),
         ChangeNotifierProvider(create: (_) => AddMenuModel()..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => CancelReservationModel()),
         ChangeNotifierProvider(create: (_) => SalonInfoModel()..fetchInfo()),
+        ChangeNotifierProvider(create: (_) => BookerDetailModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -150,7 +152,7 @@ class MyApp extends StatelessWidget {
                   if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
                     return const MasterSelectPage();
                   }
-                  return const MasterSelectPage();
+                  return const ProfilePage();
                 }
                 return const SignInPage();
               },

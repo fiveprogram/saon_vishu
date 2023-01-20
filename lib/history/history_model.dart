@@ -39,11 +39,11 @@ class HistoryModel extends ChangeNotifier {
         case '新規':
           return HexColor('#344eba');
         case '再来':
-          return HexColor('#7a3425');
+          return HexColor('#73e600');
         case '全員':
           return HexColor('#e28e7a');
         default:
-          return HexColor('#e28e7a');
+          return HexColor('#ff8db4');
       }
     }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
+import 'package:salon_vishu/profile/salon_info/salon_info_page.dart';
 
 import '../common_widget/vishu_app_bar.dart';
 import '../domain/profile.dart';
@@ -18,6 +19,31 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+
+    Container myPageListTile(
+        {required String tileName, required Widget pageWidget}) {
+      return Container(
+        height: height * 0.072,
+        decoration: const BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.black26))),
+        child: ListTile(
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => pageWidget));
+          },
+          tileColor: HexColor('#fcf8f6'),
+          title: Text(tileName,
+              style: const TextStyle(
+                fontSize: 20,
+                color: Colors.black54,
+              )),
+          trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: vishuAppBar(appBarTitle: 'my page'),
       body: Consumer<ProfileModel>(
@@ -30,20 +56,20 @@ class _ProfilePageState extends State<ProfilePage> {
 
           return Column(
             children: [
-              const SizedBox(height: 20),
+              SizedBox(height: height * 0.03),
               Row(
-                children: const [
-                  SizedBox(width: 20),
-                  Text('・お客様情報',
+                children: [
+                  SizedBox(width: width * 0.02),
+                  const Text('・お客様情報',
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.black54,
                           fontWeight: FontWeight.bold)),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: height * 0.02),
               Container(
-                height: 60,
+                height: height * 0.075,
                 decoration: BoxDecoration(
                     border: Border.all(color: HexColor('#989593'))),
                 child: ListTile(
@@ -75,33 +101,63 @@ class _ProfilePageState extends State<ProfilePage> {
                   trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
                 ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: height * 0.04),
               Row(
-                children: const [
-                  SizedBox(width: 20),
-                  Text('・お客様向けガイド',
+                children: [
+                  SizedBox(width: width * 0.02),
+                  const Text('・お客様向けガイド',
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.black54,
                           fontWeight: FontWeight.bold)),
                 ],
               ),
-              const SizedBox(height: 10),
+              SizedBox(height: height * 0.02),
               myPageListTile(
                   pageWidget: const GuideReservationPage(),
                   tileName: 'ご予約までの流れ'),
               myPageListTile(
-                tileName: 'オーナー自己紹介',
-                pageWidget: const GuideReservationPage(),
-              ),
-              myPageListTile(
-                tileName: '利用規約・ガイドライン',
-                pageWidget: const GuideReservationPage(),
+                tileName: 'オーナー&サロン紹介',
+                pageWidget: const SalonInfoPage(),
               ),
               Container(
-                height: 60,
+                height: height * 0.072,
                 decoration: const BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.black12))),
+                    border: Border(bottom: BorderSide(color: Colors.black26))),
+                child: ListTile(
+                  onTap: () {
+                    model.urlTermOfService();
+                  },
+                  tileColor: HexColor('#fcf8f6'),
+                  title: const Text('利用規約',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black54,
+                      )),
+                  trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
+                ),
+              ),
+              Container(
+                height: height * 0.072,
+                decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black26))),
+                child: ListTile(
+                  onTap: () {
+                    model.policyUrl();
+                  },
+                  tileColor: HexColor('#fcf8f6'),
+                  title: const Text('プライバシーポリシー',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black54,
+                      )),
+                  trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
+                ),
+              ),
+              Container(
+                height: height * 0.075,
+                decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide(color: Colors.black26))),
                 child: ListTile(
                   onTap: () {
                     model.signOut(context);
@@ -115,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
                 ),
               ),
-              const SizedBox(height: 90),
+              SizedBox(height: height * 0.1),
               const Text('salon Vishu',
                   style: TextStyle(
                       fontSize: 40,
@@ -129,28 +185,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           );
         },
-      ),
-    );
-  }
-
-  Container myPageListTile(
-      {required String tileName, required Widget pageWidget}) {
-    return Container(
-      height: 60,
-      decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.black26))),
-      child: ListTile(
-        onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => pageWidget));
-        },
-        tileColor: HexColor('#fcf8f6'),
-        title: Text(tileName,
-            style: const TextStyle(
-              fontSize: 20,
-              color: Colors.black54,
-            )),
-        trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
       ),
     );
   }

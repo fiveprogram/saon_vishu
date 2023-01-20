@@ -55,11 +55,11 @@ class _AddMenuPageState extends State<AddMenuPage> {
               case '新規':
                 return HexColor('#344eba');
               case '再来':
-                return HexColor('#7a3425');
+                return HexColor('#73e600');
               case '全員':
                 return HexColor('#e28e7a');
               default:
-                return HexColor('#e28e7a');
+                return HexColor('#ff8db4');
             }
           }
 
@@ -208,7 +208,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                            width: 233,
+                                            width: width * 0.62,
                                             child: Text(
                                               menu.treatmentDetail,
                                               style:
@@ -237,7 +237,8 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                                       const Text('▷'),
                                                       Text(
                                                           '${menu.afterPrice}円'),
-                                                      const SizedBox(width: 10),
+                                                      SizedBox(
+                                                          width: width * 0.02),
                                                     ],
                                                   ),
                                                   Text(
@@ -249,14 +250,25 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                                               FontWeight.bold)),
                                                 ],
                                               ),
-                                              const SizedBox(width: 30),
-                                              IconButton(
-                                                  onPressed: () {
-                                                    model.menuDelete(
-                                                        menu, context);
-                                                  },
-                                                  icon:
-                                                      const Icon(Icons.delete)),
+                                              SizedBox(width: width * 0.04),
+                                              ElevatedButton.icon(
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        Colors.white70,
+                                                    backgroundColor:
+                                                        Colors.black26),
+                                                onPressed: () {
+                                                  model.menuDelete(
+                                                      menu, context);
+                                                },
+                                                icon: const Icon(Icons.delete),
+                                                label: const Text(
+                                                  '削除',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ],

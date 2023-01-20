@@ -70,7 +70,8 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   'dateOfBirth': model.dateOfBirthController.text,
                   'telephoneNumber': model.telephoneNumberController.text,
                   'gender': model.gender,
-                  'uid': model.user!.uid
+                  'uid': model.user!.uid,
+                  'lastVisit': model.lastVisit,
                 },
               );
 
@@ -93,7 +94,8 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 'uid': model.user!.uid,
                 'imgUrl': profile.imgUrl != '' ? profile.imgUrl : '',
                 'gender': model.gender,
-                'dateTime': profile.dateTime
+                'dateTime': profile.dateTime,
+                'lastVisit': DateTime.now()
               });
             }
 

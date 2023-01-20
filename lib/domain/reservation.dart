@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Reservation {
-  //todo: startTimeよりendTimeが早ければコンストラクタでエラーを出す
   Reservation(
       {required this.startTime,
       required this.finishTime,
@@ -12,6 +11,7 @@ class Reservation {
       required this.treatmentDetail,
       required this.reservationId,
       this.beforePrice,
+      this.lastVisit,
       required this.afterPrice,
       required this.menuIntroduction,
       required this.menuImageUrl,
@@ -27,6 +27,7 @@ class Reservation {
 
   Timestamp startTime;
   Timestamp finishTime;
+  Timestamp? lastVisit;
   String targetMember;
   List<dynamic> treatmentDetailList;
   String treatmentDetail;
@@ -48,31 +49,26 @@ class Reservation {
   factory Reservation.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Reservation(
-        startTime: data['startTime'],
-        finishTime: data['finishTime'],
-        targetMember: data['targetMember'],
-        treatmentDetailList: data['treatmentDetailList'],
-        beforePrice: data['beforePrice'],
-        afterPrice: data['afterPrice'],
-        menuIntroduction: data['menuIntroduction'],
-        menuImageUrl: data['menuImageUrl'],
-        menuId: data['menuId'],
-        reservationId: data['reservationId'],
-        treatmentTime: data['treatmentTime'],
-        treatmentDetail: data['treatmentDetail'],
-        name: data['name'],
-        dateOfBirth: data['dateOfBirth'],
-        telephoneNumber: data['telephoneNumber'],
-        gender: data['gender'],
-        uid: data['uid'],
-        priority: data['priority'],
-        isNeedExtraMoney: data['isNeedExtraMoney']);
+      startTime: data['startTime'],
+      finishTime: data['finishTime'],
+      targetMember: data['targetMember'],
+      treatmentDetailList: data['treatmentDetailList'],
+      beforePrice: data['beforePrice'],
+      afterPrice: data['afterPrice'],
+      menuIntroduction: data['menuIntroduction'],
+      menuImageUrl: data['menuImageUrl'],
+      menuId: data['menuId'],
+      reservationId: data['reservationId'],
+      treatmentTime: data['treatmentTime'],
+      treatmentDetail: data['treatmentDetail'],
+      name: data['name'],
+      dateOfBirth: data['dateOfBirth'],
+      telephoneNumber: data['telephoneNumber'],
+      gender: data['gender'],
+      uid: data['uid'],
+      priority: data['priority'],
+      isNeedExtraMoney: data['isNeedExtraMoney'],
+      lastVisit: data['lastVisit'],
+    );
   }
 }
-
-//
-// いつもお世話になっております。
-// 大変恐縮ではございますが、４講は既に満席となっております。
-// 申し訳ございません。
-//
-// お手数ではございますが、再度ご検討の上、ご連絡いただければと思いますので、よろしくお願いいたします。

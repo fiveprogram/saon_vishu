@@ -121,7 +121,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: 233,
+                                  width: width * 0.66,
                                   child: Text(
                                     menu.treatmentDetail,
                                     style: const TextStyle(fontSize: 13),

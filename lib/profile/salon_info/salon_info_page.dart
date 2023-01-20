@@ -144,15 +144,15 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
                 Container(
                   alignment: Alignment.center,
                   height: height * 0.05,
-                  decoration: BoxDecoration(
-                      color: HexColor('#594840'),
-                      border: const Border(
+                  decoration: const BoxDecoration(
+                      color: Colors.black54,
+                      border: Border(
                           bottom: BorderSide(color: Colors.black26),
                           top: BorderSide(color: Colors.black26))),
                   child: const Text('スタイリスト',
                       style: TextStyle(
                           fontSize: 18,
-                          color: Colors.white,
+                          color: Colors.white70,
                           fontWeight: FontWeight.bold)),
                 ),
                 SizedBox(height: height * 0.04),
@@ -204,15 +204,15 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
                 Container(
                   alignment: Alignment.center,
                   height: height * 0.05,
-                  decoration: BoxDecoration(
-                      color: HexColor('#594840'),
-                      border: const Border(
+                  decoration: const BoxDecoration(
+                      color: Colors.black54,
+                      border: Border(
                           bottom: BorderSide(color: Colors.black26),
                           top: BorderSide(color: Colors.black26))),
                   child: const Text('サロンから一言',
                       style: TextStyle(
                           fontSize: 18,
-                          color: Colors.white,
+                          color: Colors.white70,
                           fontWeight: FontWeight.bold)),
                 ),
                 SizedBox(height: height * 0.04),
@@ -259,9 +259,9 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
                 Container(
                   alignment: Alignment.center,
                   height: height * 0.05,
-                  decoration: BoxDecoration(
-                      color: HexColor('#594840'),
-                      border: const Border(
+                  decoration: const BoxDecoration(
+                      color: Colors.black54,
+                      border: Border(
                           bottom: BorderSide(color: Colors.black26),
                           top: BorderSide(color: Colors.black26))),
                   child: const Text('サロンデータ',
@@ -342,7 +342,7 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
-                          backgroundColor: Colors.brown),
+                          backgroundColor: Colors.black26),
                       onPressed: () {
                         model.scrollController.animateTo(0,
                             duration: const Duration(milliseconds: 5),

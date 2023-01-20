@@ -25,14 +25,14 @@ class FinishReservationModel extends ChangeNotifier {
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(3)),
-        color: targetColor(menu.targetMember!),
+        color: targetColor(menu.targetMember),
         border: Border.all(
-          color: targetColor(menu.targetMember!),
+          color: targetColor(menu.targetMember),
         ),
       ),
       child: Center(
         child: Text(
-          menu.targetMember!,
+          menu.targetMember,
           style: const TextStyle(color: Colors.white, fontSize: 12),
         ),
       ),

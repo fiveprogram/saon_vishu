@@ -1,8 +1,11 @@
+import 'dart:core';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../domain/profile.dart';
 import '../firebase_options.dart';
@@ -47,8 +50,6 @@ class ProfileModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('はい'),
                   onPressed: () async {
-                    User? user = FirebaseAuth.instance.currentUser;
-
                     await googleSignOut();
                     await FirebaseAuth.instance.signOut();
                     notifyListeners();
@@ -58,5 +59,27 @@ class ProfileModel extends ChangeNotifier {
             ],
           );
         });
+  }
+
+  final Uri termOfServiceUrl = Uri.parse(
+      'https://abalone-lemongrass-524.notion.site/0dbff2a0a09848afa32698c7945fad30');
+
+  final Uri urlPolicy = Uri.parse(
+      'https://abalone-lemongrass-524.notion.site/3d1520fb1d294916ac30ae784a56c6fb');
+
+  Future<void> urlTermOfService() async {
+    if (await canLaunchUrl(termOfServiceUrl)) {
+      await launchUrl(termOfServiceUrl);
+    } else {
+      throw 'Could not launch $termOfServiceUrl';
+    }
+  }
+
+  Future<void> policyUrl() async {
+    if (await canLaunchUrl(urlPolicy)) {
+      await launchUrl(urlPolicy);
+    } else {
+      throw 'Could not launch $urlPolicy';
+    }
   }
 }

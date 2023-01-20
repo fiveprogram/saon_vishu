@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,11 +16,15 @@ class ConfirmReservationModel extends ChangeNotifier {
     emailController.text = profile.email;
     dateOfBirthController.text = profile.dateOfBirth;
     gender = profile.gender;
+    if (profile.lastVisit != null) {
+      lastVisit = profile.lastVisit;
+    }
   }
 
   User? user = FirebaseAuth.instance.currentUser;
   String? errorText;
 
+  Timestamp? lastVisit;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final telephoneNumberController = TextEditingController();

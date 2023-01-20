@@ -48,7 +48,10 @@ class _MenuCardState extends State<MenuCard> {
                   ),
                   child: Text(
                     treatmentDetail,
-                    style: const TextStyle(fontSize: 12, color: Colors.white),
+                    style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -72,7 +75,7 @@ class _MenuCardState extends State<MenuCard> {
         }
 
         return Container(
-          width: 50,
+          width: width * 0.12,
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(3)),
@@ -84,7 +87,10 @@ class _MenuCardState extends State<MenuCard> {
           child: Center(
             child: Text(
               menu.targetMember,
-              style: const TextStyle(color: Colors.white, fontSize: 12),
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold),
             ),
           ),
         );
@@ -140,18 +146,18 @@ class _MenuCardState extends State<MenuCard> {
                                 fit: BoxFit.cover,
                                 image: NetworkImage(menu.menuImageUrl!))),
                       ),
-                      const SizedBox(width: 10),
+                      SizedBox(width: width * 0.02),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width: 233,
+                            width: width * 0.62,
                             child: Text(
                               menu.treatmentDetail,
                               style: const TextStyle(fontSize: 13),
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          SizedBox(height: height * 0.02),
                           Row(
                             children: [
                               Column(
@@ -185,7 +191,8 @@ class _MenuCardState extends State<MenuCard> {
                                   width: 70,
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: HexColor('#443e30'),
+                                        foregroundColor: Colors.white,
+                                        backgroundColor: Colors.black26,
                                       ),
                                       onPressed: () {
                                         Navigator.push(

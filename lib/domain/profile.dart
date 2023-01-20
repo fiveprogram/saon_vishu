@@ -9,6 +9,7 @@ class Profile {
   String imgUrl;
   String gender;
   Timestamp dateTime;
+  Timestamp? lastVisit;
 
   Profile(
       {required this.email,
@@ -18,7 +19,8 @@ class Profile {
       required this.uid,
       required this.imgUrl,
       required this.gender,
-      required this.dateTime});
+      required this.dateTime,
+      required this.lastVisit});
 
   factory Profile.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -30,6 +32,7 @@ class Profile {
         uid: data['uid'],
         imgUrl: data['imgUrl'],
         gender: data['gender'],
-        dateTime: data['dateTime']);
+        dateTime: data['dateTime'],
+        lastVisit: data['lastVisit']);
   }
 }

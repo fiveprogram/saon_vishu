@@ -472,7 +472,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                               SizedBox(
                                 width: width * 0.55,
                                 child: const Text(
-                                  '髪の長さに応じて、パーマ剤・薬剤・その他トリートメントの使用量が変動します。ロング料金（550~円）からにご了承いただけました方は、確認欄をタップください',
+                                  '髪の長さに応じて、パーマ剤・薬剤・その他トリートメントの使用量が変動します。ロング料金（550~円)にご了承いただけました方は、確認欄をタップください',
                                   style: TextStyle(
                                       color: Colors.black87, fontSize: 13),
                                 ),

@@ -5,8 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:salon_vishu/domain/reservation.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../domain/menu.dart';
-
 class BookerCalendarModel extends ChangeNotifier {
   CalendarFormat calendarFormat = CalendarFormat.month;
   final today = DateTime.now();

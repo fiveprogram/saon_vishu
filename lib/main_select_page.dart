@@ -33,7 +33,7 @@ class _MainSelectPageState extends State<MainSelectPage> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'メニュー'),
             BottomNavigationBarItem(icon: Icon(Icons.history), label: '履歴'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'プロフィール'),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
           ]),
     );
   }

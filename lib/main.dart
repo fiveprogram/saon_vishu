@@ -17,8 +17,8 @@ import 'package:salon_vishu/master/booker_detail/booker_detail_model.dart';
 import 'package:salon_vishu/master/master_select_page.dart';
 import 'package:salon_vishu/master/push_notification/push_notification_model.dart';
 import 'package:salon_vishu/master/rest_date_register/rest_date_register_model.dart';
+import 'package:salon_vishu/profile/cancel_guide/cancel_guide_model.dart';
 import 'package:salon_vishu/profile/profile_model.dart';
-import 'package:salon_vishu/profile/profile_page.dart';
 import 'package:salon_vishu/profile/salon_info/salon_info_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 import 'package:salon_vishu/sign_in/sign_in_page.dart';
@@ -122,6 +122,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => CancelReservationModel()),
         ChangeNotifierProvider(create: (_) => SalonInfoModel()..fetchInfo()),
         ChangeNotifierProvider(create: (_) => BookerDetailModel()),
+        ChangeNotifierProvider(create: (_) => CancelGuideModel()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -152,7 +153,7 @@ class MyApp extends StatelessWidget {
                   if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
                     return const MasterSelectPage();
                   }
-                  return const ProfilePage();
+                  return const MainSelectPage();
                 }
                 return const SignInPage();
               },

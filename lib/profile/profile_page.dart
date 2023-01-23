@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -7,7 +9,8 @@ import 'package:salon_vishu/profile/salon_info/salon_info_page.dart';
 
 import '../common_widget/vishu_app_bar.dart';
 import '../domain/profile.dart';
-import '../edit/edit_page.dart';
+import '../domain/version.dart';
+import 'edit/edit_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -51,6 +54,11 @@ class _ProfilePageState extends State<ProfilePage> {
           if (model.profile == null) {
             return const CircularProgressIndicator();
           }
+
+          if (model.version == null) {
+            return const CircularProgressIndicator();
+          }
+          Version version = model.version!;
 
           Profile profile = model.profile!;
 
@@ -177,10 +185,16 @@ class _ProfilePageState extends State<ProfilePage> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black54,
                       fontFamily: 'Dancing_Script')),
-              const Text(
-                'バージョン　1.0.0',
-                style: TextStyle(),
-              ),
+              if (Platform.isIOS)
+                Text(
+                  'version　${version.iosMinAvailableVersion}',
+                  style: const TextStyle(fontSize: 20, color: Colors.black54),
+                ),
+              if (Platform.isAndroid)
+                Text(
+                  'version　${version.androidMinAvailableVersion}',
+                  style: const TextStyle(fontSize: 20, color: Colors.black54),
+                ),
             ],
           );
         },

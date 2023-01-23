@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -6,6 +8,7 @@ import 'package:salon_vishu/sign_up/sign_up_model.dart';
 
 import '../common_widget/auth_form_field.dart';
 import '../common_widget/vishu_app_bar.dart';
+import '../domain/version.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -21,6 +24,11 @@ class _SignUpPageState extends State<SignUpPage> {
     final double deviceWidth = MediaQuery.of(context).size.width;
 
     return Consumer<SignUpModel>(builder: (context, model, child) {
+      if (model.version == null) {
+        return const CircularProgressIndicator();
+      }
+      Version version = model.version!;
+
       return Scaffold(
         appBar: vishuAppBar(
           appBarTitle: 'salon Vishu',
@@ -42,10 +50,18 @@ class _SignUpPageState extends State<SignUpPage> {
                             fontWeight: FontWeight.bold,
                             color: Colors.black54,
                             fontFamily: 'Dancing_Script')),
-                    const Text(
-                      'バージョン　1.00.0',
-                      style: TextStyle(),
-                    ),
+                    if (Platform.isIOS)
+                      Text(
+                        'version　${version.iosMinAvailableVersion}',
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.black54),
+                      ),
+                    if (Platform.isAndroid)
+                      Text(
+                        'version　${version.androidMinAvailableVersion}',
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.black54),
+                      ),
                     SizedBox(
                       height: deviceHeight * 0.05,
                     ),

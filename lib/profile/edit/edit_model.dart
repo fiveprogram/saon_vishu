@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../domain/profile.dart';
+import '../../domain/profile.dart';
 
 class EditModel extends ChangeNotifier {
   Profile profile;
@@ -161,6 +161,11 @@ class EditModel extends ChangeNotifier {
           'gender': gender,
           'dateTime': profile.dateTime
         });
+
+        if (profile.email != emailController.text) {
+          await FirebaseAuth.instance.currentUser!
+              .updateEmail(emailController.text);
+        }
       }
       if (file != null) {
         final task = await FirebaseStorage.instance
@@ -180,6 +185,10 @@ class EditModel extends ChangeNotifier {
           'uid': user!.uid,
         });
 
+        if (profile.email != emailController.text) {
+          await FirebaseAuth.instance.currentUser!
+              .updateEmail(emailController.text);
+        }
         notifyListeners();
       }
     } finally {

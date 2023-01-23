@@ -8,10 +8,25 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../domain/profile.dart';
+import '../domain/version.dart';
 import '../firebase_options.dart';
 
 class ProfileModel extends ChangeNotifier {
   Profile? profile;
+  Version? version;
+
+  Future<void> fetchVersion() async {
+    Stream<DocumentSnapshot<Map<String, dynamic>>> versionStream =
+        FirebaseFirestore.instance
+            .collection('force_update')
+            .doc('uHoECUdMBarAX1H61FTC')
+            .snapshots();
+
+    versionStream.listen((snapshot) {
+      version = Version.fromFirestore(snapshot);
+      notifyListeners();
+    });
+  }
 
   Future<void> fetchProfile() async {
     User? user = FirebaseAuth.instance.currentUser;
@@ -53,7 +68,6 @@ class ProfileModel extends ChangeNotifier {
                     await googleSignOut();
                     await FirebaseAuth.instance.signOut();
                     notifyListeners();
-
                     Navigator.pop(context);
                   }),
             ],
@@ -61,25 +75,25 @@ class ProfileModel extends ChangeNotifier {
         });
   }
 
-  final Uri termOfServiceUrl = Uri.parse(
-      'https://abalone-lemongrass-524.notion.site/0dbff2a0a09848afa32698c7945fad30');
-
-  final Uri urlPolicy = Uri.parse(
-      'https://abalone-lemongrass-524.notion.site/3d1520fb1d294916ac30ae784a56c6fb');
-
   Future<void> urlTermOfService() async {
+    final Uri termOfServiceUrl = Uri.parse(
+        'https://abalone-lemongrass-524.notion.site/0dbff2a0a09848afa32698c7945fad30');
+
     if (await canLaunchUrl(termOfServiceUrl)) {
       await launchUrl(termOfServiceUrl);
     } else {
-      throw 'Could not launch $termOfServiceUrl';
+      throw '$termOfServiceUrl';
     }
   }
 
   Future<void> policyUrl() async {
+    final Uri urlPolicy = Uri.parse(
+        'https://abalone-lemongrass-524.notion.site/3d1520fb1d294916ac30ae784a56c6fb');
+
     if (await canLaunchUrl(urlPolicy)) {
       await launchUrl(urlPolicy);
     } else {
-      throw 'Could not launch $urlPolicy';
+      throw '$urlPolicy';
     }
   }
 }

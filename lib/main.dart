@@ -3,8 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -32,18 +34,93 @@ import 'history/history_model.dart';
 import 'master/schedule/schedule_model.dart';
 import 'menu/menu_model.dart';
 
+// 通知インスタンスの生成
+final FlutterLocalNotificationsPlugin localPlugin =
+    FlutterLocalNotificationsPlugin();
+
+//バックグラウンドでメッセージを受け取った時のイベント(トップレベルに定義)
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  RemoteNotification? notification = message.notification;
+  localPlugin.initialize(const InitializationSettings(
+      android: AndroidInitializationSettings('@mipmap/ic_launcher')));
+
+  if (notification == null) {
+    return;
+  }
+  // 通知
+  localPlugin.show(
+      notification.hashCode,
+      "${notification.title}:バックグラウンド",
+      notification.body,
+      const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'channel_id',
+          'channel_name',
+        ),
+      ),
+      payload: 'おはよう');
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
   runApp(const MyApp());
 
   initializeDateFormatting('ja');
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String tokenId = "";
+
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // アプリ初期化時に画面にtokenを表示
+    firebaseMessaging.getToken().then((String? token) {
+      setState(() {
+        tokenId = token!;
+      });
+      print('オッパ');
+
+      print(token);
+    });
+
+    //フォアグラウンドでメッセージを受け取った時のイベント
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      localPlugin.initialize(const InitializationSettings(
+          android: AndroidInitializationSettings('@mipmap/ic_launcher')));
+      if (notification == null) {
+        return;
+      }
+
+      localPlugin.show(
+          notification.hashCode,
+          "${notification.title}:フォアグラウンド",
+          notification.body,
+          const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'channel_id',
+              'channel_name',
+            ),
+          ),
+          payload: 'おはよう');
+    });
+  }
 
   Future<void> forceUpdate(
       String iosVersion, String androidVersion, BuildContext context) async {
@@ -96,9 +173,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => SignInModel()..fetchProfile()),
-        ChangeNotifierProvider(create: (_) => SignUpModel()),
+        ChangeNotifierProvider(create: (_) => SignUpModel()..fetchVersion()),
         ChangeNotifierProvider(create: (_) => MenuModel()..fetchMenuList()),
-        ChangeNotifierProvider(create: (_) => ProfileModel()..fetchProfile()),
+        ChangeNotifierProvider(
+            create: (_) => ProfileModel()
+              ..fetchProfile()
+              ..fetchVersion()),
         ChangeNotifierProvider(
             create: (_) => CalendarModel()
               ..fetchProfile()
@@ -120,7 +200,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => PushNotificationModel()),
         ChangeNotifierProvider(create: (_) => AddMenuModel()..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => CancelReservationModel()),
-        ChangeNotifierProvider(create: (_) => SalonInfoModel()..fetchInfo()),
+        ChangeNotifierProvider(
+            create: (_) => SalonInfoModel()
+              ..fetchInfo()
+              ..fetchVersion()),
         ChangeNotifierProvider(create: (_) => BookerDetailModel()),
         ChangeNotifierProvider(create: (_) => CancelGuideModel()),
       ],

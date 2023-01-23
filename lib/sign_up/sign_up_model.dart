@@ -6,6 +6,8 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:salon_vishu/main_select_page.dart';
 
+import '../domain/version.dart';
+
 class SignUpModel extends ChangeNotifier {
   final emailController =
       TextEditingController(text: 'yuta.nanana.tennis@gmail.com');
@@ -130,5 +132,19 @@ class SignUpModel extends ChangeNotifier {
       endLoading();
       notifyListeners();
     }
+  }
+
+  Version? version;
+  Future<void> fetchVersion() async {
+    Stream<DocumentSnapshot<Map<String, dynamic>>> versionStream =
+        FirebaseFirestore.instance
+            .collection('force_update')
+            .doc('uHoECUdMBarAX1H61FTC')
+            .snapshots();
+
+    versionStream.listen((snapshot) {
+      version = Version.fromFirestore(snapshot);
+      notifyListeners();
+    });
   }
 }

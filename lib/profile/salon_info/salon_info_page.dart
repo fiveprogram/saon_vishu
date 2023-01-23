@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
 import 'package:salon_vishu/domain/information_salon_detail.dart';
+import 'package:salon_vishu/domain/version.dart';
 import 'package:salon_vishu/profile/salon_info/salon_info_model.dart';
 
 class SalonInfoPage extends StatefulWidget {
@@ -73,6 +76,11 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
             return const CircularProgressIndicator();
           }
           InformationSalonDetail info = model.info!;
+
+          if (model.version == null) {
+            return const CircularProgressIndicator();
+          }
+          Version version = model.version!;
 
           return SingleChildScrollView(
             controller: model.scrollController,
@@ -332,10 +340,16 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black54,
                         fontFamily: 'Dancing_Script')),
-                const Text(
-                  'バージョン　1.0.0',
-                  style: TextStyle(),
-                ),
+                if (Platform.isIOS)
+                  Text(
+                    'version　${version.iosMinAvailableVersion}',
+                    style: const TextStyle(fontSize: 20, color: Colors.black54),
+                  ),
+                if (Platform.isAndroid)
+                  Text(
+                    'version　${version.androidMinAvailableVersion}',
+                    style: const TextStyle(fontSize: 20, color: Colors.black54),
+                  ),
                 SizedBox(height: height * 0.02),
                 SizedBox(
                   width: width * 0.6,

@@ -163,7 +163,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MainSelectPage()));
+                              builder: (context) => MainSelectPage()));
                     },
                     child: const Text('メインページに戻る'))
               ],

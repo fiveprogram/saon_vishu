@@ -25,14 +25,15 @@ class Profile {
   factory Profile.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return Profile(
-        email: data['email'],
-        name: data['name'],
-        dateOfBirth: data['dateOfBirth'],
-        telephoneNumber: data['telephoneNumber'],
-        uid: data['uid'],
-        imgUrl: data['imgUrl'],
-        gender: data['gender'],
-        dateTime: data['dateTime'],
-        lastVisit: data['lastVisit']);
+      email: data['email'],
+      name: data['name'],
+      dateOfBirth: data['dateOfBirth'],
+      telephoneNumber: data['telephoneNumber'],
+      uid: data['uid'],
+      imgUrl: data['imgUrl'],
+      gender: data['gender'],
+      dateTime: data['dateTime'],
+      lastVisit: data['lastVisit'],
+    );
   }
 }

@@ -114,7 +114,7 @@ class _SignInPageState extends State<SignInPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SignUpPage()));
+                                  builder: (context) => SignUpPage()));
                         },
                       style: const TextStyle(color: Colors.blue),
                     ),

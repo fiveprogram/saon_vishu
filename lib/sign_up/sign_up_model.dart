@@ -100,7 +100,7 @@ class SignUpModel extends ChangeNotifier {
       notifyListeners();
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const MainSelectPage()),
+          MaterialPageRoute(builder: (context) => MainSelectPage()),
           (route) => false);
     } on FirebaseAuthException catch (e) {
       ///snackBarを定義

@@ -94,9 +94,8 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         tokenId = token!;
       });
-      print('オッパ');
 
-      print(token);
+      print('オッパ');
     });
 
     //フォアグラウンドでメッセージを受け取った時のイベント
@@ -236,7 +235,7 @@ class _MyAppState extends State<MyApp> {
                   if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
                     return const MasterSelectPage();
                   }
-                  return const MainSelectPage();
+                  return MainSelectPage();
                 }
                 return const SignInPage();
               },

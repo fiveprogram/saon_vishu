@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:salon_vishu/profile/profile_page.dart';
 
 import 'history/history_page.dart';
 import 'menu/menu_page.dart';
 
+// ignore: must_be_immutable
 class MainSelectPage extends StatefulWidget {
   const MainSelectPage({Key? key}) : super(key: key);
 
@@ -12,6 +18,45 @@ class MainSelectPage extends StatefulWidget {
 }
 
 class _MainSelectPageState extends State<MainSelectPage> {
+  User? user = FirebaseAuth.instance.currentUser;
+  String tokenId = "";
+
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // アプリ初期化時に画面にtokenを表示
+    firebaseMessaging.getToken().then((String? token) {
+      setState(() {
+        tokenId = token!;
+      });
+
+      if (Platform.isAndroid) {
+        print(1);
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .collection('deviceTokenId')
+            .doc(tokenId)
+            .set({'androidDeviceId': tokenId});
+      }
+      if (Platform.isIOS) {
+        print(2);
+
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(user!.uid)
+            .collection('deviceTokenId')
+            .doc(tokenId)
+            .set({'iosDeviceId': tokenId});
+      }
+
+      print('オッパ');
+    });
+  }
+
   int currentPageIndex = 0;
   List<Widget> pageList = [
     const MenuPage(),

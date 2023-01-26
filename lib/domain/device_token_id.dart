@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DeviceTokenId {
-  String? iosDeviceId;
-  String? androidDeviceId;
+  String? deviceId;
 
-  DeviceTokenId({required this.iosDeviceId, required this.androidDeviceId});
+  DeviceTokenId({required this.deviceId});
 
   factory DeviceTokenId.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-    return DeviceTokenId(
-        iosDeviceId: data['iosDeviceId'],
-        androidDeviceId: data['androidDeviceId']);
+    return DeviceTokenId(deviceId: data['deviceId']);
   }
 }

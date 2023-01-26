@@ -1,23 +1,19 @@
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import * as functions from "firebase-functions";
 
 admin.initializeApp();
 
-export const sendPushNotification = functions.https.onCall(async (data) => {
-  const uid = data.uid;
-  const message = data.message;
-  const userRef = admin.firestore().collection("users").doc(uid);
-  const userSnapshot = await userRef.get();
-  const user = userSnapshot.data();
-  const deviceToken = user!.deviceToken;
-  const payload = {
-    notification: {title: "Salon vishu", body: message},
-  };
+const registrationToken = "fubrnf3FTkC77CnooZJazz:APA91bEhBpzqUXDZ-UFns3rrwgARJ-hefelmvdMG9rn86v8ateu7w_waqqQcbSzN66GU3Oi8b4gnG-tYCUsAIT8GgQnmEyfQyxjbxE_K-Vm-w4p-azsn5CnsamgGpY4lASWoztiN6XG2";
+const payload = {
+  notification: {
+    title: "Salon vishu",
+    body: "Push Notification"},
+};
 
-  try {
-    await admin.messaging().sendToDevice(deviceToken, payload);
-    return {success: true};
-  } catch (error) {
-    return {success: false, error};
-  }
-});
+admin.messaging().sendToDevice(registrationToken, payload)
+    .then((response) => {
+      console.log("Successfully sent message:", response);
+    })
+    .catch((error) => {
+      console.log("Error sending message:", error);
+    });

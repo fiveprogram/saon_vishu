@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -33,25 +31,12 @@ class _MainSelectPageState extends State<MainSelectPage> {
         tokenId = token!;
       });
 
-      if (Platform.isAndroid) {
-        print(1);
-        FirebaseFirestore.instance
-            .collection('users')
-            .doc(user!.uid)
-            .collection('deviceTokenId')
-            .doc(tokenId)
-            .set({'androidDeviceId': tokenId});
-      }
-      if (Platform.isIOS) {
-        print(2);
-
-        FirebaseFirestore.instance
-            .collection('users')
-            .doc(user!.uid)
-            .collection('deviceTokenId')
-            .doc(tokenId)
-            .set({'iosDeviceId': tokenId});
-      }
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .collection('deviceTokenId')
+          .doc(tokenId)
+          .set({'deviceId': tokenId});
 
       print('オッパ');
     });

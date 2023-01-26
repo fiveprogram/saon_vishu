@@ -95,6 +95,7 @@ class _MyAppState extends State<MyApp> {
         tokenId = token!;
       });
 
+      print(tokenId);
       print('オッパ');
     });
 
@@ -109,15 +110,15 @@ class _MyAppState extends State<MyApp> {
 
       localPlugin.show(
           notification.hashCode,
-          "${notification.title}:フォアグラウンド",
+          "${notification.title}:1",
           notification.body,
           const NotificationDetails(
             android: AndroidNotificationDetails(
-              'channel_id',
-              'channel_name',
+              '2',
+              '3',
             ),
           ),
-          payload: 'おはよう');
+          payload: '4');
     });
   }
 

@@ -203,16 +203,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: const TextStyle(fontSize: 20, color: Colors.black54),
                   ),
                 ElevatedButton(
-                    onPressed: () async {
-                      var url = Uri.parse(
-                        'https://us-central1-salon-vishu.cloudfunctions.net/sendPushNotification',
-                      );
+                  onPressed: () async {
+                    var url = Uri.parse(
+                      'https://us-central1-salon-vishu.cloudfunctions.net/sendNotification',
+                    );
 
-                      var response = await http.get(url);
-                      print('Response status: ${response.statusCode}');
-                      print('Response body: ${response.body}');
-                    },
-                    child: const Text('実験')),
+                    var response = await http.post(url);
+                    print('Response status: ${response.statusCode}');
+                    print('Response body: ${response.body}');
+                  },
+                  child: const Text('実験'),
+                ),
               ],
             ),
           );

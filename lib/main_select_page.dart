@@ -38,6 +38,7 @@ class _MainSelectPageState extends State<MainSelectPage> {
           .doc(tokenId)
           .set({'deviceId': tokenId});
 
+      print(tokenId);
       print('オッパ');
     });
   }

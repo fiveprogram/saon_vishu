@@ -1,19 +1,25 @@
-import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+import {MessagingPayload} from "firebase-admin/lib/messaging/messaging-api";
 
 admin.initializeApp();
 
-const registrationToken = "fubrnf3FTkC77CnooZJazz:APA91bEhBpzqUXDZ-UFns3rrwgARJ-hefelmvdMG9rn86v8ateu7w_waqqQcbSzN66GU3Oi8b4gnG-tYCUsAIT8GgQnmEyfQyxjbxE_K-Vm-w4p-azsn5CnsamgGpY4lASWoztiN6XG2";
-const payload = {
-  notification: {
-    title: "Salon vishu",
-    body: "Push Notification"},
-};
+export const sendNotification = functions.https.onRequest(() => {
+  const registrationToken = "cHavfRDsRYGzefuusHbUSL:APA91bFReRvDilEq3fMS8AYbG_Kb6LTGvPliK_IXNdNbAksF8nyaavYzAUJ65RFoIz5xmR9qLwywVTcxOnBEooMpllQ1QILyDgL-c1LmgbLSIWawj25ypgy-9lYDiIkMCJ7-vqQhYMZq";
 
-admin.messaging().sendToDevice(registrationToken, payload)
-    .then((response) => {
-      console.log("Successfully sent message:", response);
-    })
-    .catch((error) => {
-      console.log("Error sending message:", error);
-    });
+  function payload(content: string, M: string):MessagingPayload {
+    const message = {
+      notification: {
+        title: content,
+        body: M,
+      },
+    };
+    return message;
+  }
+
+  console.log(payload);
+
+  admin.messaging().sendToDevice(registrationToken, payload("うんち", "おしっこ"));
+});
+
+

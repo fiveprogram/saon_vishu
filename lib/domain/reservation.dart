@@ -23,7 +23,8 @@ class Reservation {
       required this.isNeedExtraMoney,
       required this.gender,
       required this.uid,
-      required this.priority});
+      required this.priority,
+      required this.deviceIdList});
 
   Timestamp startTime;
   Timestamp finishTime;
@@ -45,6 +46,7 @@ class Reservation {
   String telephoneNumber;
   String gender;
   String uid;
+  List<dynamic> deviceIdList;
 
   factory Reservation.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -69,6 +71,7 @@ class Reservation {
       priority: data['priority'],
       isNeedExtraMoney: data['isNeedExtraMoney'],
       lastVisit: data['lastVisit'],
+      deviceIdList: data['deviceIdList'],
     );
   }
 }

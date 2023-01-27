@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+import 'package:salon_vishu/domain/device_token_id.dart';
 
 import '../domain/profile.dart';
 
@@ -106,5 +107,22 @@ class ConfirmReservationModel extends ChangeNotifier {
         ),
       ),
     );
+  }
+
+  List<DeviceTokenId> deviceTokenIdList = [];
+
+  Future<void> fetchDeviceId() async {
+    final deviceIdStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection('deviceTokenId')
+        .snapshots();
+
+    deviceIdStream.listen((snapshot) {
+      deviceTokenIdList = snapshot.docs
+          .map((DocumentSnapshot doc) => DeviceTokenId.fromFirestore(doc))
+          .toList();
+      notifyListeners();
+    });
   }
 }

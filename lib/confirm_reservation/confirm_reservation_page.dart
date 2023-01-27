@@ -34,7 +34,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
     Profile profile = widget.profile;
 
     return ChangeNotifierProvider(
-      create: (_) => ConfirmReservationModel(profile: profile),
+      create: (_) => ConfirmReservationModel(profile: profile)..fetchDeviceId(),
       child: Scaffold(
         backgroundColor: HexColor('#fcf8f6'),
         appBar: vishuAppBar(appBarTitle: '予約確認', isJapanese: true),
@@ -42,6 +42,12 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
           builder: (context, model, child) {
             final height = MediaQuery.of(context).size.height;
             final width = MediaQuery.of(context).size.width;
+
+            if (model.deviceTokenIdList.isEmpty) {
+              return const CircularProgressIndicator();
+            }
+            final deviceIdList =
+                model.deviceTokenIdList.map((e) => e.deviceId).toList();
 
             ///予約情報を登録するためのメソッド
             Future<void> sendFirebaseWithReservationDate() async {
@@ -72,9 +78,9 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   'gender': model.gender,
                   'uid': model.user!.uid,
                   'lastVisit': model.lastVisit,
+                  'deviceIdList': deviceIdList,
                 },
               );
-
               await FirebaseFirestore.instance
                   .collection('users')
                   .doc(model.user!.uid)
@@ -185,7 +191,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                     image: NetworkImage(menu.menuImageUrl!))),
                           ),
                         ),
-                        SizedBox(width: width * 0.03),
+                        SizedBox(width: width * 0.02),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -198,7 +204,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                             ),
                             SizedBox(height: height * 0.015),
                             SizedBox(
-                              width: width * 0.66,
+                              width: width * 0.61,
                               child: Text(
                                 menu.treatmentDetail,
                                 style: const TextStyle(

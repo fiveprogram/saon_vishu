@@ -11,21 +11,24 @@ class InformationSalonDetail {
   //オーナー写真
   String stylistImage;
 
+  String infoId;
+
   InformationSalonDetail(
       {required this.vishuImagesList,
       required this.vishuImage,
       required this.skillYear,
       required this.ownerWord,
-      required this.stylistImage});
+      required this.stylistImage,
+      required this.infoId});
 
   factory InformationSalonDetail.fromFirestore(DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
     return InformationSalonDetail(
-      vishuImagesList: data['vishuImagesList'],
-      vishuImage: data['vishuImage'],
-      stylistImage: data['stylistImage'],
-      ownerWord: data['ownerWord'],
-      skillYear: data['skillYear'],
-    );
+        vishuImagesList: data['vishuImagesList'],
+        vishuImage: data['vishuImage'],
+        stylistImage: data['stylistImage'],
+        ownerWord: data['ownerWord'],
+        skillYear: data['skillYear'],
+        infoId: data['infoId']);
   }
 }

@@ -213,9 +213,9 @@ class _AddDetailPageState extends State<AddDetailPage> {
                       Divider(
                         height: height * 0.05,
                       ),
-                      const Text('・料金',
+                      const Text('・料金(割引なしの場合、割引後価格のみ)',
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               color: Colors.black54,
                               fontWeight: FontWeight.bold)),
                       SizedBox(height: height * 0.02),
@@ -306,6 +306,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
                       SizedBox(height: height * 0.05),
                       const Text('ロングヘアーの別途料金の支払いが発生しますか？'),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Checkbox(
                               value: model.isNeedExtraMoney,
@@ -323,7 +324,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
-                            backgroundColor: HexColor('#b38861'),
+                            backgroundColor: Colors.black26,
                           ),
                           onPressed: () {
                             model.menuAddButton(context);

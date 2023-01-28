@@ -96,7 +96,6 @@ class _MyAppState extends State<MyApp> {
       });
 
       print(tokenId);
-      print('オッパ');
     });
 
     //フォアグラウンドでメッセージを受け取った時のイベント
@@ -197,7 +196,8 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
             create: (_) => BookerCalendarModel()..fetchReservation()),
-        ChangeNotifierProvider(create: (_) => PushNotificationModel()),
+        ChangeNotifierProvider(
+            create: (_) => PushNotificationModel()..fetchDeviceIds()),
         ChangeNotifierProvider(create: (_) => AddMenuModel()..fetchMenuList()),
         ChangeNotifierProvider(create: (_) => CancelReservationModel()),
         ChangeNotifierProvider(
@@ -236,7 +236,7 @@ class _MyAppState extends State<MyApp> {
                   if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
                     return const MasterSelectPage();
                   }
-                  return MainSelectPage();
+                  return const MainSelectPage();
                 }
                 return const SignInPage();
               },

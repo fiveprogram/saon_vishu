@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/common_widget/vishu_app_bar.dart';
 import 'package:salon_vishu/master/push_notification/push_notification_model.dart';
@@ -18,32 +19,80 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
 
     return Consumer<PushNotificationModel>(builder: (context, model, child) {
       return Scaffold(
+          backgroundColor: HexColor('#fcf8f6'),
           appBar: vishuAppBar(appBarTitle: 'プッシュ通知管理', isJapanese: true),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          body: Stack(
             children: [
-              SizedBox(width: width),
-              SizedBox(
-                height: height * 0.2,
-                width: width * 0.7,
-                child: TextFormField(
-                  maxLength: 300,
-                  maxLines: 4,
-                  controller: model.notificationController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
+                    children: [
+                      SizedBox(width: width * 0.15, height: height * 0.04),
+                      const Text('プッシュ通知タイトル',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold)),
+                    ],
                   ),
-                ),
+                  SizedBox(
+                    height: height * 0.05,
+                    width: width * 0.7,
+                    child: TextFormField(
+                      controller: model.notificationTitleController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: height * 0.07, width: width),
+                  Row(
+                    children: [
+                      SizedBox(width: width * 0.15, height: height * 0.04),
+                      const Text('お知らせ内容',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  SizedBox(
+                    height: height * 0.2,
+                    width: width * 0.7,
+                    child: TextFormField(
+                      maxLength: 300,
+                      maxLines: 4,
+                      controller: model.notificationContentController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: height * 0.05),
+                  SizedBox(
+                    width: width * 0.6,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.black26,
+                      ),
+                      child: const Text('送信する'),
+                      onPressed: () {
+                        model.sendPushNotification(context);
+                      },
+                    ),
+                  ),
+                ],
               ),
-              SizedBox(height: height * 0.05),
-              SizedBox(
-                width: width * 0.6,
-                child: ElevatedButton(
-                  child: Text('送信する'),
-                  onPressed: () {},
-                ),
-              )
+              if (model.isLoading)
+                Container(
+                  color: Colors.black54,
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
             ],
           ));
     });

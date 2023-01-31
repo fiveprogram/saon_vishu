@@ -3,6 +3,7 @@ import * as admin from "firebase-admin";
 import {MessagingPayload} from "firebase-admin/lib/messaging/messaging-api";
 import {DocumentData} from "firebase-admin/firestore";
 
+process.env.TZ = "Asia/Tokyo";
 admin.initializeApp();
 
 function payload(title: string, content: string):MessagingPayload {
@@ -18,7 +19,6 @@ function payload(title: string, content: string):MessagingPayload {
 export const pushNotificationWhenCreateReservation = functions.firestore.document("users/{userId}/reservations/{reservationId}").onCreate((snapshot)=>{
   const reservationData : DocumentData = snapshot.data();
   const registrationToken = reservationData.deviceIdList;
-  process.env.TZ = "Asia/Tokyo";
   const dateFormat = reservationData.startTime.toDate();
 
   const year = dateFormat.getFullYear().toString();
@@ -28,14 +28,13 @@ export const pushNotificationWhenCreateReservation = functions.firestore.documen
   const minute = dateFormat.getMinutes().toString();
 
   const dateText = year + "年" + month + "月" + day + "日" + hour +"時" +minute +"分";
-  admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}に予約されました。${reservationData.treatmentDetail}`));
+  return admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}に予約されました。${reservationData.treatmentDetail}`));
 });
 
 
 export const pushNotificationWhenDeleteReservation = functions.firestore.document("users/{userId}/reservations/{reservationId}").onDelete((snapshot)=>{
   const reservationData : DocumentData = snapshot.data();
   const registrationToken = reservationData.deviceIdList;
-  process.env.TZ = "Asia/Tokyo";
   const dateFormat = reservationData.startTime.toDate();
 
   const year = dateFormat.getFullYear().toString();
@@ -45,7 +44,7 @@ export const pushNotificationWhenDeleteReservation = functions.firestore.documen
   const minute = dateFormat.getMinutes().toString();
 
   const dateText = year + "年" + month + "月" + day + "日" + hour +"時" +minute +"分";
-  admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}の予約がキャンセルされました。${reservationData.treatmentDetail}`));
+  return admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}の予約がキャンセルされました。${reservationData.treatmentDetail}`));
 });
 
 export const pushNotificationWhenOwnerMessage = functions.firestore.document("pushNotification/{pushNotificationId}").onCreate((snapshot)=>{
@@ -55,27 +54,40 @@ export const pushNotificationWhenOwnerMessage = functions.firestore.document("pu
   const title = pushNotificationData.title;
   const content = pushNotificationData.content;
 
-  admin.messaging().sendToDevice(registrationTokenList, payload(title, content ));
+  return admin.messaging().sendToDevice(registrationTokenList, payload(title, content ));
 });
 
-export const scheduleNotification = functions.firestore.document("users/{userId}/reservations/{reservationId}").onCreate((async (snapshot)=> {
-  process.env.TZ = "Asia/Tokyo";
-  const reservation = snapshot.data();
-  const registrationTokenList = reservation.deviceIdList;
+exports.exampleSchedule = functions.pubsub.schedule("0 8 * * *").timeZone( "Asia/Tokyo").onRun(async () => {
+  const d1 = new Date();
+  const d2 = new Date();
 
-  const dateFormat = reservation.startTime.toDate();
+  d2.setDate( d1.getDate() + 1);
+  const db = admin.firestore();
+  const ref = await db.collectionGroup("reservations") .where("startTime", ">", d1)
+      .where("startTime", "<", d2).get();
 
-  const year = dateFormat.getFullYear().toString();
-  const month = (dateFormat.getMonth() + 1).toString();
-  const day = dateFormat.getDate().toString();
-  const hour = dateFormat.getHours().toString();
-  const minute = dateFormat.getMinutes().toString();
+  const deviceIdList:Array<string> = [];
+  for (const reservation of ref.docs) {
+    for (const deviceId of reservation.data().deviceIdList) {
+      deviceIdList.push(deviceId);
+    }
+  }
+  if (deviceIdList.length === 0) {
+    return;
+  }
+  return admin.messaging().sendToDevice(deviceIdList, payload("予約当日になりました。", "ご来店をお待ちしております。" ));
+});
 
-  const dateText = year + "年" + month + "月" + day + "日" + hour +"時" +minute +"分";
 
+class ReminderPushNotification {
 
-  exports.scheduleFunction = functions.pubsub.schedule(`0,8,${day},${month},${year}`).onRun(() => {
-    return admin.messaging().sendToDevice(registrationTokenList, payload("予約当日になりました。", `${dateText}/${reservation.treatmentDetail}` ));
-  });
-})
-);
+  deviceIdList : Array<string>;
+  treatmentDetail : string;
+  startTime : any;
+
+  constructor(deviceIdList:  Array<string>, treatmentDetail: string,startTime : string) {
+    this.deviceIdList = deviceIdList;
+    this.startTime = startTime;
+    this.treatmentDetail = treatmentDetail;
+  }
+}

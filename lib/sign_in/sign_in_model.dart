@@ -125,7 +125,8 @@ class SignInModel extends ChangeNotifier {
             'dateOfBirth': '',
             'telephoneNumber': user.phoneNumber ?? '00000000000',
             'imgUrl': user.photoURL != '' ? user.photoURL : '',
-            'dateTime': createAccountDate
+            'dateTime': createAccountDate,
+            'gender': '',
           },
         );
       }
@@ -157,11 +158,12 @@ class SignInModel extends ChangeNotifier {
             {
               'uid': user.uid,
               'email': user.email,
-              'name': user.displayName,
+              'name': 'unknown',
               'dateOfBirth': '',
               'telephoneNumber': user.phoneNumber ?? '00000000000',
-              'imgUrl': user.photoURL != '' ? user.photoURL : '',
-              'dateTime': createAccountDate
+              'imgUrl': user.photoURL ?? '',
+              'dateTime': createAccountDate,
+              'gender': '',
             },
           );
         }

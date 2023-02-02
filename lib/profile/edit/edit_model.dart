@@ -148,6 +148,7 @@ class EditModel extends ChangeNotifier {
                 ],
               );
             });
+        endLoading();
         return;
       }
       if (file == null) {
@@ -191,9 +192,9 @@ class EditModel extends ChangeNotifier {
         }
         notifyListeners();
       }
+      Navigator.pop(context);
     } finally {
       endLoading();
-      Navigator.pop(context);
     }
   }
 }

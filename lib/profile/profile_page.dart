@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: height * 0.03),
+                SizedBox(height: height * 0.01),
                 Row(
                   children: [
                     SizedBox(width: width * 0.02),

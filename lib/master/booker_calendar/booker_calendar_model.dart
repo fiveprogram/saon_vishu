@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:salon_vishu/domain/reservation.dart';
 import 'package:table_calendar/table_calendar.dart';
+
+import '../../firebase_options.dart';
 
 class BookerCalendarModel extends ChangeNotifier {
   CalendarFormat calendarFormat = CalendarFormat.month;
@@ -74,5 +79,38 @@ class BookerCalendarModel extends ChangeNotifier {
       default:
         return HexColor('#ff8db4');
     }
+  }
+
+  Future<void> googleSignOut() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn(
+        clientId: DefaultFirebaseOptions.currentPlatform.iosClientId);
+    if (await googleSignIn.isSignedIn()) {
+      await googleSignIn.disconnect();
+    }
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('本当にログアウトしますか？'),
+            actions: [
+              CupertinoButton(
+                  child: const Text('いいえ'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              CupertinoButton(
+                  child: const Text('はい'),
+                  onPressed: () async {
+                    await googleSignOut();
+                    await FirebaseAuth.instance.signOut();
+                    notifyListeners();
+                    Navigator.pop(context);
+                  }),
+            ],
+          );
+        });
   }
 }

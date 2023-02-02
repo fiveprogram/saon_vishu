@@ -253,4 +253,35 @@ class AddDetailModel extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  ///前のページに戻る
+  Future<bool> willPopCallback(BuildContext context) async {
+    ///あとで、registeredRestListの要素が減っていなければっていう制御も必要
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('登録を中止しますか？'),
+            content: const Text('登録した内容は破棄されます'),
+            actions: [
+              CupertinoButton(
+                  child: const Text('いいえ'),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  }),
+              CupertinoButton(
+                child: const Text('はい'),
+                onPressed: () {
+                  ///restTImeListを初期値に戻す
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MasterSelectPage()),
+                      (route) => false);
+                },
+              ),
+            ],
+          );
+        });
+  }
 }

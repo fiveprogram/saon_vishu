@@ -10,7 +10,7 @@ import '../firebase_options.dart';
 
 class SignInModel extends ChangeNotifier {
   final emailController =
-      TextEditingController(text: 'yuta.nanana.tennis@gmail.com');
+      TextEditingController(text: 'hiroshi.tennis@outlookl.com');
   final passController = TextEditingController(text: '03Yuta16');
 
   DateTime createAccountDate = DateTime.now();
@@ -72,13 +72,15 @@ class SignInModel extends ChangeNotifier {
         password: passController.text,
       );
     } on FirebaseAuthException catch (e) {
-      final snackBar = SnackBar(content: Text(e.code));
       if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('ユーザーが見つかりません。')));
       } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('パスワードに誤りがあります。')));
       } else if (e.code == 'user-disabled') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('指定のアカウントは使用できません。')));
       }
     } finally {
       endLoading();

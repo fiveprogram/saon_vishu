@@ -148,11 +148,10 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                const Text('お客様のメールアドレスへ、確認メールを送付しました。',
+                const Text('お客様へ確認のプッシュ通知を送信させていただきました。',
                     style: TextStyle(fontSize: 14, color: Colors.black)),
                 const SizedBox(height: 3),
-                const Text(
-                    '*しばらく経ってもメールが届かない場合は、ご登録頂いたメールアドレスが間違っているか、迷惑メールフォルダに振り分けられている可能性がございます。',
+                const Text('*しばらく経っても通知が届かない場合は、初期設定で通知が届かない仕様になっている可能性がございます。',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.black54,
@@ -163,9 +162,9 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MainSelectPage()));
+                              builder: (context) => const MainSelectPage()));
                     },
-                    child: const Text('メインページに戻る'))
+                    child: const Text('メインページに戻る')),
               ],
             ),
           );

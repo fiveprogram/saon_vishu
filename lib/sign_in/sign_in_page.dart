@@ -33,7 +33,7 @@ class _SignInPageState extends State<SignInPage> {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  vishuImage(height * 0.3, width),
+                  vishuImage(height * 0.275, width),
                   const SizedBox(height: 30),
                   AuthFormField(
                       isSuffixIcon: false,
@@ -114,7 +114,7 @@ class _SignInPageState extends State<SignInPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SignUpPage()));
+                                  builder: (context) => const SignUpPage()));
                         },
                       style: const TextStyle(color: Colors.blue),
                     ),
@@ -141,7 +141,9 @@ Container vishuImage(double deviceHeight, double width) {
     height: deviceHeight,
     width: width,
     decoration: const BoxDecoration(
-        image: DecorationImage(image: AssetImage('images/vishu_view.png'))),
+        image: DecorationImage(
+            image: NetworkImage(
+                'https://souryo.info/wp-content/uploads/2019/10/unko-hotoke.jpg'))),
   );
 }
 

@@ -17,8 +17,6 @@ class PushNotificationModel extends ChangeNotifier {
           .map((DocumentSnapshot doc) => DeviceTokenId.fromFirestore(doc))
           .toList();
       notifyListeners();
-
-      print(deviceTokenIdList);
     });
   }
 
@@ -53,7 +51,10 @@ class PushNotificationModel extends ChangeNotifier {
               ],
             );
           });
+      endLoading();
+      return;
     }
+
     if (deviceTokenIdList.isEmpty) {
       await showCupertinoDialog(
           context: context,
@@ -69,37 +70,63 @@ class PushNotificationModel extends ChangeNotifier {
               ],
             );
           });
+      endLoading();
+      return;
     }
 
-    final deviceIds = deviceTokenIdList.map((e) => e.deviceId).toList();
+    await showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('本当に送信してもよろしいですか？'),
+            actions: [
+              CupertinoButton(
+                  child: const Text('戻る'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              CupertinoButton(
+                  child: const Text('送信'),
+                  onPressed: () async {
+                    final deviceIds = deviceTokenIdList
+                        .map((e) => e.deviceId)
+                        .toSet()
+                        .toList();
 
-    await FirebaseFirestore.instance.collection('pushNotification').add({
-      'title': notificationTitleController.text,
-      'content': notificationContentController.text,
-      'deviceIdList': deviceIds,
-    }).then(
-      (DocumentReference ref) async {
-        await FirebaseFirestore.instance
-            .collection('pushNotification')
-            .doc(ref.id)
-            .update({'notificationId': ref.id});
+                    await FirebaseFirestore.instance
+                        .collection('pushNotification')
+                        .add({
+                      'title': notificationTitleController.text,
+                      'content': notificationContentController.text,
+                      'deviceIdList': deviceIds,
+                    }).then(
+                      (DocumentReference ref) async {
+                        await FirebaseFirestore.instance
+                            .collection('pushNotification')
+                            .doc(ref.id)
+                            .update({'notificationId': ref.id});
 
-        await showCupertinoDialog(
-            context: context,
-            builder: (context) {
-              return CupertinoAlertDialog(
-                title: const Text('送信が完了しました。'),
-                actions: [
-                  CupertinoButton(
-                      child: const Text('戻る'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      }),
-                ],
-              );
-            });
-      },
-    );
-    endLoading();
+                        await showCupertinoDialog(
+                            context: context,
+                            builder: (context) {
+                              return CupertinoAlertDialog(
+                                title: const Text('送信が完了しました。'),
+                                actions: [
+                                  CupertinoButton(
+                                      child: const Text('戻る'),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      }),
+                                ],
+                              );
+                            });
+                      },
+                    );
+                    endLoading();
+                    Navigator.pop(context);
+                  }),
+            ],
+          );
+        });
   }
 }

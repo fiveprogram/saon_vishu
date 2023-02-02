@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:salon_vishu/main_select_page.dart';
 
 import '../domain/version.dart';
@@ -103,29 +102,25 @@ class SignUpModel extends ChangeNotifier {
           MaterialPageRoute(builder: (context) => MainSelectPage()),
           (route) => false);
     } on FirebaseAuthException catch (e) {
-      ///snackBarを定義
-      SnackBar snackBar = SnackBar(
-        content: Text(
-          e.code,
-          style: const TextStyle(color: Colors.black54),
-        ),
-        backgroundColor: HexColor('#8d9895'),
-      );
-
       if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('パスワードが短すぎます。')));
         notifyListeners();
       } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('そのメールアドレスは既に使用されています。')));
         notifyListeners();
       } else if (e.code == 'invalid-email') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('無効なメールアドレスです。')));
         notifyListeners();
       } else if (e.code == 'too-many-requests') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('リクエストが重複しています。')));
         notifyListeners();
       } else if (e.code == 'user-disabled') {
-        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('こちらのアカウントはご使用できません。')));
         notifyListeners();
       }
     } finally {

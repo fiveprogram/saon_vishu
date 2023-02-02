@@ -20,6 +20,9 @@ class ConfirmReservationModel extends ChangeNotifier {
     if (profile.lastVisit != null) {
       lastVisit = profile.lastVisit;
     }
+    if (profile.imgUrl != '') {
+      userImage = profile.imgUrl;
+    }
   }
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -31,6 +34,7 @@ class ConfirmReservationModel extends ChangeNotifier {
   final telephoneNumberController = TextEditingController();
   final dateOfBirthController = TextEditingController();
   String? gender;
+  String? userImage;
 
   DateFormat dayOfWeekFormatter = DateFormat('EE', 'ja_JP');
   DateFormat startMinuteFormatter = DateFormat('HH:mm');

@@ -254,6 +254,7 @@ class RestDateRegisterModel extends ChangeNotifier {
                   await registerRestTime(context);
                   willRemoveRegisteredRestList.clear();
                   willAddRegisteredRestList.clear();
+
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(

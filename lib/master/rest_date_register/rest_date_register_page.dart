@@ -180,15 +180,10 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
                                             Border.all(color: Colors.black38),
                                       ),
                                       child: Text(model.cellLabel(thirtyMinute),
-                                          style: model.isNotAlreadyReserved(
-                                                  thirtyMinute)
-                                              ? TextStyle(
-                                                  color: HexColor('#fc7ea0'),
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold)
-                                              : TextStyle(
-                                                  color: HexColor('#8f948a'),
-                                                  fontSize: 20),
+                                          style: TextStyle(
+                                              color: HexColor('#8f948a'),
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center),
                                     ),
                                   );

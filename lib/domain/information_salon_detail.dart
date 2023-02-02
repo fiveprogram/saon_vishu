@@ -32,3 +32,6 @@ class InformationSalonDetail {
         infoId: data['infoId']);
   }
 }
+
+///後から更新できるのが、スタイリストの写真・名前・経歴・一言
+///ページ上部の写真・vishuの写真は後から更新することができる。

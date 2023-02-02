@@ -25,7 +25,7 @@ export const pushNotificationWhenCreateReservation = functions.firestore.documen
   const month = (dateFormat.getMonth() + 1).toString();
   const day = dateFormat.getDate().toString();
   const hour = dateFormat.getHours().toString();
-  const minute = dateFormat.getMinutes().toString();
+  const minute = dateFormat.getMinutes().toString().padStart(2, "0");
 
   const dateText = year + "年" + month + "月" + day + "日" + hour +"時" +minute +"分";
   return admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}に予約されました。${reservationData.treatmentDetail}`));
@@ -41,7 +41,7 @@ export const pushNotificationWhenDeleteReservation = functions.firestore.documen
   const month = (dateFormat.getMonth() + 1).toString();
   const day = dateFormat.getDate().toString();
   const hour = dateFormat.getHours().toString();
-  const minute = dateFormat.getMinutes().toString();
+  const minute = dateFormat.getMinutes().toString().padStart(2, "0");
 
   const dateText = year + "年" + month + "月" + day + "日" + hour +"時" +minute +"分";
   return admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}の予約がキャンセルされました。${reservationData.treatmentDetail}`));
@@ -57,7 +57,7 @@ export const pushNotificationWhenOwnerMessage = functions.firestore.document("pu
   return admin.messaging().sendToDevice(registrationTokenList, payload(title, content ));
 });
 
-exports.exampleSchedule = functions.pubsub.schedule("0 8 * * *").timeZone( "Asia/Tokyo").onRun(async () => {
+exports.scheduleNotification = functions.pubsub.schedule("0 8 * * *").timeZone( "Asia/Tokyo").onRun(async () => {
   const d1 = new Date();
   const d2 = new Date();
 
@@ -66,26 +66,40 @@ exports.exampleSchedule = functions.pubsub.schedule("0 8 * * *").timeZone( "Asia
   const ref = await db.collectionGroup("reservations") .where("startTime", ">", d1)
       .where("startTime", "<", d2).get();
 
-  const deviceIdList:Array<string> = [];
-  for (const reservation of ref.docs) {
-    for (const deviceId of reservation.data().deviceIdList) {
-      deviceIdList.push(deviceId);
-    }
-  }
-  if (deviceIdList.length === 0) {
+  if (ref.docs.length === 0) {
     return;
   }
-  return admin.messaging().sendToDevice(deviceIdList, payload("予約当日になりました。", "ご来店をお待ちしております。" ));
+  const reminderPushNotificationList :Array<ReminderPushNotification> = [];
+  console.log(`${reminderPushNotificationList.length}クラスのリストの長さ`);
+
+  for (const reservation of ref.docs) {
+    const dateFormat = reservation.data().startTime.toDate();
+
+    const year = dateFormat.getFullYear().toString();
+    const month = (dateFormat.getMonth() + 1).toString();
+    const day = dateFormat.getDate().toString();
+    const hour = dateFormat.getHours().toString();
+    const minute = dateFormat.getMinutes().toString().padStart(2, "0");
+
+    const dateText = year + "年" + month + "月" + day + "日" + hour +"時" +minute +"分";
+
+    reminderPushNotificationList.push(new ReminderPushNotification(reservation.data().deviceIdList, reservation.data().treatmentDetail, dateText));
+    console.log(`${reminderPushNotificationList.length}クラスのリストの長さ`);
+  }
+
+  for (const reminderPushNotification of reminderPushNotificationList) {
+    console.log("プッシュ通知送信メソッド");
+
+    admin.messaging().sendToDevice( reminderPushNotification.deviceIdList, payload("予約当日になりました。", `${reminderPushNotification.startTime}よりお待ちしております。${reminderPushNotification.treatmentDetail}` ));
+  }
 });
 
-
 class ReminderPushNotification {
-
   deviceIdList : Array<string>;
   treatmentDetail : string;
-  startTime : any;
+  startTime : string;
 
-  constructor(deviceIdList:  Array<string>, treatmentDetail: string,startTime : string) {
+  constructor(deviceIdList: Array<string>, treatmentDetail: string, startTime : string) {
     this.deviceIdList = deviceIdList;
     this.startTime = startTime;
     this.treatmentDetail = treatmentDetail;

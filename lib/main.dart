@@ -50,7 +50,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // 通知
   localPlugin.show(
       notification.hashCode,
-      "${notification.title}:バックグラウンド",
+      "${notification.title}",
       notification.body,
       const NotificationDetails(
         android: AndroidNotificationDetails(
@@ -58,7 +58,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
           'channel_name',
         ),
       ),
-      payload: 'おはよう');
+      payload: '1000');
 }
 
 void main() async {
@@ -94,7 +94,6 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         tokenId = token!;
       });
-
       print(tokenId);
     });
 
@@ -109,12 +108,12 @@ class _MyAppState extends State<MyApp> {
 
       localPlugin.show(
           notification.hashCode,
-          "${notification.title}:1",
+          "${notification.title}",
           notification.body,
           const NotificationDetails(
             android: AndroidNotificationDetails(
-              '2',
-              '3',
+              'channel_id',
+              'channel_name',
             ),
           ),
           payload: '4');
@@ -181,7 +180,8 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
             create: (_) => CalendarModel()
               ..fetchProfile()
-              ..fetchReservationList()),
+              ..fetchReservationList()
+              ..fetchRestList()),
         ChangeNotifierProvider(
             create: (_) => HistoryModel()..fetchReservationList()),
         ChangeNotifierProvider(create: (_) => FinishReservationModel()),

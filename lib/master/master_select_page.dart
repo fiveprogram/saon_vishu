@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:salon_vishu/master/addMenu/add_menu_page.dart';
 import 'package:salon_vishu/master/booker_calendar/booker_calendar_page.dart';
@@ -13,9 +16,35 @@ class MasterSelectPage extends StatefulWidget {
 }
 
 class _MasterSelectPageState extends State<MasterSelectPage> {
+  User? user = FirebaseAuth.instance.currentUser;
+  String tokenId = "";
+
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // アプリ初期化時に画面にtokenを表示
+    firebaseMessaging.getToken().then((String? token) {
+      setState(() {
+        tokenId = token!;
+      });
+
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(user!.uid)
+          .collection('deviceTokenId')
+          .doc(tokenId)
+          .set({'deviceId': tokenId});
+
+      print(tokenId);
+    });
+  }
+
   List<Widget> masterPageList = [
-    const SchedulePage(),
     const BookerCalendarPage(),
+    const SchedulePage(),
     const PushNotificationPage(),
     const AddMenuPage()
   ];
@@ -36,7 +65,7 @@ class _MasterSelectPageState extends State<MasterSelectPage> {
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_month), label: '予定'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: '予約者一覧'),
+            BottomNavigationBarItem(icon: Icon(Icons.local_cafe), label: '休憩'),
             BottomNavigationBarItem(
                 icon: Icon(Icons.notification_add), label: 'プッシュ通知画面'),
             BottomNavigationBarItem(

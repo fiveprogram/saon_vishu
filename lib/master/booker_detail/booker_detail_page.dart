@@ -86,182 +86,207 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
     return Scaffold(
       appBar: vishuAppBar(appBarTitle: '予約者情報', isJapanese: true),
       body: Consumer<BookerDetailModel>(builder: (context, model, child) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: height * 0.005),
-            Container(
-              alignment: Alignment.center,
-              height: height * 0.05,
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.black26),
-                      top: BorderSide(color: Colors.black26))),
-              child: const Text('予約者情報',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  contentText('名前'),
-                  const Expanded(child: SizedBox()),
-                  profileText(width, reservation.name),
-                ],
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: height * 0.02),
+              CircleAvatar(
+                maxRadius: 60,
+                backgroundImage: NetworkImage(
+                  reservation.userImage ??
+                      'https://thumb.ac-illust.com/ac/ac500a4028ead506a866103700776220_t.jpeg',
+                ),
               ),
-            ),
-            SizedBox(height: height * 0.02),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  contentText('電話番号'),
-                  const Expanded(child: SizedBox()),
-                  profileText(width, reservation.telephoneNumber),
-                ],
+              SizedBox(height: height * 0.03),
+              Container(
+                alignment: Alignment.center,
+                height: height * 0.05,
+                decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: Colors.black26),
+                        top: BorderSide(color: Colors.black26))),
+                child: const Text('予約者情報',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
-            ),
-            const SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  contentText('生年月日'),
-                  const Expanded(child: SizedBox()),
-                  profileText(width, reservation.dateOfBirth),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  contentText('性別'),
-                  const Expanded(child: SizedBox()),
-                  profileText(width, reservation.gender),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: height * 0.05,
-            ),
-            Container(
-              alignment: Alignment.center,
-              height: height * 0.05,
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(color: Colors.black26),
-                      top: BorderSide(color: Colors.black26))),
-              child: const Text('施術内容',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            ),
-            Card(
-              surfaceTintColor: Colors.white12,
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        targetCard(),
-                        SizedBox(
-                          width: width * 0.09,
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Wrap(
-                              children: contentsOfHairList(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: height * 0.01),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: height * 0.09,
-                          width: width * 0.19,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black87),
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image:
-                                      NetworkImage(reservation.menuImageUrl))),
-                        ),
-                        const SizedBox(width: 10),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: width * 0.66,
-                              child: Text(
-                                reservation.treatmentDetail,
-                                style: const TextStyle(fontSize: 13),
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        if (reservation.beforePrice != null)
-                                          Text(
-                                            '${reservation.beforePrice}円',
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                decoration:
-                                                    TextDecoration.lineThrough),
-                                          ),
-                                        const Text('▷'),
-                                        Text('${reservation.afterPrice}円'),
-                                        const SizedBox(width: 10),
-                                      ],
-                                    ),
-                                    Text('施術時間：${reservation.treatmentTime}分',
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black54,
-                                            fontWeight: FontWeight.bold)),
-                                  ],
-                                ),
-                                const SizedBox(width: 30),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    )
+                    contentText('名前'),
+                    const Expanded(child: SizedBox()),
+                    profileText(width, reservation.name),
                   ],
                 ),
               ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              width: width * 0.4,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.brown,
-                    foregroundColor: Colors.white),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text(
-                  '戻る',
-                  style: TextStyle(),
+              SizedBox(height: height * 0.02),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    contentText('電話番号'),
+                    const Expanded(child: SizedBox()),
+                    profileText(width, reservation.telephoneNumber),
+                  ],
                 ),
               ),
-            )
-          ],
+              SizedBox(height: height * 0.02),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    contentText('生年月日'),
+                    const Expanded(child: SizedBox()),
+                    profileText(width, reservation.dateOfBirth),
+                  ],
+                ),
+              ),
+              SizedBox(height: height * 0.02),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    contentText('性別'),
+                    const Expanded(child: SizedBox()),
+                    profileText(width, reservation.gender),
+                  ],
+                ),
+              ),
+              SizedBox(height: height * 0.02),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    contentText('性別'),
+                    const Expanded(child: SizedBox()),
+                    profileText(width, reservation.email!),
+                  ],
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: height * 0.05,
+                decoration: const BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: Colors.black26),
+                        top: BorderSide(color: Colors.black26))),
+                child: const Text('施術内容',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+              Card(
+                surfaceTintColor: Colors.white12,
+                elevation: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(13.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          targetCard(),
+                          SizedBox(
+                            width: width * 0.09,
+                          ),
+                          Expanded(
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Wrap(
+                                children: contentsOfHairList(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: height * 0.01),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: height * 0.09,
+                            width: width * 0.19,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black87),
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: NetworkImage(
+                                        reservation.menuImageUrl))),
+                          ),
+                          const SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: width * 0.66,
+                                child: Text(
+                                  reservation.treatmentDetail,
+                                  style: const TextStyle(fontSize: 13),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          if (reservation.beforePrice != null)
+                                            Text(
+                                              '${reservation.beforePrice}円',
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  decoration: TextDecoration
+                                                      .lineThrough),
+                                            ),
+                                          const Text('▷'),
+                                          Text('${reservation.afterPrice}円'),
+                                          const SizedBox(width: 10),
+                                        ],
+                                      ),
+                                      Text('施術時間：${reservation.treatmentTime}分',
+                                          style: const TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black54,
+                                              fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                  const SizedBox(width: 30),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: height * 0.03),
+              SizedBox(
+                width: width * 0.4,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white70,
+                      backgroundColor: Colors.black26),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text(
+                    '戻る',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: height * 0.05),
+            ],
+          ),
         );
       }),
     );

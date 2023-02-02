@@ -12,8 +12,6 @@ import '../domain/profile.dart';
 import '../domain/version.dart';
 import 'edit/edit_page.dart';
 
-import 'package:http/http.dart' as http;
-
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -50,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     return Scaffold(
-      appBar: vishuAppBar(appBarTitle: 'my page'),
+      appBar: vishuAppBar(appBarTitle: 'Home'),
       body: Consumer<ProfileModel>(
         builder: (context, model, child) {
           if (model.profile == null) {
@@ -185,7 +183,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
                   ),
                 ),
-                SizedBox(height: height * 0.01),
+                SizedBox(height: height * 0.03),
                 const Text('salon Vishu',
                     style: TextStyle(
                         fontSize: 40,
@@ -202,18 +200,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     'version　${version.androidMinAvailableVersion}',
                     style: const TextStyle(fontSize: 20, color: Colors.black54),
                   ),
-                ElevatedButton(
-                  onPressed: () async {
-                    var url = Uri.parse(
-                      'https://us-central1-salon-vishu.cloudfunctions.net/sendNotification',
-                    );
-
-                    var response = await http.post(url);
-                    print('Response status: ${response.statusCode}');
-                    print('Response body: ${response.body}');
-                  },
-                  child: const Text('実験'),
-                ),
               ],
             ),
           );

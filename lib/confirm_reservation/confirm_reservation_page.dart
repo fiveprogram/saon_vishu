@@ -78,7 +78,9 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   'gender': model.gender,
                   'uid': model.user!.uid,
                   'lastVisit': model.lastVisit,
+                  'userImage': model.userImage,
                   'deviceIdList': deviceIdList,
+                  'email': model.emailController.text,
                 },
               );
               await FirebaseFirestore.instance
@@ -101,7 +103,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 'imgUrl': profile.imgUrl != '' ? profile.imgUrl : '',
                 'gender': model.gender,
                 'dateTime': profile.dateTime,
-                'lastVisit': DateTime.now()
+                'lastVisit': startTime,
               });
             }
 

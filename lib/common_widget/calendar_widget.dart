@@ -122,7 +122,8 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                             ),
                             ...model.separateThirtyMinutes(weekDay).map(
                               (thirtyMinute) {
-                                return GestureDetector(
+                                return InkWell(
+                                  splashColor: Colors.redAccent,
                                   onTap: model.isAvailable(
                                           thirtyMinute, widget.menu)
                                       ? () {

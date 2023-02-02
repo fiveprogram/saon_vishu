@@ -163,7 +163,7 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
                               ),
                               ...model.separateThirtyMinutes(weekDay).map(
                                 (thirtyMinute) {
-                                  return GestureDetector(
+                                  return InkWell(
                                     onTap:
                                         model.isNotAlreadyReserved(thirtyMinute)
                                             ? () {

@@ -73,7 +73,6 @@ class PushNotificationModel extends ChangeNotifier {
       endLoading();
       return;
     }
-
     await showCupertinoDialog(
         context: context,
         builder: (context) {
@@ -83,6 +82,7 @@ class PushNotificationModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('戻る'),
                   onPressed: () {
+                    endLoading();
                     Navigator.pop(context);
                   }),
               CupertinoButton(
@@ -122,6 +122,8 @@ class PushNotificationModel extends ChangeNotifier {
                             });
                       },
                     );
+                    notificationTitleController.clear();
+                    notificationContentController.clear();
                     endLoading();
                     Navigator.pop(context);
                   }),

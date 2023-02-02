@@ -27,9 +27,7 @@ class _MasterSelectPageState extends State<MasterSelectPage> {
 
     // アプリ初期化時に画面にtokenを表示
     firebaseMessaging.getToken().then((String? token) {
-      setState(() {
-        tokenId = token!;
-      });
+      tokenId = token!;
 
       FirebaseFirestore.instance
           .collection('users')

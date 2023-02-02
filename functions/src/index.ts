@@ -28,7 +28,7 @@ export const pushNotificationWhenCreateReservation = functions.firestore.documen
   const minute = dateFormat.getMinutes().toString().padStart(2, "0");
 
   const dateText = year + "年" + month + "月" + day + "日" + hour +"時" +minute +"分";
-  return admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}に予約されました。${reservationData.treatmentDetail}`));
+  return admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}~に予約されました。${reservationData.treatmentDetail}`));
 });
 
 
@@ -44,7 +44,7 @@ export const pushNotificationWhenDeleteReservation = functions.firestore.documen
   const minute = dateFormat.getMinutes().toString().padStart(2, "0");
 
   const dateText = year + "年" + month + "月" + day + "日" + hour +"時" +minute +"分";
-  return admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}の予約がキャンセルされました。${reservationData.treatmentDetail}`));
+  return admin.messaging().sendToDevice(registrationToken, payload("salonVishu", `${dateText}~の予約がキャンセルされました。${reservationData.treatmentDetail}`));
 });
 
 export const pushNotificationWhenOwnerMessage = functions.firestore.document("pushNotification/{pushNotificationId}").onCreate((snapshot)=>{
@@ -90,7 +90,7 @@ exports.scheduleNotification = functions.pubsub.schedule("0 8 * * *").timeZone( 
   for (const reminderPushNotification of reminderPushNotificationList) {
     console.log("プッシュ通知送信メソッド");
 
-    admin.messaging().sendToDevice( reminderPushNotification.deviceIdList, payload("予約当日になりました。", `${reminderPushNotification.startTime}よりお待ちしております。${reminderPushNotification.treatmentDetail}` ));
+    admin.messaging().sendToDevice( reminderPushNotification.deviceIdList, payload("予約当日になりました。", `${reminderPushNotification.startTime}~よりお待ちしております。${reminderPushNotification.treatmentDetail}` ));
   }
 });
 

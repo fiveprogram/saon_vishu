@@ -37,27 +37,58 @@ class _EditPageState extends State<EditPage> {
                   children: [
                     const SizedBox(height: 20),
                     if (model.file != null)
-                      CircleAvatar(
-                        radius: 64,
-                        backgroundImage: FileImage(model.file!),
-                      ),
-                    if (model.file == null)
-                      CircleAvatar(
-                          radius: 64,
-                          backgroundImage: profile.imgUrl != ''
-                              ? NetworkImage(profile.imgUrl)
-                              : const NetworkImage(
-                                  'https://jobneta.sasamedia.net/miyashikai/wp-content/uploads/2017/02/default-avatar.png')),
-                    TextButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           model.registerAccountPhoto(context);
                         },
-                        child: const Text(
-                          'プロフィール写真を変更',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
-                        )),
-                    const SizedBox(height: 30),
+                        child: Stack(
+                          children: [
+                            CircleAvatar(
+                              radius: 64,
+                              backgroundImage: FileImage(model.file!),
+                            ),
+                            const Positioned(
+                              top: 97,
+                              right: 12,
+                              child: Padding(
+                                padding: EdgeInsets.all(2.0),
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  child: Icon(Icons.add, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    if (model.file == null)
+                      GestureDetector(
+                        onTap: () {
+                          model.registerAccountPhoto(context);
+                        },
+                        child: Stack(
+                          children: [
+                            CircleAvatar(
+                                radius: 64,
+                                backgroundImage: profile.imgUrl != ''
+                                    ? NetworkImage(profile.imgUrl)
+                                    : const NetworkImage(
+                                        'https://jobneta.sasamedia.net/miyashikai/wp-content/uploads/2017/02/default-avatar.png')),
+                            const Positioned(
+                              top: 97,
+                              right: 12,
+                              child: Padding(
+                                padding: EdgeInsets.all(2.0),
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  child: Icon(Icons.add, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    SizedBox(height: height * 0.05),
                     guidListTile(
                         model: model,
                         width: 80,
@@ -122,11 +153,18 @@ class _EditPageState extends State<EditPage> {
                       ),
                     ),
                     SizedBox(height: height * 0.04),
-                    ElevatedButton(
-                        onPressed: () {
-                          model.editProfileInformation(context);
-                        },
-                        child: const Text('登録する'))
+                    SizedBox(
+                      height: height * 0.06,
+                      width: width * 0.5,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            model.editProfileInformation(context);
+                          },
+                          child: const Text(
+                            '保存する',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                    )
                   ],
                 ),
                 if (model.isLoading)

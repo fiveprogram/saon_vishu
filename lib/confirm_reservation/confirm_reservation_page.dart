@@ -300,7 +300,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     const Text(
-                      '前日17時まで→無料\n当日の場合→料金の50%を請求',
+                      '前日18時まで→無料\n当日の場合→料金の50%を請求',
                       style: TextStyle(fontSize: 17, color: Colors.black87),
                     ),
                     SizedBox(height: height * 0.03),
@@ -369,10 +369,18 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                         model.isLateConfirm = value!;
                                       });
                                     }),
-                                const Text(
-                                  '確認しました。',
-                                  style: TextStyle(
-                                      color: Colors.black87, fontSize: 13),
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      model.isLateConfirm =
+                                          !model.isLateConfirm;
+                                    });
+                                  },
+                                  child: const Text(
+                                    '確認しました。',
+                                    style: TextStyle(
+                                        color: Colors.black87, fontSize: 13),
+                                  ),
                                 ),
                               ],
                             ),
@@ -432,10 +440,18 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                         model.isChildConfirm = value!;
                                       });
                                     }),
-                                const Text(
-                                  '確認しました',
-                                  style: TextStyle(
-                                      color: Colors.black87, fontSize: 13),
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      model.isChildConfirm =
+                                          !model.isChildConfirm;
+                                    });
+                                  },
+                                  child: const Text(
+                                    '確認しました。',
+                                    style: TextStyle(
+                                        color: Colors.black87, fontSize: 13),
+                                  ),
                                 ),
                               ],
                             ),

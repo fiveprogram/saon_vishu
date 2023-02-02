@@ -142,8 +142,6 @@ class CalendarModel extends ChangeNotifier {
             .map((DocumentSnapshot doc) => Rest.fromFirestore(doc))
             .toList();
         notifyListeners();
-
-        print("${restList.length}レスト");
       },
     );
   }
@@ -160,8 +158,6 @@ class CalendarModel extends ChangeNotifier {
             .map((DocumentSnapshot doc) => Reservation.fromFirestore(doc))
             .toList();
         notifyListeners();
-
-        print(reservationList.length);
       },
     );
   }

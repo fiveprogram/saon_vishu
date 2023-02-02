@@ -21,15 +21,20 @@ class _MainSelectPageState extends State<MainSelectPage> {
 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
+  int currentPageIndex = 0;
+  List<Widget> pageList = [
+    const MenuPage(),
+    const HistoryPage(),
+    const ProfilePage()
+  ];
+
   @override
   void initState() {
     super.initState();
 
     // アプリ初期化時に画面にtokenを表示
     firebaseMessaging.getToken().then((String? token) {
-      setState(() {
-        tokenId = token!;
-      });
+      tokenId = token!;
 
       FirebaseFirestore.instance
           .collection('users')
@@ -41,13 +46,6 @@ class _MainSelectPageState extends State<MainSelectPage> {
       print(tokenId);
     });
   }
-
-  int currentPageIndex = 0;
-  List<Widget> pageList = [
-    const MenuPage(),
-    const HistoryPage(),
-    const ProfilePage()
-  ];
 
   @override
   Widget build(BuildContext context) {

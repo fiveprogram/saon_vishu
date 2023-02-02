@@ -151,7 +151,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                 const Text('お客様へ確認のプッシュ通知を送信させていただきました。',
                     style: TextStyle(fontSize: 14, color: Colors.black)),
                 const SizedBox(height: 3),
-                const Text('*しばらく経っても通知が届かない場合は、初期設定で通知が届かない仕様になっている可能性がございます。',
+                const Text('*しばらく経っても通知が届かない場合は、アプリの通知設定をご確認ください。',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.black54,

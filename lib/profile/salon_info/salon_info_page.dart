@@ -364,7 +364,7 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
                       },
                       child: const Text('トップに戻る')),
                 ),
-                SizedBox(height: height * 0.02),
+                SizedBox(height: height * 0.1),
               ],
             ),
           );

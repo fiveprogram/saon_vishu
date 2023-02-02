@@ -19,7 +19,7 @@ class BookerCalendarPage extends StatefulWidget {
 class _BookerCalendarPageState extends State<BookerCalendarPage> {
   @override
   Widget build(BuildContext context) {
-    late final ValueNotifier<List<Reservation>> selectedEvents;
+    ValueNotifier<List<Reservation>> selectedEvents;
 
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;

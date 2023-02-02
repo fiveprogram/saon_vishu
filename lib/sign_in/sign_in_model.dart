@@ -93,7 +93,6 @@ class SignInModel extends ChangeNotifier {
     clientId: DefaultFirebaseOptions.currentPlatform.iosClientId,
     scopes: [
       'email',
-      "https://www.googleapis.com/auth/user.birthday.read",
       'https://www.googleapis.com/auth/contacts.readonly',
     ],
   );

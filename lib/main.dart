@@ -67,6 +67,23 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+
+  await firebaseMessaging.requestPermission(
+    alert: true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
+  );
+
+  await firebaseMessaging.setForegroundNotificationPresentationOptions(
+    alert: true, // Required to display a heads up notification
+    badge: true,
+    sound: true,
+  );
 
   runApp(const MyApp());
 
@@ -97,26 +114,41 @@ class _MyAppState extends State<MyApp> {
       print(tokenId);
     });
 
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+    );
+
     //フォアグラウンドでメッセージを受け取った時のイベント
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       localPlugin.initialize(const InitializationSettings(
+          iOS: initializationSettingsIOS,
           android: AndroidInitializationSettings('@mipmap/ic_launcher')));
       if (notification == null) {
         return;
       }
 
-      localPlugin.show(
-          notification.hashCode,
-          "${notification.title}",
-          notification.body,
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'channel_id',
-              'channel_name',
-            ),
-          ),
-          payload: '4');
+      AndroidNotification? android = message.notification?.android;
+
+      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+          FlutterLocalNotificationsPlugin();
+
+      if (android != null) {
+        flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                'channel.id',
+                'channel.name',
+                icon: android.smallIcon,
+              ),
+            ));
+      }
     });
   }
 
@@ -229,6 +261,7 @@ class _MyAppState extends State<MyApp> {
             return StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
+                print('ログアウト認識できてますか？');
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasData) {

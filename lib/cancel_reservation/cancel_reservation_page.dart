@@ -59,7 +59,7 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${startTime.year}年${startTime.month}月${startTime.day}日 (${model.dayOfWeekFormatter.format(startTime)}) ${model.startMinuteFormatter.format(startTime)}',
+                              '${startTime.year}年${startTime.month}月${startTime.day}日 (${model.dayOfWeekFormatter.format(startTime)}) ${model.startMinuteFormatter.format(startTime)}~',
                               style: const TextStyle(
                                   color: Colors.black87,
                                   fontSize: 18,
@@ -161,7 +161,7 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     const Text(
-                      '前日17時まで→無料\n当日の場合→料金の50%を請求',
+                      '前日18時まで→無料\n当日の場合→料金の50%を請求',
                       style: TextStyle(fontSize: 17, color: Colors.black87),
                     ),
                     SizedBox(height: height * 0.03),
@@ -175,9 +175,11 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                               backgroundColor: HexColor("#989593"),
                               foregroundColor: Colors.white),
                           onPressed: () {
-                            model.cancelDialog(context, reservation);
+                            model.cancelDialog(context, reservation,
+                                reservation.startTime.toDate());
                           },
-                          child: const Text('予約をキャンセルする'),
+                          child: const Text('予約をキャンセルする',
+                              style: TextStyle(fontWeight: FontWeight.bold)),
                         ),
                       ),
                     ),

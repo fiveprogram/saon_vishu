@@ -170,7 +170,7 @@ class _SchedulePageState extends State<SchedulePage> {
                     fullscreenDialog: true,
                     builder: (context) => const RestDateRegisterPage()));
           },
-          child: const Icon(Icons.add)),
+          child: const Icon(Icons.edit)),
     );
   }
 }

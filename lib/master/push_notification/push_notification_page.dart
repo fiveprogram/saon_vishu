@@ -19,72 +19,85 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
 
     return Consumer<PushNotificationModel>(builder: (context, model, child) {
       return Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: HexColor('#fcf8f6'),
           appBar: vishuAppBar(appBarTitle: 'プッシュ通知管理', isJapanese: true),
           body: Stack(
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(width: width * 0.15, height: height * 0.04),
-                      const Text('プッシュ通知タイトル',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black87,
-                              fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                  SizedBox(
-                    height: height * 0.05,
-                    width: width * 0.7,
-                    child: TextFormField(
-                      controller: model.notificationTitleController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
+              Focus(
+                focusNode: model.focusNode,
+                child: GestureDetector(
+                  onTap: model.focusNode.requestFocus,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(width: width * 0.15, height: height * 0.05),
+                        Row(
+                          children: [
+                            SizedBox(width: width * 0.1, height: height * 0.04),
+                            const Text('プッシュ通知タイトル',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        SizedBox(
+                          width: width * 0.8,
+                          child: TextFormField(
+                            controller: model.notificationTitleController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: height * 0.07, width: width),
+                        Row(
+                          children: [
+                            SizedBox(width: width * 0.1, height: height * 0.04),
+                            const Text('お知らせ内容',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        SizedBox(
+                          width: width * 0.8,
+                          child: TextFormField(
+                            maxLength: 300,
+                            maxLines: 4,
+                            controller: model.notificationContentController,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: height * 0.05),
+                        SizedBox(
+                          width: width * 0.6,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.black26,
+                            ),
+                            child: const Text(
+                              '送信する',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            onPressed: () {
+                              model.sendPushNotification(context);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(height: height * 0.07, width: width),
-                  Row(
-                    children: [
-                      SizedBox(width: width * 0.15, height: height * 0.04),
-                      const Text('お知らせ内容',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black87,
-                              fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                  SizedBox(
-                    height: height * 0.2,
-                    width: width * 0.7,
-                    child: TextFormField(
-                      maxLength: 300,
-                      maxLines: 4,
-                      controller: model.notificationContentController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.05),
-                  SizedBox(
-                    width: width * 0.6,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.black26,
-                      ),
-                      child: const Text('送信する'),
-                      onPressed: () {
-                        model.sendPushNotification(context);
-                      },
-                    ),
-                  ),
-                ],
+                ),
               ),
               if (model.isLoading)
                 Container(

@@ -83,12 +83,7 @@ class ScheduleModel extends ChangeNotifier {
     }
 
     ///以下のどちらかでないと予約はできない。
-    //1. 予約する施術の終了時間が、既に予約を入れられている施術の終了時間よりも前(同時も含む)の場合。
-    //-------------------------施術開始時間[予約済]-----施術終了時間[予約済]
-    //-----施術終了時間[未予約]
-    //2. 予約する施術の開始時間が、既に予約を入れられている施術の終了時間よりも後(同時も含む)の場合。
-    //施術開始時間[予約済]-----施術終了時間[予約済]
-    //----------------------------------------施術開始時間[未予約]----
+
     for (final reservation in reservationList) {
       if (!(endTime.isBefore(reservation.startTime.toDate()) ||
           endTime.isAtSameMomentAs(reservation.startTime.toDate()) ||
@@ -115,15 +110,21 @@ class ScheduleModel extends ChangeNotifier {
   List<Reservation> reservationList = [];
   List<Rest> restList = [];
 
+  Timestamp nowTime = Timestamp.fromDate(DateTime.now());
+
   Future<void> fetchRestList() async {
-    Stream<QuerySnapshot> restStream =
-        FirebaseFirestore.instance.collectionGroup('rests').snapshots();
+    Stream<QuerySnapshot> restStream = FirebaseFirestore.instance
+        .collectionGroup('rests')
+        .where('startTime', isGreaterThan: nowTime)
+        .snapshots();
 
     restStream.listen(
       (snapshot) {
         restList = snapshot.docs
             .map((DocumentSnapshot doc) => Rest.fromFirestore(doc))
             .toList();
+
+        print(restList.length);
         notifyListeners();
       },
     );
@@ -132,14 +133,18 @@ class ScheduleModel extends ChangeNotifier {
   ///データベースから予約
   ///全員の予約履歴から参照
   Future<void> fetchReservationList() async {
-    Stream<QuerySnapshot> reservationStream =
-        FirebaseFirestore.instance.collectionGroup('reservations').snapshots();
+    Stream<QuerySnapshot> reservationStream = FirebaseFirestore.instance
+        .collectionGroup('reservations')
+        .where('startTime', isGreaterThan: nowTime)
+        .snapshots();
 
     reservationStream.listen(
       (snapshot) {
         reservationList = snapshot.docs
             .map((DocumentSnapshot doc) => Reservation.fromFirestore(doc))
             .toList();
+        print(reservationList.length);
+
         notifyListeners();
       },
     );

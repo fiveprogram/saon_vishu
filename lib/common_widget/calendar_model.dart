@@ -131,10 +131,13 @@ class CalendarModel extends ChangeNotifier {
   ///予約一覧
   List<Reservation> reservationList = [];
   List<Rest> restList = [];
+  Timestamp nowTime = Timestamp.fromDate(DateTime.now());
 
   Future<void> fetchRestList() async {
-    Stream<QuerySnapshot> restStream =
-        FirebaseFirestore.instance.collectionGroup('rests').snapshots();
+    Stream<QuerySnapshot> restStream = FirebaseFirestore.instance
+        .collectionGroup('rests')
+        .where('startTime', isGreaterThan: nowTime)
+        .snapshots();
 
     restStream.listen(
       (snapshot) {
@@ -149,8 +152,10 @@ class CalendarModel extends ChangeNotifier {
   ///データベースから予約
   ///全員の予約履歴から参照
   Future<void> fetchReservationList() async {
-    Stream<QuerySnapshot> reservationStream =
-        FirebaseFirestore.instance.collectionGroup('reservations').snapshots();
+    Stream<QuerySnapshot> reservationStream = FirebaseFirestore.instance
+        .collectionGroup('reservations')
+        .where('startTime', isGreaterThan: nowTime)
+        .snapshots();
 
     reservationStream.listen(
       (snapshot) {

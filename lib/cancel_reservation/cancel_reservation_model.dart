@@ -35,14 +35,20 @@ class CancelReservationModel extends ChangeNotifier {
         context: context,
         builder: (context) {
           return CupertinoAlertDialog(
-            title: const Text('予約当日のキャンセルのため、お電話にてお問い合わせください'),
+            title: const Text(
+              '当日キャンセルのため、お電話にてお問い合わせ下さい。',
+              style: TextStyle(fontSize: 20),
+            ),
+            content: const Text(
+              '0721-21-8824',
+              style: TextStyle(fontSize: 20),
+            ),
             actions: [
               CupertinoButton(
-                child: const Text('はい'),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
+                  child: const Text('戻る'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
             ],
           );
         },

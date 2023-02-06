@@ -164,7 +164,10 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                           MaterialPageRoute(
                               builder: (context) => const MainSelectPage()));
                     },
-                    child: const Text('メインページに戻る')),
+                    child: const Text(
+                      'メインページに戻る',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    )),
               ],
             ),
           );

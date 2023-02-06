@@ -24,10 +24,39 @@ class EditModel extends ChangeNotifier {
   String? errorText;
   String? gender;
 
+  final focusNode = FocusNode();
+
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final telephoneNumberController = TextEditingController();
   final dateOfBirthController = TextEditingController();
+
+  ///前のページに戻る
+  Future<bool> willPopCallback(BuildContext context) async {
+    ///あとで、registeredRestListの要素が減っていなければっていう制御も必要
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('登録を中止しますか？'),
+            content: const Text('登録した内容は破棄されます'),
+            actions: [
+              CupertinoButton(
+                  child: const Text('いいえ'),
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  }),
+              CupertinoButton(
+                child: const Text('はい'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                  Navigator.of(context).pop(false);
+                },
+              ),
+            ],
+          );
+        });
+  }
 
   ///loading
   bool isLoading = false;
@@ -84,8 +113,8 @@ class EditModel extends ChangeNotifier {
   }
 
   ///写真の登録
-  void registerAccountPhoto(BuildContext context) {
-    showCupertinoModalPopup<void>(
+  Future<void> registerAccountPhoto(BuildContext context) async {
+    await showCupertinoModalPopup<void>(
       context: context,
       builder: (BuildContext context) => CupertinoActionSheet(
         title: const Text(

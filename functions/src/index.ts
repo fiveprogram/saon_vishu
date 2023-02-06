@@ -105,3 +105,26 @@ class ReminderPushNotification {
     this.treatmentDetail = treatmentDetail;
   }
 }
+
+
+exports.automaticDelete = functions.pubsub.schedule("* * 1 * *").timeZone( "Asia/Tokyo").onRun(async () => {
+  const d1 = new Date();
+  const db = admin.firestore();
+
+  const removeRestList = await db.collectionGroup("rests") .where("startTime", "<", d1).get();
+
+  for (const remove of removeRestList.docs) {
+    const restId = remove.data().restId;
+    await db.collection("rests").doc(restId).delete();
+  }
+
+  const d2 = new Date();
+  d2.setDate( d1.getDate() - 365);
+
+  const removeReservationList = await db.collectionGroup("reservations") .where("startTime", "<", d2).get();
+
+  for (const remove of removeReservationList.docs) {
+    const ref = remove.ref;
+    await ref.delete();
+  }
+});

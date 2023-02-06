@@ -17,6 +17,8 @@ class SignUpModel extends ChangeNotifier {
 
   String? gender;
 
+  final focusNode = FocusNode();
+
   bool isLoading = false;
   void startLoading() {
     isLoading = true;

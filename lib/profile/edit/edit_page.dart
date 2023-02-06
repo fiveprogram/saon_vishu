@@ -23,6 +23,7 @@ class _EditPageState extends State<EditPage> {
     return ChangeNotifierProvider<EditModel>(
       create: (_) => EditModel(profile: widget.profile),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: vishuAppBar(appBarTitle: 'my page'),
         body: Consumer<EditModel>(
           builder: (context, model, child) {
@@ -31,150 +32,166 @@ class _EditPageState extends State<EditPage> {
             final height = MediaQuery.of(context).size.height;
             final double width = MediaQuery.of(context).size.width;
 
-            return Stack(
-              children: [
-                Column(
-                  children: [
-                    const SizedBox(height: 20),
-                    if (model.file != null)
-                      GestureDetector(
-                        onTap: () {
-                          model.registerAccountPhoto(context);
-                        },
-                        child: Stack(
-                          children: [
-                            CircleAvatar(
-                              radius: 64,
-                              backgroundImage: FileImage(model.file!),
-                            ),
-                            const Positioned(
-                              top: 97,
-                              right: 12,
-                              child: Padding(
-                                padding: EdgeInsets.all(2.0),
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  child: Icon(Icons.add, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    if (model.file == null)
-                      GestureDetector(
-                        onTap: () {
-                          model.registerAccountPhoto(context);
-                        },
-                        child: Stack(
-                          children: [
-                            CircleAvatar(
-                                radius: 64,
-                                backgroundImage: profile.imgUrl != ''
-                                    ? NetworkImage(profile.imgUrl)
-                                    : const NetworkImage(
-                                        'https://jobneta.sasamedia.net/miyashikai/wp-content/uploads/2017/02/default-avatar.png')),
-                            const Positioned(
-                              top: 97,
-                              right: 12,
-                              child: Padding(
-                                padding: EdgeInsets.all(2.0),
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  child: Icon(Icons.add, color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    SizedBox(height: height * 0.05),
-                    guidListTile(
-                        model: model,
-                        width: 80,
-                        controller: model.nameController,
-                        hintText: '名前'),
-                    guidListTile(
-                        model: model,
-                        width: 60,
-                        controller: model.emailController,
-                        hintText: 'メール'),
-                    guidListTile(
-                        model: model,
-                        width: 40,
-                        isNumberOnly: true,
-                        controller: model.telephoneNumberController,
-                        hintText: '電話番号'),
-                    guidListTile(
-                        model: model,
-                        width: 40,
-                        picker: () async {
-                          model.dateOfBirthPicker(context);
-                        },
-                        controller: model.dateOfBirthController,
-                        hintText: '生年月日'),
-                    Container(
-                      height: 60,
-                      width: width,
-                      decoration: BoxDecoration(
-                          color: HexColor('#fcf8f6'),
-                          border: Border(
-                              bottom: BorderSide(color: HexColor('#7e796e')))),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+            return WillPopScope(
+              onWillPop: () async {
+                return model.willPopCallback(context);
+              },
+              child: Focus(
+                focusNode: model.focusNode,
+                child: GestureDetector(
+                  onTap: model.focusNode.requestFocus,
+                  child: Stack(
+                    children: [
+                      Column(
                         children: [
-                          SizedBox(
-                            width: width * 0.4,
-                            child: RadioListTile(
-                              title: const Text("男性"),
-                              value: "男性",
-                              groupValue: model.gender,
-                              onChanged: (value) {
-                                setState(() {
-                                  model.gender = value.toString();
-                                });
+                          const SizedBox(height: 20),
+                          if (model.file != null)
+                            GestureDetector(
+                              onTap: () {
+                                model.registerAccountPhoto(context);
                               },
+                              child: Stack(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 64,
+                                    backgroundImage: FileImage(model.file!),
+                                  ),
+                                  const Positioned(
+                                    top: 97,
+                                    right: 12,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(2.0),
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.lightBlueAccent,
+                                        radius: 16,
+                                        child: Icon(Icons.add,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          if (model.file == null)
+                            GestureDetector(
+                              onTap: () {
+                                model.registerAccountPhoto(context);
+                              },
+                              child: Stack(
+                                children: [
+                                  CircleAvatar(
+                                      radius: 64,
+                                      backgroundImage: profile.imgUrl != ''
+                                          ? NetworkImage(profile.imgUrl)
+                                          : const NetworkImage(
+                                              'https://jobneta.sasamedia.net/miyashikai/wp-content/uploads/2017/02/default-avatar.png')),
+                                  const Positioned(
+                                    top: 97,
+                                    right: 12,
+                                    child: Padding(
+                                      padding: EdgeInsets.all(2.0),
+                                      child: CircleAvatar(
+                                        backgroundColor: Colors.lightBlueAccent,
+                                        radius: 16,
+                                        child: Icon(Icons.add,
+                                            color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          SizedBox(height: height * 0.05),
+                          guidListTile(
+                              model: model,
+                              width: 80,
+                              controller: model.nameController,
+                              hintText: '名前'),
+                          guidListTile(
+                              model: model,
+                              width: 60,
+                              controller: model.emailController,
+                              hintText: 'メール'),
+                          guidListTile(
+                              model: model,
+                              width: 40,
+                              isNumberOnly: true,
+                              controller: model.telephoneNumberController,
+                              hintText: '電話番号'),
+                          guidListTile(
+                              model: model,
+                              width: 40,
+                              picker: () async {
+                                model.dateOfBirthPicker(context);
+                              },
+                              controller: model.dateOfBirthController,
+                              hintText: '生年月日'),
+                          Container(
+                            height: 60,
+                            width: width,
+                            decoration: BoxDecoration(
+                                color: HexColor('#fcf8f6'),
+                                border: Border(
+                                    bottom: BorderSide(
+                                        color: HexColor('#7e796e')))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: width * 0.4,
+                                  child: RadioListTile(
+                                    title: const Text("男性"),
+                                    value: "男性",
+                                    groupValue: model.gender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        model.gender = value.toString();
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width * 0.4,
+                                  child: RadioListTile(
+                                    title: const Text("女性"),
+                                    value: "女性",
+                                    groupValue: model.gender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        model.gender = value.toString();
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+                          SizedBox(height: height * 0.04),
                           SizedBox(
-                            width: width * 0.4,
-                            child: RadioListTile(
-                              title: const Text("女性"),
-                              value: "女性",
-                              groupValue: model.gender,
-                              onChanged: (value) {
-                                setState(() {
-                                  model.gender = value.toString();
-                                });
-                              },
-                            ),
-                          ),
+                            height: height * 0.06,
+                            width: width * 0.5,
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  model.editProfileInformation(context);
+                                },
+                                child: const Text(
+                                  '保存する',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )),
+                          )
                         ],
                       ),
-                    ),
-                    SizedBox(height: height * 0.04),
-                    SizedBox(
-                      height: height * 0.06,
-                      width: width * 0.5,
-                      child: ElevatedButton(
-                          onPressed: () {
-                            model.editProfileInformation(context);
-                          },
-                          child: const Text(
-                            '保存する',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                    )
-                  ],
+                      if (model.isLoading)
+                        Container(
+                          color: Colors.black26,
+                          child: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        )
+                    ],
+                  ),
                 ),
-                if (model.isLoading)
-                  Container(
-                    color: Colors.black26,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )
-              ],
+              ),
             );
           },
         ),

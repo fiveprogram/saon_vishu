@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:salon_vishu/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../domain/profile.dart';
@@ -65,13 +66,12 @@ class ProfileModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('はい'),
                   onPressed: () async {
-                    Navigator.pop(context);
-                    try {
-                      await googleSignOut();
-                      await FirebaseAuth.instance.signOut();
-                    } catch (e) {
-                      print(e);
-                    }
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                        (route) => false);
+                    await googleSignOut();
+                    await FirebaseAuth.instance.signOut();
                   }),
             ],
           );

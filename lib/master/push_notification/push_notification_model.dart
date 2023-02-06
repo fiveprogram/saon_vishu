@@ -5,6 +5,7 @@ import 'package:salon_vishu/domain/device_token_id.dart';
 class PushNotificationModel extends ChangeNotifier {
   final notificationTitleController = TextEditingController();
   final notificationContentController = TextEditingController();
+  final focusNode = FocusNode();
 
   List<DeviceTokenId> deviceTokenIdList = [];
 

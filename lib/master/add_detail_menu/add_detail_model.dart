@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:salon_vishu/domain/menu.dart';
-import 'package:salon_vishu/master/master_select_page.dart';
 
 class AddDetailModel extends ChangeNotifier {
   AddDetailModel(Menu? menu) {
@@ -62,6 +61,8 @@ class AddDetailModel extends ChangeNotifier {
     '着付け'
   ];
   List selectedTypeList = <String>[];
+
+  final focusNode = FocusNode();
 
   ///写真の選択
   final ImagePicker _picker = ImagePicker();
@@ -152,6 +153,7 @@ class AddDetailModel extends ChangeNotifier {
             builder: (context) {
               return CupertinoAlertDialog(
                 title: const Text('登録してもよろしいですか？'),
+                content: const Text('反映されるまで時間がかかる\n場合があります。'),
                 actions: [
                   CupertinoButton(
                     child: const Text('いいえ'),
@@ -237,11 +239,9 @@ class AddDetailModel extends ChangeNotifier {
                             .update({'menuId': result.id});
                       }
                       notifyListeners();
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MasterSelectPage()),
-                          (route) => false);
+
+                      Navigator.pop(context);
+                      Navigator.pop(context);
                     },
                   ),
                 ],
@@ -256,7 +256,6 @@ class AddDetailModel extends ChangeNotifier {
 
   ///前のページに戻る
   Future<bool> willPopCallback(BuildContext context) async {
-    ///あとで、registeredRestListの要素が減っていなければっていう制御も必要
     return await showDialog(
         context: context,
         builder: (context) {
@@ -272,12 +271,8 @@ class AddDetailModel extends ChangeNotifier {
               CupertinoButton(
                 child: const Text('はい'),
                 onPressed: () {
-                  ///restTImeListを初期値に戻す
-                  Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MasterSelectPage()),
-                      (route) => false);
+                  Navigator.of(context).pop(false);
+                  Navigator.of(context).pop(false);
                 },
               ),
             ],

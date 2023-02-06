@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -44,6 +45,8 @@ class ConfirmReservationModel extends ChangeNotifier {
   bool isLateConfirm = false;
   bool isChildConfirm = false;
   bool isLongHairConfirm = false;
+
+  final focusNode = FocusNode();
 
   ///isNeedExtraMoney
   Future<void> dateOfBirthPicker(
@@ -128,5 +131,30 @@ class ConfirmReservationModel extends ChangeNotifier {
           .toList();
       notifyListeners();
     });
+  }
+
+  DateTime now = DateTime.now();
+
+  Future<void> isCheckWithinThirtyMinutes(
+      BuildContext context, DateTime startTime) async {
+    final checkTime = startTime.add(const Duration(minutes: -30));
+
+    if (checkTime.isBefore(now)) {
+      await showDialog(
+          context: context,
+          builder: (context) {
+            return CupertinoAlertDialog(
+              title: const Text('予約時間が迫っているため、直接お電話にてご確認ください。'),
+              content: const Text('0721-21-8824'),
+              actions: [
+                CupertinoButton(
+                    child: const Text('戻る'),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+              ],
+            );
+          });
+    }
   }
 }

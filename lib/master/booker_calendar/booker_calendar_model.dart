@@ -9,6 +9,7 @@ import 'package:salon_vishu/domain/reservation.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../firebase_options.dart';
+import '../../main.dart';
 
 class BookerCalendarModel extends ChangeNotifier {
   CalendarFormat calendarFormat = CalendarFormat.month;
@@ -21,9 +22,14 @@ class BookerCalendarModel extends ChangeNotifier {
   DateFormat lastVisitFormatter = DateFormat('yyyy年M月d日');
   List<Reservation> reservationList = [];
 
+  Timestamp nowTime =
+      Timestamp.fromDate(DateTime.now().add(const Duration(days: -90)));
+
   Future<void> fetchReservation() async {
-    Stream<QuerySnapshot> reservationStream =
-        FirebaseFirestore.instance.collectionGroup('reservations').snapshots();
+    Stream<QuerySnapshot> reservationStream = FirebaseFirestore.instance
+        .collectionGroup('reservations')
+        .where('startTime', isGreaterThan: nowTime)
+        .snapshots();
 
     reservationStream.listen((snapshot) {
       reservationList = snapshot.docs
@@ -104,10 +110,12 @@ class BookerCalendarModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('はい'),
                   onPressed: () async {
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                        (route) => false);
                     await googleSignOut();
                     await FirebaseAuth.instance.signOut();
-                    notifyListeners();
-                    Navigator.pop(context);
                   }),
             ],
           );

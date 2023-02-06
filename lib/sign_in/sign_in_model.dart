@@ -17,6 +17,8 @@ class SignInModel extends ChangeNotifier {
 
   bool isLoading = false;
 
+  final focusNode = FocusNode();
+
   void startLoading() {
     isLoading = true;
     notifyListeners();

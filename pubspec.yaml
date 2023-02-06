@@ -54,7 +54,24 @@ dependencies:
   flutter_local_notifications: ^13.0.0
   cloud_functions: ^4.0.7
   http: ^0.13.5
-  flutter_native_splash: ^2.2.17
+  flutter_native_splash: ^2.2.16
+  flutter_launcher_icons: ^0.11.0
+
+
+flutter_native_splash:
+  image: images/vishu_logo.png
+  color: "#613822"
+  android_12:
+    image: images/vishu_android_image.png
+    color: "#613822"
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path_ios: "images/vishu_logo.png"
+  image_path_android: "images/vishu_android_image.png"
+  min_sdk_android: 21
+  adaptive_icon_foreground: "images/vishu_android_image.png"
 
 
 dev_dependencies:
@@ -125,6 +142,9 @@ flutter:
     - images/begin_cancel.jpg
     - images/complete_cancel.PNG
     - images/vishu_screen.png
+    - images/vishu_logo.png
+    - images/vishu_android_image.png
+
     #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

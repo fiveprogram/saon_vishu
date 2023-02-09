@@ -7,7 +7,6 @@ import 'package:salon_vishu/profile/profile_page.dart';
 import 'history/history_page.dart';
 import 'menu/menu_page.dart';
 
-// ignore: must_be_immutable
 class MainSelectPage extends StatefulWidget {
   const MainSelectPage({Key? key}) : super(key: key);
 
@@ -42,8 +41,6 @@ class _MainSelectPageState extends State<MainSelectPage> {
           .collection('deviceTokenId')
           .doc(tokenId)
           .set({'deviceId': tokenId});
-
-      print(tokenId);
     });
   }
 
@@ -61,7 +58,7 @@ class _MainSelectPageState extends State<MainSelectPage> {
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'メニュー'),
             BottomNavigationBarItem(icon: Icon(Icons.history), label: '履歴'),
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'ホーム'),
+            BottomNavigationBarItem(icon: Icon(Icons.settings), label: '設定'),
           ]),
     );
   }

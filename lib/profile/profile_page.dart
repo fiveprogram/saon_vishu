@@ -38,8 +38,8 @@ class _ProfilePageState extends State<ProfilePage> {
           },
           tileColor: HexColor('#fcf8f6'),
           title: Text(tileName,
-              style: const TextStyle(
-                fontSize: 20,
+              style: TextStyle(
+                fontSize: height * 0.019,
                 color: Colors.black54,
               )),
           trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
@@ -48,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     return Scaffold(
-      appBar: vishuAppBar(appBarTitle: 'Home'),
+      appBar: vishuAppBar(appBarTitle: '設定', isJapanese: true),
       body: Consumer<ProfileModel>(
         builder: (context, model, child) {
           if (model.profile == null) {
@@ -69,9 +69,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 Row(
                   children: [
                     SizedBox(width: width * 0.02),
-                    const Text('・お客様情報',
+                    Text('・お客様情報',
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: height * 0.02,
                             color: Colors.black54,
                             fontWeight: FontWeight.bold)),
                   ],
@@ -92,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     tileColor: HexColor('#fcf8f6'),
                     leading: CircleAvatar(
-                      radius: 25,
+                      radius: 24,
                       foregroundColor: Colors.black54,
                       backgroundColor: HexColor('#fcf8f6'),
                       backgroundImage: profile.imgUrl != ''
@@ -102,8 +102,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     title: Text(
                       profile.name,
-                      style: const TextStyle(
-                        fontSize: 20,
+                      style: TextStyle(
+                        fontSize: height * 0.019,
                         color: Colors.black54,
                       ),
                     ),
@@ -114,9 +114,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 Row(
                   children: [
                     SizedBox(width: width * 0.02),
-                    const Text('・お客様向けガイド',
+                    Text('・お客様向けガイド',
                         style: TextStyle(
-                            fontSize: 20,
+                            fontSize: height * 0.02,
                             color: Colors.black54,
                             fontWeight: FontWeight.bold)),
                   ],
@@ -139,9 +139,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       model.urlTermOfService();
                     },
                     tileColor: HexColor('#fcf8f6'),
-                    title: const Text('利用規約',
+                    title: Text('利用規約',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: height * 0.019,
                           color: Colors.black54,
                         )),
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
@@ -157,9 +157,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       model.policyUrl();
                     },
                     tileColor: HexColor('#fcf8f6'),
-                    title: const Text('プライバシーポリシー',
+                    title: Text('プライバシーポリシー',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: height * 0.019,
                           color: Colors.black54,
                         )),
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
@@ -175,30 +175,32 @@ class _ProfilePageState extends State<ProfilePage> {
                       model.signOut(context);
                     },
                     tileColor: HexColor('#fcf8f6'),
-                    title: const Text('ログアウト',
+                    title: Text('ログアウト',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: height * 0.019,
                           color: Colors.black54,
                         )),
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
                   ),
                 ),
                 SizedBox(height: height * 0.03),
-                const Text('salon Vishu',
+                Text('salon Vishu',
                     style: TextStyle(
-                        fontSize: 40,
+                        fontSize: height * 0.06,
                         fontWeight: FontWeight.bold,
                         color: Colors.black54,
                         fontFamily: 'Dancing_Script')),
                 if (Platform.isIOS)
                   Text(
                     'version　${version.iosMinAvailableVersion}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black54),
+                    style: TextStyle(
+                        fontSize: height * 0.022, color: Colors.black54),
                   ),
                 if (Platform.isAndroid)
                   Text(
                     'version　${version.androidMinAvailableVersion}',
-                    style: const TextStyle(fontSize: 20, color: Colors.black54),
+                    style: TextStyle(
+                        fontSize: height * 0.022, color: Colors.black54),
                   ),
               ],
             ),

@@ -135,10 +135,17 @@ class _EditPageState extends State<EditPage> {
                                     bottom: BorderSide(
                                         color: HexColor('#7e796e')))),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                const SizedBox(width: 20),
+                                const Text('性別',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black54,
+                                    )),
+                                const SizedBox(width: 60),
                                 SizedBox(
-                                  width: width * 0.4,
+                                  width: width * 0.32,
                                   child: RadioListTile(
                                     title: const Text("男性"),
                                     value: "男性",
@@ -151,7 +158,7 @@ class _EditPageState extends State<EditPage> {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: width * 0.4,
+                                  width: width * 0.32,
                                   child: RadioListTile(
                                     title: const Text("女性"),
                                     value: "女性",

@@ -48,60 +48,74 @@ class _SignUpPageState extends State<SignUpPage> {
                         SizedBox(
                           height: deviceHeight * 0.05,
                         ),
-                        const Text('salon Vishu',
+                        Text('salon Vishu',
                             style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                fontSize: 40,
+                                fontSize: deviceHeight * 0.05,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black54,
                                 fontFamily: 'Dancing_Script')),
                         if (Platform.isIOS)
                           Text(
                             'version　${version.iosMinAvailableVersion}',
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.black54),
+                            style: TextStyle(
+                                fontSize: deviceHeight * 0.022,
+                                color: Colors.black54),
                           ),
                         if (Platform.isAndroid)
                           Text(
                             'version　${version.androidMinAvailableVersion}',
-                            style: const TextStyle(
-                                fontSize: 20, color: Colors.black54),
+                            style: TextStyle(
+                                fontSize: deviceHeight * 0.022,
+                                color: Colors.black54),
                           ),
                         SizedBox(
                           height: deviceHeight * 0.05,
                         ),
-                        AuthFormField(
-                            isSuffixIcon: false,
-                            isVisivilly: false,
-                            isPicker: false,
-                            width: deviceWidth,
-                            signUpModel: model,
-                            textEditingController: model.emailController,
-                            icon: Icons.email,
-                            hintText: 'メールアドレス'),
-                        SizedBox(height: deviceHeight * 0.015),
-                        AuthFormField(
-                            isSuffixIcon: true,
-                            isVisivilly: false,
-                            isPicker: false,
-                            width: deviceWidth,
-                            signUpModel: model,
-                            textEditingController: model.passController,
-                            icon: Icons.password,
-                            hintText: 'パスワード'),
-                        SizedBox(height: deviceHeight * 0.015),
-                        AuthFormField(
-                            isSuffixIcon: false,
-                            isVisivilly: false,
-                            isPicker: false,
-                            width: deviceWidth,
-                            signUpModel: model,
-                            textEditingController: model.nameController,
-                            icon: Icons.person,
-                            hintText: '名前'),
+                        SizedBox(
+                          height: deviceHeight * 0.07,
+                          child: AuthFormField(
+                              isSuffixIcon: false,
+                              isVisivilly: false,
+                              isPicker: false,
+                              width: deviceWidth,
+                              signUpModel: model,
+                              textEditingController: model.emailController,
+                              icon: Icons.email,
+                              hintText: 'メールアドレス'),
+                        ),
+                        SizedBox(
+                          height: deviceHeight * 0.02,
+                        ),
+                        SizedBox(
+                          height: deviceHeight * 0.07,
+                          child: AuthFormField(
+                              isSuffixIcon: true,
+                              isVisivilly: true,
+                              isPicker: false,
+                              width: deviceWidth,
+                              signUpModel: model,
+                              textEditingController: model.passController,
+                              icon: Icons.password,
+                              hintText: 'パスワード'),
+                        ),
+                        SizedBox(
+                          height: deviceHeight * 0.02,
+                        ),
+                        SizedBox(
+                          height: deviceHeight * 0.07,
+                          child: AuthFormField(
+                              isSuffixIcon: false,
+                              isVisivilly: false,
+                              isPicker: false,
+                              width: deviceWidth,
+                              signUpModel: model,
+                              textEditingController: model.nameController,
+                              icon: Icons.person,
+                              hintText: '名前'),
+                        ),
                         SizedBox(height: deviceHeight * 0.015),
                         SizedBox(
-                          height: 40,
+                          height: deviceHeight * 0.07,
                           width: deviceWidth * 0.8,
                           child: TextFormField(
                             onTap: () {
@@ -126,7 +140,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         SizedBox(height: deviceHeight * 0.015),
                         SizedBox(
-                          height: deviceHeight * 0.05,
+                          height: deviceHeight * 0.07,
                           width: deviceWidth * 0.8,
                           child: TextFormField(
                             controller: model.telephoneNumberController,
@@ -138,7 +152,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               filled: true,
                               fillColor: HexColor('#fcf8f6'),
                               border: const OutlineInputBorder(),
-                              hintText: '電話番号',
+                              hintText: '電話番号(例：09012345678)',
                               hintStyle: const TextStyle(
                                   fontSize: 10.0, color: Colors.black54),
                               icon: Icon(
@@ -159,9 +173,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                             SizedBox(width: deviceWidth * 0.03),
                             Container(
-                              height: 40,
-                              width: deviceWidth * 0.7,
+                              height: deviceHeight * 0.05,
+                              width: deviceWidth * 0.71,
                               decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
                                   color: HexColor('#fcf8f6'),
                                   border: Border.all(color: Colors.black54)),
                               child: Row(
@@ -202,9 +217,10 @@ class _SignUpPageState extends State<SignUpPage> {
                             ),
                           ],
                         ),
-                        SizedBox(height: deviceHeight * 0.03),
+                        SizedBox(height: deviceHeight * 0.05),
                         SizedBox(
-                            width: 300,
+                            width: deviceWidth * 0.5,
+                            height: deviceHeight * 0.05,
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.white,

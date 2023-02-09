@@ -1,12 +1,40 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:salon_vishu/domain/menu.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SelectReservationDateModel extends ChangeNotifier {
   Menu menu;
   SelectReservationDateModel(this.menu);
 
-  List<Widget> contentsOfHairList() {
+  Future<void> directCallVishu(BuildContext context) async {
+    final Uri launchUri = Uri(
+      scheme: 'tel',
+      path: '0721-21-8824',
+    );
+
+    await showDialog(
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+              title: const Text('0721-21-8824'),
+              content: const Text('電話しますか？'),
+              actions: [
+                CupertinoButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("戻る")),
+                CupertinoButton(
+                    onPressed: () {
+                      launchUrl(launchUri);
+                    },
+                    child: const Text("OK"))
+              ],
+            ));
+  }
+
+  List<Widget> contentsOfHairList(double height) {
     return menu.treatmentDetailList.map((treatmentDetail) {
       return Padding(
         padding: const EdgeInsets.all(1.0),
@@ -21,7 +49,7 @@ class SelectReservationDateModel extends ChangeNotifier {
           ),
           child: Text(
             treatmentDetail,
-            style: const TextStyle(fontSize: 12, color: Colors.white),
+            style: TextStyle(fontSize: height * 0.018, color: Colors.white),
           ),
         ),
       );
@@ -29,7 +57,7 @@ class SelectReservationDateModel extends ChangeNotifier {
   }
 
   //対象者を表す
-  Widget targetCard() {
+  Widget targetCard(double height, double width) {
     HexColor targetColor(String targetMember) {
       switch (targetMember) {
         case '新規':
@@ -44,7 +72,7 @@ class SelectReservationDateModel extends ChangeNotifier {
     }
 
     return Container(
-      width: 50,
+      width: width * 0.12,
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(3)),
@@ -56,7 +84,7 @@ class SelectReservationDateModel extends ChangeNotifier {
       child: Center(
         child: Text(
           menu.targetMember,
-          style: const TextStyle(color: Colors.white, fontSize: 12),
+          style: TextStyle(color: Colors.white, fontSize: height * 0.018),
         ),
       ),
     );

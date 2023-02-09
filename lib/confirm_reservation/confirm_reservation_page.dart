@@ -280,61 +280,65 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                             ),
                           ],
                         ),
-                        const Divider(height: 20),
-                        const Text(
+                        Divider(height: height * 0.04),
+                        Text(
                           '決済方法',
                           style: TextStyle(
-                              fontSize: 24,
+                              fontSize: height * 0.024,
                               color: Colors.black87,
                               fontWeight: FontWeight.bold),
                         ),
-                        const SizedBox(height: 4),
-                        const Text(
+                        SizedBox(height: height * 0.01),
+                        Text(
                           '💳クレジットカード',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: height * 0.018,
                               color: Colors.black87),
                         ),
-                        const Text(
+                        Text(
                           'Mastercard / Visa / JCB \nAmerican Express / Diners Club',
-                          style: TextStyle(fontSize: 16, color: Colors.black87),
+                          style: TextStyle(
+                              fontSize: height * 0.016, color: Colors.black87),
                         ),
-                        const SizedBox(height: 4),
-                        const Text(
+                        SizedBox(height: height * 0.01),
+                        Text(
                           '💳その他決済',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: height * 0.018,
                               color: Colors.black87),
                         ),
-                        const Text(
-                          'PayPay/現金',
-                          style: TextStyle(fontSize: 16, color: Colors.black87),
+                        Text(
+                          'PayPay / LINE Pay',
+                          style: TextStyle(
+                              fontSize: height * 0.016, color: Colors.black87),
                         ),
                         SizedBox(height: height * 0.03),
-                        const Text(
+                        Text(
                           '決済時期',
                           style: TextStyle(
-                              fontSize: 24,
+                              fontSize: height * 0.024,
                               color: Colors.black87,
                               fontWeight: FontWeight.bold),
                         ),
-                        const Text(
+                        Text(
                           '来店時支払い',
-                          style: TextStyle(fontSize: 16, color: Colors.black87),
+                          style: TextStyle(
+                              fontSize: height * 0.016, color: Colors.black87),
                         ),
                         SizedBox(height: height * 0.03),
-                        const Text(
+                        Text(
                           'キャンセル連絡',
                           style: TextStyle(
-                              fontSize: 24,
+                              fontSize: height * 0.024,
                               color: Colors.black87,
                               fontWeight: FontWeight.bold),
                         ),
-                        const Text(
+                        Text(
                           '前日18時まで→無料\n当日の場合→料金の50%を請求',
-                          style: TextStyle(fontSize: 17, color: Colors.black87),
+                          style: TextStyle(
+                              fontSize: height * 0.016, color: Colors.black87),
                         ),
                         SizedBox(height: height * 0.03),
                         Container(
@@ -580,26 +584,26 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                         model.guidListTile(
                             height: height * 0.07,
                             width: width,
-                            deviceWidth: width * 0.07,
+                            deviceWidth: 20,
                             controller: model.nameController,
                             hintText: 'フルネーム'),
                         model.guidListTile(
                             height: height * 0.07,
                             width: width,
-                            deviceWidth: width * 0.15,
+                            deviceWidth: 50,
                             controller: model.emailController,
                             hintText: 'メール'),
                         model.guidListTile(
                             height: height * 0.07,
                             width: width,
-                            deviceWidth: width * 0.1,
+                            deviceWidth: 35,
                             isNumberOnly: true,
                             controller: model.telephoneNumberController,
                             hintText: '電話番号'),
                         model.guidListTile(
                             height: height * 0.07,
                             width: width,
-                            deviceWidth: width * 0.1,
+                            deviceWidth: 35,
                             picker: () async {
                               model.dateOfBirthPicker(context);
                             },
@@ -611,8 +615,9 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                   bottom:
                                       BorderSide(color: HexColor('#7e796e')))),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
+                              const SizedBox(width: 15),
                               const Text(
                                 '性別',
                                 style: TextStyle(
@@ -620,9 +625,9 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                   color: Colors.black87,
                                 ),
                               ),
-                              SizedBox(width: width * 0.04),
+                              const SizedBox(width: 50),
                               SizedBox(
-                                width: width * 0.35,
+                                width: width * 0.32,
                                 child: RadioListTile(
                                   title: const Text("男性"),
                                   value: "男性",
@@ -635,7 +640,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                 ),
                               ),
                               SizedBox(
-                                width: width * 0.35,
+                                width: width * 0.32,
                                 child: RadioListTile(
                                   title: const Text("女性"),
                                   value: "女性",
@@ -654,6 +659,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                         Center(
                           child: SizedBox(
                             width: width * 0.5,
+                            height: height * 0.05,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: HexColor('#c9c5c3')),
@@ -664,9 +670,10 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                       '${startTime.year}年${startTime.month}月${startTime.day}日 (${model.dayOfWeekFormatter.format(startTime)}) ${model.startMinuteFormatter.format(startTime)}~',
                                 );
                               },
-                              child: const Text(
+                              child: Text(
                                 '予約完了',
                                 style: TextStyle(
+                                    fontSize: height * 0.015,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87),
                               ),

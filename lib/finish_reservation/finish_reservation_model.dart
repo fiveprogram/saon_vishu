@@ -6,7 +6,7 @@ import '../domain/menu.dart';
 
 class FinishReservationModel extends ChangeNotifier {
   ///menuCardの中で新規と
-  Widget targetCard(Menu menu) {
+  Widget targetCard(Menu menu, double width) {
     HexColor targetColor(String targetMember) {
       switch (targetMember) {
         case '新規':
@@ -21,7 +21,7 @@ class FinishReservationModel extends ChangeNotifier {
     }
 
     return Container(
-      width: 50,
+      width: width * 0.12,
       padding: const EdgeInsets.all(2),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(3)),
@@ -33,7 +33,8 @@ class FinishReservationModel extends ChangeNotifier {
       child: Center(
         child: Text(
           menu.targetMember,
-          style: const TextStyle(color: Colors.white, fontSize: 12),
+          style:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
       ),
     );

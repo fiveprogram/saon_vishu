@@ -49,9 +49,7 @@ class _MenuCardState extends State<MenuCard> {
                   child: Text(
                     treatmentDetail,
                     style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -88,9 +86,7 @@ class _MenuCardState extends State<MenuCard> {
             child: Text(
               menu.targetMember,
               style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold),
+                  color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
         );
@@ -137,8 +133,8 @@ class _MenuCardState extends State<MenuCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: height * 0.09,
-                        width: width * 0.19,
+                        height: height * 0.11,
+                        width: width * 0.20,
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.black87),
                             borderRadius: BorderRadius.circular(10),
@@ -146,7 +142,7 @@ class _MenuCardState extends State<MenuCard> {
                                 fit: BoxFit.cover,
                                 image: NetworkImage(menu.menuImageUrl!))),
                       ),
-                      SizedBox(width: width * 0.02),
+                      SizedBox(width: width * 0.01),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -154,7 +150,7 @@ class _MenuCardState extends State<MenuCard> {
                             width: width * 0.62,
                             child: Text(
                               menu.treatmentDetail,
-                              style: const TextStyle(fontSize: 13),
+                              style: TextStyle(fontSize: height * 0.016),
                             ),
                           ),
                           SizedBox(height: height * 0.02),
@@ -168,46 +164,52 @@ class _MenuCardState extends State<MenuCard> {
                                       if (menu.beforePrice != null)
                                         Text(
                                           '${menu.beforePrice}円',
-                                          style: const TextStyle(
-                                              fontSize: 12,
+                                          style: TextStyle(
+                                              fontSize: height * 0.016,
                                               decoration:
                                                   TextDecoration.lineThrough),
                                         ),
                                       const Text('▷'),
-                                      Text('${menu.afterPrice}円'),
-                                      const SizedBox(width: 10),
+                                      Text(
+                                        '${menu.afterPrice}円',
+                                        style: TextStyle(
+                                          fontSize: height * 0.016,
+                                        ),
+                                      ),
+                                      SizedBox(width: width * 0.03),
                                     ],
                                   ),
                                   Text('施術時間：${menu.treatmentTime}分',
-                                      style: const TextStyle(
-                                          fontSize: 15,
+                                      style: TextStyle(
+                                          fontSize: height * 0.016,
                                           color: Colors.black54,
                                           fontWeight: FontWeight.bold)),
                                 ],
                               ),
-                              const SizedBox(width: 30),
+                              SizedBox(width: width * 0.07),
                               SizedBox(
-                                  height: 40,
-                                  width: 70,
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        foregroundColor: Colors.white,
-                                        backgroundColor: Colors.black26,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    SelectReservationDatePage(
-                                                        menu: menu)));
-                                      },
-                                      child: const Text(
-                                        '予約',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ))),
+                                width: width * 0.2,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.black26,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                SelectReservationDatePage(
+                                                    menu: menu)));
+                                  },
+                                  child: const Text(
+                                    '予約',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -223,3 +225,5 @@ class _MenuCardState extends State<MenuCard> {
     });
   }
 }
+
+//

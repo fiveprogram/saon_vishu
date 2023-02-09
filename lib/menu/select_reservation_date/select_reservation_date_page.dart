@@ -39,9 +39,9 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                   Row(
                     children: [
                       SizedBox(width: width * 0.03),
-                      const Text('予約内容',
+                      Text('予約内容',
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: height * 0.02,
                               color: Colors.black54,
                               fontWeight: FontWeight.bold)),
                     ],
@@ -56,11 +56,11 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            model.targetCard(),
+                            model.targetCard(height, width),
                             SizedBox(height: height * 0.007),
                             Container(
                               height: height * 0.12,
-                              width: width * 0.27,
+                              width: width * 0.22,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black87),
                                   borderRadius: BorderRadius.circular(10),
@@ -75,15 +75,15 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                                 if (menu.beforePrice != null)
                                   Text(
                                     '${menu.beforePrice}円',
-                                    style: const TextStyle(
-                                        fontSize: 12,
+                                    style: TextStyle(
+                                        fontSize: height * 0.017,
                                         decoration: TextDecoration.lineThrough),
                                   ),
                                 const Text('▷'),
                                 Text(
                                   '${menu.afterPrice}円',
-                                  style: const TextStyle(
-                                      fontSize: 15,
+                                  style: TextStyle(
+                                      fontSize: height * 0.017,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -96,18 +96,21 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Wrap(
-                                children: model.contentsOfHairList(),
+                                children: model.contentsOfHairList(height),
                               ),
                               SizedBox(
                                   height: height * 0.11,
                                   width: width * 0.6,
-                                  child: Text(menu.treatmentDetail)),
+                                  child: Text(
+                                    menu.treatmentDetail,
+                                    style: TextStyle(fontSize: height * 0.017),
+                                  )),
                               Row(
                                 children: [
                                   SizedBox(width: width * 0.25),
                                   Text('施術時間：${menu.treatmentTime}分',
-                                      style: const TextStyle(
-                                          fontSize: 15,
+                                      style: TextStyle(
+                                          fontSize: height * 0.017,
                                           color: Colors.black54,
                                           fontWeight: FontWeight.bold)),
                                 ],
@@ -119,8 +122,9 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                     ),
                   ),
                   const Divider(),
-                  const Text('【メニュー紹介♪】', style: TextStyle(fontSize: 17)),
-                  Text(menu.menuIntroduction),
+                  Text('【メニュー紹介♪】', style: TextStyle(fontSize: height * 0.018)),
+                  Text(menu.menuIntroduction,
+                      style: TextStyle(fontSize: height * 0.016)),
                   SizedBox(height: height * 0.02),
                   Container(
                     height: height * 0.06,
@@ -139,12 +143,20 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                     ),
                   ),
                   CalenderWidget(menu: menu),
-                  const SizedBox(height: 20),
+                  SizedBox(height: height * 0.03),
                   Center(
                     child: ElevatedButton(
-                        onPressed: () {}, child: const Text('オーナーと直接連絡を取る')),
+                        onPressed: () {
+                          model.directCallVishu(context);
+                        },
+                        child: Text(
+                          'オーナーと直接連絡を取る',
+                          style: TextStyle(
+                            fontSize: height * 0.018,
+                          ),
+                        )),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: height * 0.1),
                 ],
               ),
             );

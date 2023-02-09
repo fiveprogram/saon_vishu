@@ -100,6 +100,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
                                     color: Colors.black54,
                                     fontWeight: FontWeight.bold)),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Radio(
                                     value: '全員',
@@ -240,6 +241,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
                                     inputFormatters: [
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
+                                    keyboardType: TextInputType.number,
                                     controller: model.beforePriceController,
                                     decoration: const InputDecoration(
                                         label: Text('割引前価格'),
@@ -258,6 +260,10 @@ class _AddDetailPageState extends State<AddDetailPage> {
                                   width: width * 0.3,
                                   child: TextFormField(
                                     controller: model.afterPriceController,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
                                         label: Text('割引後価格'),
                                         hintText: '割引後価格',
@@ -300,6 +306,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
                                     inputFormatters: [
                                       FilteringTextInputFormatter.digitsOnly
                                     ],
+                                    keyboardType: TextInputType.number,
                                     controller: model.treatmentTimeController,
                                     decoration: const InputDecoration(
                                         label: Text('施術時間'),
@@ -344,7 +351,7 @@ class _AddDetailPageState extends State<AddDetailPage> {
                                 child: const Text('登録する'),
                               ),
                             ),
-                            SizedBox(height: height * 0.03),
+                            SizedBox(height: height * 0.1),
                           ],
                         ),
                       ),

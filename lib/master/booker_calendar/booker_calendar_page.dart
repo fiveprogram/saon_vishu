@@ -150,7 +150,9 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
                                                   child: Text(
                                                       model.menuBlock(
                                                           treatmentDetail),
-                                                      style: const TextStyle(
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              height * 0.022,
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.bold),
@@ -161,10 +163,20 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
                                             )
                                             .toList(),
                                         SizedBox(width: width * 0.02),
-                                        Text(model.startTimeFormatter.format(
-                                            reservation.startTime.toDate())),
-                                        Text(model.endTimeFormatter.format(
-                                            reservation.finishTime.toDate())),
+                                        Text(
+                                          model.startTimeFormatter.format(
+                                              reservation.startTime.toDate()),
+                                          style: TextStyle(
+                                            fontSize: height * 0.022,
+                                          ),
+                                        ),
+                                        Text(
+                                          model.endTimeFormatter.format(
+                                              reservation.finishTime.toDate()),
+                                          style: TextStyle(
+                                            fontSize: height * 0.022,
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     SizedBox(height: height * 0.01),
@@ -187,27 +199,37 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
                                                   BorderRadius.circular(10),
                                             ),
                                             child: Text(
-                                                reservation.targetMember,
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                                textAlign: TextAlign.center),
+                                              reservation.targetMember,
+                                              style: TextStyle(
+                                                  fontSize: height * 0.02,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                              textAlign: TextAlign.center,
+                                            ),
                                           ),
                                         ),
                                         SizedBox(width: width * 0.02),
                                         Text(
                                           reservation.name,
-                                          style: const TextStyle(
-                                              fontSize: 15,
+                                          style: TextStyle(
+                                              fontSize: height * 0.02,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        const Expanded(child: SizedBox()),
+                                        SizedBox(
+                                          width: width * 0.05,
+                                        ),
                                         if (reservation.lastVisit == null)
-                                          const Text('初来店になります。'),
+                                          Text('初来店になります。',
+                                              style: TextStyle(
+                                                fontSize: height * 0.02,
+                                              )),
                                         if (reservation.lastVisit != null)
                                           Text(
-                                              '前回来店：${model.lastVisitFormatter.format(reservation.lastVisit!.toDate())}'),
+                                            '前回来店：${model.lastVisitFormatter.format(reservation.lastVisit!.toDate())}',
+                                            style: TextStyle(
+                                              fontSize: height * 0.02,
+                                            ),
+                                          ),
                                       ],
                                     ),
                                   ],
@@ -216,10 +238,11 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
                             );
                           },
                         )
-                      : const Text(
+                      : Text(
                           '本日ご予約はございません',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                              fontWeight: FontWeight.bold,
+                              fontSize: height * 0.027),
                         );
                 },
               ),

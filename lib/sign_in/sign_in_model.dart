@@ -9,9 +9,8 @@ import '../domain/profile.dart';
 import '../firebase_options.dart';
 
 class SignInModel extends ChangeNotifier {
-  final emailController =
-      TextEditingController(text: 'hiroshi.tennis@outlookl.com');
-  final passController = TextEditingController(text: '03Yuta16');
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
 
   DateTime createAccountDate = DateTime.now();
 
@@ -46,7 +45,6 @@ class SignInModel extends ChangeNotifier {
   ///メールアドレスを使ってのサインイン
   Future<void> signInTransition(BuildContext context) async {
     startLoading();
-    print(isLoading);
     notifyListeners();
 
     try {
@@ -86,18 +84,13 @@ class SignInModel extends ChangeNotifier {
       }
     } finally {
       endLoading();
-      print(isLoading);
     }
   }
 
   ///Google Sign in
   GoogleSignIn googleSignIn = GoogleSignIn(
-    clientId: DefaultFirebaseOptions.currentPlatform.iosClientId,
-    scopes: [
-      'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
-    ],
-  );
+      clientId: DefaultFirebaseOptions.currentPlatform.iosClientId,
+      scopes: ['email']);
 
   Future<void> signInWithGoogle(BuildContext context) async {
     startLoading();
@@ -144,7 +137,6 @@ class SignInModel extends ChangeNotifier {
       final auth = FirebaseAuth.instance;
       final appleProvider = AppleAuthProvider();
       if (kIsWeb) {
-        print(auth.signInWithPopup(appleProvider).runtimeType);
         await auth.signInWithPopup(appleProvider);
       } else {
         final result = await auth.signInWithProvider(appleProvider);
@@ -158,7 +150,7 @@ class SignInModel extends ChangeNotifier {
               .set(
             {
               'uid': user.uid,
-              'email': user.email,
+              'email': user.email ?? '',
               'name': 'unknown',
               'dateOfBirth': '',
               'telephoneNumber': user.phoneNumber ?? '00000000000',

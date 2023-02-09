@@ -284,7 +284,7 @@ class RestDateRegisterModel extends ChangeNotifier {
     }
     return await showDialog(
         context: context,
-        builder: (context) {
+        builder: (dialogContext) {
           return CupertinoAlertDialog(
             title: const Text('登録を中止しますか？'),
             content: const Text('登録した内容は破棄されます'),
@@ -292,16 +292,16 @@ class RestDateRegisterModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('いいえ'),
                   onPressed: () {
-                    Navigator.of(context).pop(false);
+                    Navigator.of(dialogContext).pop(false);
                   }),
               CupertinoButton(
-                child: const Text('はい'),
+                child: const Text('OK'),
                 onPressed: () {
                   ///restTImeListを初期値に戻す
                   willAddRegisteredRestList.clear();
                   willRemoveRegisteredRestList.clear();
 
-                  Navigator.of(context).pop(false);
+                  Navigator.of(dialogContext).pop(false);
                   Navigator.of(context).pop(false);
                 },
               ),

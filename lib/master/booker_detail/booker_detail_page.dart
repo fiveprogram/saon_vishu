@@ -158,7 +158,7 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    contentText('性別'),
+                    contentText('メール'),
                     const Expanded(child: SizedBox()),
                     profileText(width, reservation.email!),
                   ],

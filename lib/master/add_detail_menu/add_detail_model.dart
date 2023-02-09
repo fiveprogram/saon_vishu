@@ -150,7 +150,7 @@ class AddDetailModel extends ChangeNotifier {
       } else {
         await showDialog(
             context: context,
-            builder: (context) {
+            builder: (dialogContext) {
               return CupertinoAlertDialog(
                 title: const Text('登録してもよろしいですか？'),
                 content: const Text('反映されるまで時間がかかる\n場合があります。'),
@@ -158,7 +158,7 @@ class AddDetailModel extends ChangeNotifier {
                   CupertinoButton(
                     child: const Text('いいえ'),
                     onPressed: () {
-                      Navigator.pop(context);
+                      Navigator.of(dialogContext).pop(false);
                     },
                   ),
                   CupertinoButton(
@@ -175,7 +175,7 @@ class AddDetailModel extends ChangeNotifier {
                                 CupertinoButton(
                                     child: const Text('戻る'),
                                     onPressed: () {
-                                      Navigator.pop(context);
+                                      Navigator.of(dialogContext).pop(false);
                                     })
                               ],
                             );
@@ -240,7 +240,7 @@ class AddDetailModel extends ChangeNotifier {
                       }
                       notifyListeners();
 
-                      Navigator.pop(context);
+                      Navigator.of(dialogContext).pop(false);
                       Navigator.pop(context);
                     },
                   ),
@@ -257,26 +257,27 @@ class AddDetailModel extends ChangeNotifier {
   ///前のページに戻る
   Future<bool> willPopCallback(BuildContext context) async {
     return await showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: const Text('登録を中止しますか？'),
-            content: const Text('登録した内容は破棄されます'),
-            actions: [
-              CupertinoButton(
-                  child: const Text('いいえ'),
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  }),
-              CupertinoButton(
-                child: const Text('はい'),
+      context: context,
+      builder: (dialogContext) {
+        return CupertinoAlertDialog(
+          title: const Text('登録を中止しますか？'),
+          content: const Text('登録した内容は破棄されます'),
+          actions: [
+            CupertinoButton(
+                child: const Text('いいえ'),
                 onPressed: () {
-                  Navigator.of(context).pop(false);
-                  Navigator.of(context).pop(false);
-                },
-              ),
-            ],
-          );
-        });
+                  Navigator.of(dialogContext).pop(false);
+                }),
+            CupertinoButton(
+              child: const Text('はい'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(false);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

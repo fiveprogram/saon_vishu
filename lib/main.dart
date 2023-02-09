@@ -6,9 +6,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:salon_vishu/cancel_reservation/cancel_reservation_model.dart';
@@ -66,6 +67,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -86,8 +92,6 @@ void main() async {
   );
 
   runApp(const MyApp());
-
-  initializeDateFormatting('ja');
 }
 
 class MyApp extends StatefulWidget {
@@ -111,7 +115,6 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         tokenId = token!;
       });
-      print(tokenId);
     });
 
     const DarwinInitializationSettings initializationSettingsIOS =
@@ -167,33 +170,35 @@ class _MyAppState extends State<MyApp> {
         minAvailableVersionStringList.map((e) => int.parse(e)).toList();
     for (int i = 0; i < 3; i++) {
       if (usingVersionIntList[i] < minAvailableVersionIntList[i]) {
-        return showDialog(
-          context: context,
-          builder: (context) => CupertinoAlertDialog(
-            title: const Text('新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。'),
-            actions: [
-              CupertinoButton(
-                child: const Text('今すぐ更新'),
-                onPressed: () async {
-                  if (Platform.isAndroid || Platform.isIOS) {
-                    final appId = Platform.isAndroid
-                        ? 'com.itsukage.salonVishu'
-                        : '1666140616';
-                    final url = Uri.parse(
-                      Platform.isAndroid
-                          ? "https://play.google.com/store/apps/details?id=$appId"
-                          : "https://apps.apple.com/app/id$appId",
-                    );
-                    launchUrl(
-                      url,
-                      mode: LaunchMode.externalApplication,
-                    );
-                  }
-                },
-              )
-            ],
-          ),
-        );
+        if (mounted) {
+          return showDialog(
+            context: context,
+            builder: (context) => CupertinoAlertDialog(
+              title: const Text('新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。'),
+              actions: [
+                CupertinoButton(
+                  child: const Text('今すぐ更新'),
+                  onPressed: () async {
+                    if (Platform.isAndroid || Platform.isIOS) {
+                      final appId = Platform.isAndroid
+                          ? 'com.itsukage.salonVishu'
+                          : '1666140616';
+                      final url = Uri.parse(
+                        Platform.isAndroid
+                            ? "https://play.google.com/store/apps/details?id=$appId"
+                            : "https://apps.apple.com/app/id$appId",
+                      );
+                      launchUrl(
+                        url,
+                        mode: LaunchMode.externalApplication,
+                      );
+                    }
+                  },
+                )
+              ],
+            ),
+          );
+        }
       }
     }
   }
@@ -240,6 +245,12 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) => CancelGuideModel()),
       ],
       child: MaterialApp(
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('ja', 'JP')],
         debugShowCheckedModeBanner: false,
         title: 'salon "Vishu"',
         theme: ThemeData(
@@ -252,6 +263,11 @@ class _MyAppState extends State<MyApp> {
               .doc('uHoECUdMBarAX1H61FTC')
               .snapshots(),
           builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             if (snapshot.hasData &&
                 snapshot.connectionState == ConnectionState.active) {
               final doc = snapshot.data!;
@@ -261,11 +277,9 @@ class _MyAppState extends State<MyApp> {
             return StreamBuilder<User?>(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (context, snapshot) {
-                print('ログアウト認識できてますか？');
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasData) {
-                  ///GoogleAccountでログインした時のみ
                   if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
                     return const MasterSelectPage();
                   }

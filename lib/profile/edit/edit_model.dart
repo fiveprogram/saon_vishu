@@ -35,27 +35,28 @@ class EditModel extends ChangeNotifier {
   Future<bool> willPopCallback(BuildContext context) async {
     ///あとで、registeredRestListの要素が減っていなければっていう制御も必要
     return await showDialog(
-        context: context,
-        builder: (context) {
-          return CupertinoAlertDialog(
-            title: const Text('登録を中止しますか？'),
-            content: const Text('登録した内容は破棄されます'),
-            actions: [
-              CupertinoButton(
-                  child: const Text('いいえ'),
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  }),
-              CupertinoButton(
-                child: const Text('はい'),
+      context: context,
+      builder: (dialogContext) {
+        return CupertinoAlertDialog(
+          title: const Text('登録を中止しますか？'),
+          content: const Text('登録した内容は破棄されます'),
+          actions: [
+            CupertinoButton(
+                child: const Text('いいえ'),
                 onPressed: () {
-                  Navigator.of(context).pop(false);
-                  Navigator.of(context).pop(false);
-                },
-              ),
-            ],
-          );
-        });
+                  Navigator.of(dialogContext).pop(false);
+                }),
+            CupertinoButton(
+              child: const Text('はい'),
+              onPressed: () {
+                Navigator.of(dialogContext).pop(false);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   ///loading
@@ -86,7 +87,7 @@ class EditModel extends ChangeNotifier {
       notifyListeners();
     },
         currentTime: dateOfBirthController.text == ''
-            ? DateTime.now()
+            ? DateTime(1980, 1, 1)
             : registerDateOfBirth,
         locale: LocaleType.jp);
   }

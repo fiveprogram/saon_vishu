@@ -8,12 +8,11 @@ import 'package:salon_vishu/main_select_page.dart';
 import '../domain/version.dart';
 
 class SignUpModel extends ChangeNotifier {
-  final emailController =
-      TextEditingController(text: 'yuta.nanana.tennis@gmail.com');
-  final passController = TextEditingController(text: '03Yuta16');
-  final nameController = TextEditingController(text: '五影 裕太');
+  final emailController = TextEditingController();
+  final passController = TextEditingController();
+  final nameController = TextEditingController();
   final dateOfBirthController = TextEditingController();
-  final telephoneNumberController = TextEditingController(text: '09019645524');
+  final telephoneNumberController = TextEditingController();
 
   String? gender;
 
@@ -46,7 +45,7 @@ class SignUpModel extends ChangeNotifier {
       notifyListeners();
     },
         currentTime: dateOfBirthController.text.isEmpty
-            ? DateTime.now()
+            ? DateTime(1980, 1, 1)
             : registerDateOfBirth,
         locale: LocaleType.jp);
   }

@@ -30,9 +30,11 @@ class _HistoryPageState extends State<HistoryPage> {
             ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text('現在、予約情報がありません', style: TextStyle(fontSize: 17)),
-                    Text('メニューより予約してみましょう', style: TextStyle(fontSize: 17)),
+                  children: [
+                    Text('現在、予約情報がありません',
+                        style: TextStyle(fontSize: height * 0.02)),
+                    Text('メニューより予約してみましょう',
+                        style: TextStyle(fontSize: height * 0.02)),
                   ],
                 ),
               )
@@ -100,16 +102,16 @@ class _HistoryPageState extends State<HistoryPage> {
                             children: [
                               Text(
                                 '${model.historyDateFormatter.format(reservation.startTime.toDate())}のご利用',
-                                style: const TextStyle(
+                                style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87,
-                                    fontSize: 15),
+                                    fontSize: height * 0.018),
                               ),
-                              const SizedBox(height: 7),
+                              SizedBox(height: height * 0.01),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  model.targetCard(reservation),
+                                  model.targetCard(reservation, width),
                                   SizedBox(
                                     width: width * 0.09,
                                   ),
@@ -139,8 +141,9 @@ class _HistoryPageState extends State<HistoryPage> {
                                                   child: Text(
                                                     treatmentDetail,
                                                     style: const TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.white),
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                 ),
                                               ),
@@ -156,7 +159,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    height: height * 0.09,
+                                    height: height * 0.11,
                                     width: width * 0.19,
                                     decoration: BoxDecoration(
                                         border:
@@ -167,32 +170,38 @@ class _HistoryPageState extends State<HistoryPage> {
                                             image: NetworkImage(
                                                 reservation.menuImageUrl))),
                                   ),
-                                  const SizedBox(width: 10),
+                                  SizedBox(width: width * 0.02),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: width * 0.6,
+                                        width: width * 0.62,
                                         child: Text(
                                           reservation.treatmentDetail,
-                                          style: const TextStyle(fontSize: 13),
+                                          style: TextStyle(
+                                              fontSize: height * 0.016),
                                         ),
                                       ),
-                                      const SizedBox(height: 10),
+                                      SizedBox(height: height * 0.02),
                                       Row(
                                         children: [
                                           if (reservation.beforePrice != null)
                                             Text(
                                               '${reservation.beforePrice}円',
-                                              style: const TextStyle(
-                                                  fontSize: 12,
+                                              style: TextStyle(
+                                                  fontSize: height * 0.016,
                                                   decoration: TextDecoration
                                                       .lineThrough),
                                             ),
                                           const Text('▷'),
-                                          Text('${reservation.afterPrice}円'),
-                                          const SizedBox(width: 40),
+                                          Text(
+                                            '${reservation.afterPrice}円',
+                                            style: TextStyle(
+                                              fontSize: height * 0.016,
+                                            ),
+                                          ),
+                                          SizedBox(width: width * 0.03),
                                         ],
                                       ),
                                       Row(
@@ -200,8 +209,8 @@ class _HistoryPageState extends State<HistoryPage> {
                                           SizedBox(width: width * 0.3),
                                           Text(
                                               '施術時間： ${reservation.treatmentTime}分',
-                                              style: const TextStyle(
-                                                  fontSize: 15,
+                                              style: TextStyle(
+                                                  fontSize: height * 0.016,
                                                   color: Colors.black54,
                                                   fontWeight: FontWeight.bold)),
                                         ],

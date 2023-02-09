@@ -42,17 +42,16 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Container(
-                            height: height * 0.12,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black87),
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        reservation.menuImageUrl))),
-                          ),
+                        Container(
+                          height: height * 0.12,
+                          width: width * 0.23,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black87),
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image:
+                                      NetworkImage(reservation.menuImageUrl))),
                         ),
                         SizedBox(width: width * 0.03),
                         Column(
@@ -70,8 +69,9 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                               width: width * 0.66,
                               child: Text(
                                 reservation.treatmentDetail,
-                                style: const TextStyle(
-                                    fontSize: 15, color: Colors.black87),
+                                style: TextStyle(
+                                    fontSize: height * 0.016,
+                                    color: Colors.black87),
                               ),
                             ),
                             SizedBox(height: height * 0.015),
@@ -80,15 +80,15 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                                 if (reservation.beforePrice != null)
                                   Text(
                                     '${reservation.beforePrice}円',
-                                    style: const TextStyle(
-                                        fontSize: 14,
+                                    style: TextStyle(
+                                        fontSize: height * 0.016,
                                         decoration: TextDecoration.lineThrough),
                                   ),
                                 const Text('▷'),
                                 Text(
                                   '${reservation.afterPrice}円',
-                                  style: const TextStyle(
-                                      fontSize: 17,
+                                  style: TextStyle(
+                                      fontSize: height * 0.016,
                                       fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -98,8 +98,8 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                               children: [
                                 SizedBox(width: width * 0.3),
                                 Text('施術時間：${reservation.treatmentTime}分',
-                                    style: const TextStyle(
-                                        fontSize: 15,
+                                    style: TextStyle(
+                                        fontSize: height * 0.016,
                                         color: Colors.black54,
                                         fontWeight: FontWeight.bold)),
                               ],
@@ -108,61 +108,65 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                         ),
                       ],
                     ),
-                    const Divider(height: 20),
-                    const Text(
+                    Divider(height: height * 0.04),
+                    Text(
                       '決済方法',
                       style: TextStyle(
-                          fontSize: 24,
+                          fontSize: height * 0.024,
                           color: Colors.black87,
                           fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 4),
-                    const Text(
+                    SizedBox(height: height * 0.01),
+                    Text(
                       '💳クレジットカード',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: height * 0.018,
                           color: Colors.black87),
                     ),
-                    const Text(
+                    Text(
                       'Mastercard / Visa / JCB \nAmerican Express / Diners Club',
-                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                      style: TextStyle(
+                          fontSize: height * 0.016, color: Colors.black87),
                     ),
-                    const SizedBox(height: 4),
-                    const Text(
+                    SizedBox(height: height * 0.01),
+                    Text(
                       '💳その他決済',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: height * 0.018,
                           color: Colors.black87),
                     ),
-                    const Text(
+                    Text(
                       'PayPay / LINE Pay',
-                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                      style: TextStyle(
+                          fontSize: height * 0.016, color: Colors.black87),
                     ),
                     SizedBox(height: height * 0.03),
-                    const Text(
+                    Text(
                       '決済時期',
                       style: TextStyle(
-                          fontSize: 24,
+                          fontSize: height * 0.024,
                           color: Colors.black87,
                           fontWeight: FontWeight.bold),
                     ),
-                    const Text(
+                    Text(
                       '来店時支払い',
-                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                      style: TextStyle(
+                          fontSize: height * 0.016, color: Colors.black87),
                     ),
                     SizedBox(height: height * 0.03),
-                    const Text(
+                    Text(
                       'キャンセル連絡',
                       style: TextStyle(
-                          fontSize: 24,
+                          fontSize: height * 0.024,
                           color: Colors.black87,
                           fontWeight: FontWeight.bold),
                     ),
-                    const Text(
+                    Text(
                       '前日18時まで→無料\n当日の場合→料金の50%を請求',
-                      style: TextStyle(fontSize: 17, color: Colors.black87),
+                      style: TextStyle(
+                          fontSize: height * 0.016, color: Colors.black87),
                     ),
                     SizedBox(height: height * 0.03),
                     const Divider(),
@@ -170,6 +174,7 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                     Center(
                       child: SizedBox(
                         width: width * 0.5,
+                        height: height * 0.05,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: HexColor("#989593"),
@@ -178,8 +183,10 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                             model.cancelDialog(context, reservation,
                                 reservation.startTime.toDate());
                           },
-                          child: const Text('予約をキャンセルする',
-                              style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: Text('予約をキャンセルする',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: height * 0.014)),
                         ),
                       ),
                     ),

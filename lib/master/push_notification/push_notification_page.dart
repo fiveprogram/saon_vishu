@@ -47,6 +47,7 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
                         SizedBox(
                           width: width * 0.8,
                           child: TextFormField(
+                            maxLines: 2,
                             controller: model.notificationTitleController,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
@@ -77,15 +78,17 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
                         ),
                         SizedBox(height: height * 0.05),
                         SizedBox(
+                          height: height * 0.05,
                           width: width * 0.6,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white,
                               backgroundColor: Colors.black26,
                             ),
-                            child: const Text(
+                            child: Text(
                               '送信する',
                               style: TextStyle(
+                                fontSize: height * 0.025,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

@@ -42,9 +42,9 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                const Text('ご予約ありがとうございます😄',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                Text('ご予約ありがとうございます😄',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: height * 0.022)),
                 const SizedBox(height: 20),
                 Card(
                   surfaceTintColor: Colors.white,
@@ -56,15 +56,15 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                       children: [
                         Text(
                             '${model.visitStoreFormatter.format(startTime)}のご来店',
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87,
-                                fontSize: 15)),
-                        const SizedBox(height: 7),
+                                fontSize: height * 0.018)),
+                        SizedBox(height: height * 0.01),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            model.targetCard(menu),
+                            model.targetCard(menu, width),
                             SizedBox(
                               width: width * 0.09,
                             ),
@@ -90,7 +90,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                                             child: Text(
                                               treatmentDetail,
                                               style: const TextStyle(
-                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
                                                   color: Colors.white),
                                             ),
                                           ),
@@ -107,7 +107,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              height: height * 0.09,
+                              height: height * 0.11,
                               width: width * 0.19,
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black87),
@@ -116,7 +116,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                                       fit: BoxFit.cover,
                                       image: NetworkImage(menu.menuImageUrl!))),
                             ),
-                            const SizedBox(width: 10),
+                            SizedBox(width: width * 0.02),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -124,17 +124,22 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                                   width: width * 0.62,
                                   child: Text(
                                     menu.treatmentDetail,
-                                    style: const TextStyle(fontSize: 13),
+                                    style: TextStyle(fontSize: height * 0.016),
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                Text('${menu.afterPrice}円'),
+                                SizedBox(height: height * 0.02),
+                                Text(
+                                  '${menu.afterPrice}円',
+                                  style: TextStyle(
+                                    fontSize: height * 0.016,
+                                  ),
+                                ),
                                 Row(
                                   children: [
                                     SizedBox(width: width * 0.3),
                                     Text('施術時間： ${menu.treatmentTime}分',
-                                        style: const TextStyle(
-                                            fontSize: 15,
+                                        style: TextStyle(
+                                            fontSize: height * 0.016,
                                             color: Colors.black54,
                                             fontWeight: FontWeight.bold)),
                                   ],
@@ -147,27 +152,34 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 40),
-                const Text('お客様へ確認のプッシュ通知を送信させていただきました。',
-                    style: TextStyle(fontSize: 14, color: Colors.black)),
-                const SizedBox(height: 3),
-                const Text('*しばらく経っても通知が届かない場合は、アプリの通知設定をご確認ください。',
+                SizedBox(height: height * 0.04),
+                Text('お客様へ確認のプッシュ通知を送信させていただきました。',
                     style: TextStyle(
-                      fontSize: 14,
+                        fontSize: height * 0.017, color: Colors.black)),
+                SizedBox(height: height * 0.01),
+                Text('*しばらく経っても通知が届かない場合は、アプリの通知設定をご確認ください。',
+                    style: TextStyle(
+                      fontSize: height * 0.016,
                       color: Colors.black54,
                     )),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MainSelectPage()));
-                    },
-                    child: const Text(
-                      'メインページに戻る',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    )),
+                SizedBox(height: height * 0.05),
+                SizedBox(
+                  width: width * 0.5,
+                  height: height * 0.05,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MainSelectPage()));
+                      },
+                      child: Text(
+                        'メインページに戻る',
+                        style: TextStyle(
+                            fontSize: height * 0.015,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ),
               ],
             ),
           );

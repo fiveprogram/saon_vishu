@@ -15,18 +15,22 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
     return Consumer<MenuModel>(
       builder: (context, model, child) {
         return Scaffold(
           appBar: vishuAppBar(appBarTitle: 'Menu'),
           body: Column(
             children: [
-              const Text('お好みの条件を１つ選択してください',
+              Text('お好みの条件を１つ選択してください',
                   style: TextStyle(
-                      fontSize: 17,
+                      fontSize: height * 0.02,
                       color: Colors.black54,
                       fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
+              SizedBox(
+                height: height * 0.01,
+              ),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Wrap(
@@ -37,7 +41,8 @@ class _MenuPageState extends State<MenuPage> {
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        label: Text(model.treatmentTypeList[index]),
+                        label: Text(model.treatmentTypeList[index],
+                            style: TextStyle(fontSize: height * 0.017)),
                         selected: model.treatmentListIndex == index,
                         onSelected: (bool value) {
                           if (value) {
@@ -57,8 +62,10 @@ class _MenuPageState extends State<MenuPage> {
               const Divider(),
               Text(
                   '全${model.filteredMenuList.isEmpty ? model.menuList.length : model.filteredMenuList.length}件',
-                  style: const TextStyle(
-                      color: Colors.black54, fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                      fontSize: height * 0.017,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold)),
               Expanded(
                 child: Scrollbar(
                   child: ListView.builder(

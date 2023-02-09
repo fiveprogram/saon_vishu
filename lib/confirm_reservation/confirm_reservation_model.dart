@@ -63,7 +63,7 @@ class ConfirmReservationModel extends ChangeNotifier {
       notifyListeners();
     },
         currentTime: dateOfBirthController.text.isEmpty
-            ? DateTime.now()
+            ? DateTime(1980, 1, 1)
             : registerDateOfBirth,
         locale: LocaleType.jp);
   }

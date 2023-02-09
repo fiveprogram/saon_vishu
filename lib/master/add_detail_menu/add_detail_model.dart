@@ -10,7 +10,6 @@ import 'package:salon_vishu/domain/menu.dart';
 class AddDetailModel extends ChangeNotifier {
   AddDetailModel(Menu? menu) {
     if (menu != null) {
-      print(file == null);
       targetMember = menu.targetMember;
       treatmentDetailController.text = menu.treatmentDetail;
       if (menu.beforePrice != null) {

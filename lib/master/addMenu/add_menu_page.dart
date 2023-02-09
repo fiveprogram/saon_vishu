@@ -24,7 +24,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
         }
 
         //カット内容のリスト
-        List<Widget> contentsOfHairList(Menu menu) {
+        List<Widget> contentsOfHairList(Menu menu, double height) {
           return menu.treatmentDetailList
               .map(
                 (treatmentDetail) => Padding(
@@ -40,7 +40,8 @@ class _AddMenuPageState extends State<AddMenuPage> {
                     ),
                     child: Text(
                       treatmentDetail,
-                      style: const TextStyle(fontSize: 12, color: Colors.white),
+                      style: TextStyle(
+                          fontSize: height * 0.016, color: Colors.white),
                     ),
                   ),
                 ),
@@ -49,7 +50,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
         }
 
         //対象者を表す
-        Widget targetCard(Menu menu) {
+        Widget targetCard(Menu menu, double width) {
           HexColor targetColor(String targetMember) {
             switch (targetMember) {
               case '新規':
@@ -64,7 +65,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
           }
 
           return Container(
-            width: 50,
+            width: width * 0.12,
             padding: const EdgeInsets.all(2),
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(3)),
@@ -76,7 +77,8 @@ class _AddMenuPageState extends State<AddMenuPage> {
             child: Center(
               child: Text(
                 menu.targetMember,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                style: const TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
           );
@@ -89,9 +91,9 @@ class _AddMenuPageState extends State<AddMenuPage> {
           appBar: vishuAppBar(appBarTitle: 'メニューリスト', isJapanese: true),
           body: Column(
             children: [
-              const Text('お好みの条件を１つ選択してください',
+              Text('お好みの条件を１つ選択してください',
                   style: TextStyle(
-                      fontSize: 17,
+                      fontSize: height * 0.02,
                       color: Colors.black54,
                       fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
@@ -105,7 +107,8 @@ class _AddMenuPageState extends State<AddMenuPage> {
                         shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                         ),
-                        label: Text(model.treatmentTypeList[index]),
+                        label: Text(model.treatmentTypeList[index],
+                            style: TextStyle(fontSize: height * 0.017)),
                         selected: model.treatmentListIndex == index,
                         onSelected: (bool value) {
                           if (value) {
@@ -125,8 +128,10 @@ class _AddMenuPageState extends State<AddMenuPage> {
               const Divider(),
               Text(
                   '全${model.filteredMenuList.isEmpty ? model.menuList.length : model.filteredMenuList.length}件',
-                  style: const TextStyle(
-                      color: Colors.black54, fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                      fontSize: height * 0.017,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold)),
               Expanded(
                 child: Scrollbar(
                   child: ListView.builder(
@@ -167,7 +172,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      targetCard(menu),
+                                      targetCard(menu, width),
                                       SizedBox(
                                         width: width * 0.09,
                                       ),
@@ -175,7 +180,8 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                         child: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Wrap(
-                                            children: contentsOfHairList(menu),
+                                            children: contentsOfHairList(
+                                                menu, height),
                                           ),
                                         ),
                                       ),
@@ -187,7 +193,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Container(
-                                        height: height * 0.09,
+                                        height: height * 0.11,
                                         width: width * 0.19,
                                         decoration: BoxDecoration(
                                             border: Border.all(
@@ -209,11 +215,12 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                         children: [
                                           SizedBox(
                                             width: width * 0.62,
-                                            child: Text(
-                                              menu.treatmentDetail,
-                                              style:
-                                                  const TextStyle(fontSize: 13),
-                                            ),
+                                            child: Text(menu.treatmentDetail,
+                                                style: TextStyle(
+                                                    fontSize: height * 0.016,
+                                                    color: Colors.black87,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                           ),
                                           const SizedBox(height: 10),
                                           Row(
@@ -228,44 +235,55 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                                           null)
                                                         Text(
                                                           '${menu.beforePrice}円',
-                                                          style: const TextStyle(
-                                                              fontSize: 12,
+                                                          style: TextStyle(
+                                                              fontSize: height *
+                                                                  0.016,
                                                               decoration:
                                                                   TextDecoration
                                                                       .lineThrough),
                                                         ),
                                                       const Text('▷'),
                                                       Text(
-                                                          '${menu.afterPrice}円'),
+                                                          '${menu.afterPrice}円',
+                                                          style: TextStyle(
+                                                              fontSize: height *
+                                                                  0.016)),
                                                       SizedBox(
                                                           width: width * 0.02),
                                                     ],
                                                   ),
                                                   Text(
                                                       '施術時間：${menu.treatmentTime}分',
-                                                      style: const TextStyle(
-                                                          fontSize: 15,
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              height * 0.017,
                                                           color: Colors.black54,
                                                           fontWeight:
                                                               FontWeight.bold)),
                                                 ],
                                               ),
                                               SizedBox(width: width * 0.04),
-                                              ElevatedButton.icon(
-                                                style: ElevatedButton.styleFrom(
-                                                    foregroundColor:
-                                                        Colors.white70,
-                                                    backgroundColor:
-                                                        Colors.black26),
-                                                onPressed: () {
-                                                  model.menuDelete(
-                                                      menu, context);
-                                                },
-                                                icon: const Icon(Icons.delete),
-                                                label: const Text(
-                                                  '削除',
-                                                  style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
+                                              SizedBox(
+                                                width: width * 0.2,
+                                                child: ElevatedButton.icon(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          foregroundColor:
+                                                              Colors.white70,
+                                                          backgroundColor:
+                                                              Colors.black26),
+                                                  onPressed: () {
+                                                    model.menuDelete(
+                                                        menu, context);
+                                                  },
+                                                  icon:
+                                                      const Icon(Icons.delete),
+                                                  label: const Text(
+                                                    '削除',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
                                                 ),
                                               ),

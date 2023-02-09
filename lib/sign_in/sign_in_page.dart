@@ -119,7 +119,7 @@ class _SignInPageState extends State<SignInPage> {
                             model.signInWithApple();
                           }),
                         ),
-                        SizedBox(height: height * 0.02),
+                        SizedBox(height: height * 0.04),
                         SizedBox(
                           height: height * 0.05,
                           width: width * 0.6,

@@ -138,7 +138,8 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
                               child: Text(
                                   model.businessTimeFormatter
                                       .format(thirtyMinute),
-                                  style: const TextStyle(
+                                  style: TextStyle(
+                                      fontSize: height * 0.016,
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.center),
                             );
@@ -158,8 +159,12 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
                                   border: Border.all(color: Colors.black38),
                                 ),
                                 child: Text(
-                                    '${weekDay.day}日\n${model.dayOfWeekFormatter.format(weekDay)}',
-                                    textAlign: TextAlign.center),
+                                  '${weekDay.day}日\n${model.dayOfWeekFormatter.format(weekDay)}',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontSize: height * 0.016,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                               ...model.separateThirtyMinutes(weekDay).map(
                                 (thirtyMinute) {

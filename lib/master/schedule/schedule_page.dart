@@ -103,7 +103,8 @@ class _SchedulePageState extends State<SchedulePage> {
                               child: Text(
                                   model.businessTimeFormatter
                                       .format(thirtyMinute),
-                                  style: const TextStyle(
+                                  style: TextStyle(
+                                      fontSize: height * 0.016,
                                       fontWeight: FontWeight.bold),
                                   textAlign: TextAlign.center),
                             );
@@ -124,6 +125,9 @@ class _SchedulePageState extends State<SchedulePage> {
                                 ),
                                 child: Text(
                                     '${weekDay.day}日\n${model.dayOfWeekFormatter.format(weekDay)}',
+                                    style: TextStyle(
+                                        fontSize: height * 0.016,
+                                        fontWeight: FontWeight.bold),
                                     textAlign: TextAlign.center),
                               ),
                               ...model.separateThirtyMinutes(weekDay).map(

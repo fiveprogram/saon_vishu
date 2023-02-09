@@ -264,7 +264,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                               ),
                                               SizedBox(width: width * 0.04),
                                               SizedBox(
-                                                width: width * 0.2,
+                                                width: width * 0.25,
                                                 child: ElevatedButton.icon(
                                                   style:
                                                       ElevatedButton.styleFrom(

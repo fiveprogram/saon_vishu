@@ -219,21 +219,24 @@ class _SignUpPageState extends State<SignUpPage> {
                         ),
                         SizedBox(height: deviceHeight * 0.05),
                         SizedBox(
-                            width: deviceWidth * 0.5,
-                            height: deviceHeight * 0.05,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: Colors.black54),
-                                onPressed: () {
-                                  model.signUpTransition(context);
-                                },
-                                child: const Text(
-                                  '新規登録',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold),
-                                ))),
+                          width: deviceWidth * 0.5,
+                          height: deviceHeight * 0.05,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black54),
+                            onPressed: () {
+                              model.signUpTransition(context);
+                            },
+                            child: const Text(
+                              '新規登録',
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: deviceHeight * 0.2),
                       ],
                     ),
                   ),

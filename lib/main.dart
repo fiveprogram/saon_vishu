@@ -283,7 +283,7 @@ class _MyAppState extends State<MyApp> {
                   if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
                     return const MasterSelectPage();
                   }
-                  return const MasterSelectPage();
+                  return const MainSelectPage();
                 }
                 return const SignInPage();
               },

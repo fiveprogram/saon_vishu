@@ -39,6 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
           tileColor: HexColor('#fcf8f6'),
           title: Text(tileName,
               style: TextStyle(
+                fontWeight: FontWeight.bold,
                 fontSize: height * 0.019,
                 color: Colors.black54,
               )),
@@ -71,7 +72,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(width: width * 0.02),
                     Text('・お客様情報',
                         style: TextStyle(
-                            fontSize: height * 0.02,
+                            fontSize: height * 0.023,
                             color: Colors.black54,
                             fontWeight: FontWeight.bold)),
                   ],
@@ -103,9 +104,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     title: Text(
                       profile.name,
                       style: TextStyle(
-                        fontSize: height * 0.019,
-                        color: Colors.black54,
-                      ),
+                          fontSize: height * 0.019,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold),
                     ),
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
                   ),
@@ -116,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(width: width * 0.02),
                     Text('・お客様向けガイド',
                         style: TextStyle(
-                            fontSize: height * 0.02,
+                            fontSize: height * 0.023,
                             color: Colors.black54,
                             fontWeight: FontWeight.bold)),
                   ],
@@ -141,9 +142,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     tileColor: HexColor('#fcf8f6'),
                     title: Text('利用規約',
                         style: TextStyle(
-                          fontSize: height * 0.019,
-                          color: Colors.black54,
-                        )),
+                            fontSize: height * 0.019,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.bold)),
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
                   ),
                 ),
@@ -159,9 +160,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     tileColor: HexColor('#fcf8f6'),
                     title: Text('プライバシーポリシー',
                         style: TextStyle(
-                          fontSize: height * 0.019,
-                          color: Colors.black54,
-                        )),
+                            fontSize: height * 0.019,
+                            color: Colors.black54,
+                            fontWeight: FontWeight.bold)),
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
                   ),
                 ),
@@ -178,6 +179,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     title: Text('ログアウト',
                         style: TextStyle(
                           fontSize: height * 0.019,
+                          fontWeight: FontWeight.bold,
                           color: Colors.black54,
                         )),
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),

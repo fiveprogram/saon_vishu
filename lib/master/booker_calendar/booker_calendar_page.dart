@@ -216,7 +216,7 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
                                               fontWeight: FontWeight.bold),
                                         ),
                                         SizedBox(
-                                          width: width * 0.05,
+                                          width: width * 0.03,
                                         ),
                                         if (reservation.lastVisit == null)
                                           Text('初来店になります。',
@@ -227,7 +227,7 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
                                           Text(
                                             '前回来店：${model.lastVisitFormatter.format(reservation.lastVisit!.toDate())}',
                                             style: TextStyle(
-                                              fontSize: height * 0.02,
+                                              fontSize: height * 0.018,
                                             ),
                                           ),
                                       ],

@@ -25,7 +25,6 @@ class Reservation {
       required this.uid,
       required this.priority,
       required this.deviceIdList,
-      required this.email,
       required this.userImage});
 
   Timestamp startTime;
@@ -49,7 +48,6 @@ class Reservation {
   String gender;
   String uid;
   String? userImage;
-  String? email;
   List<dynamic> deviceIdList;
 
   factory Reservation.fromFirestore(DocumentSnapshot doc) {
@@ -76,7 +74,6 @@ class Reservation {
         isNeedExtraMoney: data['isNeedExtraMoney'],
         lastVisit: data['lastVisit'],
         deviceIdList: data['deviceIdList'],
-        userImage: data['userImage'],
-        email: data['email']);
+        userImage: data['userImage']);
   }
 }

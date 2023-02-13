@@ -81,7 +81,7 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                                   ),
                                 const Text('▷'),
                                 Text(
-                                  '${menu.afterPrice}円',
+                                  '${menu.afterPrice}円〜',
                                   style: TextStyle(
                                       fontSize: height * 0.017,
                                       fontWeight: FontWeight.bold),

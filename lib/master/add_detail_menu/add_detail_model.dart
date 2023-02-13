@@ -54,8 +54,8 @@ class AddDetailModel extends ChangeNotifier {
     'カラー',
     'トリートメント',
     'パーマ',
-    'ヘッドスパ',
     '縮毛矯正',
+    'ヘッドスパ',
     'ヘアセット',
     '着付け'
   ];
@@ -123,6 +123,9 @@ class AddDetailModel extends ChangeNotifier {
 
   ///完了ボタン
   Future<void> menuAddButton(BuildContext context) async {
+    startLoading();
+    print(isLoading);
+
     ///最低限入力項目
     try {
       if (targetMember == '' ||
@@ -165,7 +168,7 @@ class AddDetailModel extends ChangeNotifier {
                     onPressed: () async {
                       startLoading();
                       if (file == null && imgUrl == null) {
-                        await showDialog(
+                        return await showDialog(
                           context: context,
                           builder: (context) {
                             return CupertinoAlertDialog(
@@ -182,7 +185,7 @@ class AddDetailModel extends ChangeNotifier {
                         );
                       }
 
-                      ///もともとメニューがある時
+                      ///もともとメニューがあり、画像の変更を行わない場合
                       if (file == null && imgUrl != null) {
                         await FirebaseFirestore.instance
                             .collection('menu')
@@ -207,7 +210,37 @@ class AddDetailModel extends ChangeNotifier {
                         );
                       }
 
-                      if (file != null) {
+                      ///もともと画像が用意されており、且つ画像を変更したい場合
+                      if (file != null && imgUrl != null) {
+                        final task = await FirebaseStorage.instance
+                            .ref(
+                                'menu/${FirebaseFirestore.instance.collection('menu').doc().id}')
+                            .putFile(file!);
+                        imgUrl = await task.ref.getDownloadURL();
+
+                        await FirebaseFirestore.instance
+                            .collection('menu')
+                            .doc(menuId)
+                            .update({
+                          'targetMember': targetMember,
+                          'treatmentDetailList': selectedTypeList,
+                          'treatmentDetail': treatmentDetailController.text,
+                          'afterPrice': int.parse(afterPriceController.text),
+                          'beforePrice': beforePriceController.text.isEmpty
+                              ? null
+                              : int.parse(beforePriceController.text),
+                          'treatmentTime':
+                              int.parse(treatmentTimeController.text),
+                          'menuIntroduction': menuIntroductionController.text,
+                          'menuImageUrl': imgUrl,
+                          'priority': 999,
+                          'isNeedExtraMoney': isNeedExtraMoney,
+                          'menuId': menuId
+                        });
+                      }
+
+                      ///新規で作成される場合
+                      if (file != null && imgUrl == '') {
                         final task = await FirebaseStorage.instance
                             .ref(
                                 'menu/${FirebaseFirestore.instance.collection('menu').doc().id}')
@@ -237,9 +270,8 @@ class AddDetailModel extends ChangeNotifier {
                             .doc(result.id)
                             .update({'menuId': result.id});
                       }
-                      notifyListeners();
 
-                      Navigator.of(dialogContext).pop(false);
+                      notifyListeners();
                       Navigator.pop(context);
                     },
                   ),
@@ -249,6 +281,7 @@ class AddDetailModel extends ChangeNotifier {
       }
     } finally {
       endLoading();
+      print(isLoading);
     }
     notifyListeners();
   }

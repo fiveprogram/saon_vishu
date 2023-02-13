@@ -61,6 +61,7 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
     }
 
     return Scaffold(
+      backgroundColor: HexColor('#fcf8f6'),
       appBar: vishuAppBar(appBarTitle: '予約者情報', isJapanese: true),
       body: Consumer<BookerDetailModel>(builder: (context, model, child) {
         return SingleChildScrollView(
@@ -131,16 +132,6 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
                 ),
               ),
               SizedBox(height: height * 0.02),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    contentText('メール'),
-                    const Expanded(child: SizedBox()),
-                    profileText(width, reservation.email!),
-                  ],
-                ),
-              ),
               Container(
                 alignment: Alignment.center,
                 height: height * 0.05,
@@ -153,8 +144,13 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ),
               Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: const BorderSide(
+                    color: Colors.black87,
+                  ),
+                ),
                 surfaceTintColor: Colors.white,
-                elevation: 5,
                 child: Padding(
                   padding: const EdgeInsets.all(13.0),
                   child: Column(
@@ -248,7 +244,7 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
                                     ),
                                   const Text('▷'),
                                   Text(
-                                    '${reservation.afterPrice}円',
+                                    '${reservation.afterPrice}円〜',
                                     style: TextStyle(
                                       fontSize: height * 0.016,
                                     ),

@@ -19,7 +19,6 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
 
     return Consumer<PushNotificationModel>(builder: (context, model, child) {
       return Scaffold(
-          resizeToAvoidBottomInset: false,
           backgroundColor: HexColor('#fcf8f6'),
           appBar: vishuAppBar(appBarTitle: 'プッシュ通知管理', isJapanese: true),
           body: Stack(

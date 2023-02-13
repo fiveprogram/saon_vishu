@@ -86,7 +86,7 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                                   ),
                                 const Text('▷'),
                                 Text(
-                                  '${reservation.afterPrice}円',
+                                  '${reservation.afterPrice}円〜',
                                   style: TextStyle(
                                       fontSize: height * 0.016,
                                       fontWeight: FontWeight.bold),
@@ -109,40 +109,6 @@ class _CancelReservationPageState extends State<CancelReservationPage> {
                       ],
                     ),
                     Divider(height: height * 0.04),
-                    Text(
-                      '決済方法',
-                      style: TextStyle(
-                          fontSize: height * 0.024,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: height * 0.01),
-                    Text(
-                      '💳クレジットカード',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: height * 0.018,
-                          color: Colors.black87),
-                    ),
-                    Text(
-                      'Mastercard / Visa / JCB \nAmerican Express / Diners Club',
-                      style: TextStyle(
-                          fontSize: height * 0.016, color: Colors.black87),
-                    ),
-                    SizedBox(height: height * 0.01),
-                    Text(
-                      '💳その他決済',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: height * 0.018,
-                          color: Colors.black87),
-                    ),
-                    Text(
-                      'PayPay / LINE Pay',
-                      style: TextStyle(
-                          fontSize: height * 0.016, color: Colors.black87),
-                    ),
-                    SizedBox(height: height * 0.03),
                     Text(
                       '決済時期',
                       style: TextStyle(

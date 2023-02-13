@@ -185,6 +185,25 @@ class _ProfilePageState extends State<ProfilePage> {
                     trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
                   ),
                 ),
+                Container(
+                  height: height * 0.075,
+                  decoration: const BoxDecoration(
+                      border:
+                          Border(bottom: BorderSide(color: Colors.black26))),
+                  child: ListTile(
+                    onTap: () {
+                      model.deleteAccount(context);
+                    },
+                    tileColor: HexColor('#fcf8f6'),
+                    title: Text('アカウントの削除',
+                        style: TextStyle(
+                          fontSize: height * 0.019,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54,
+                        )),
+                    trailing: const Icon(Icons.keyboard_arrow_right, size: 30),
+                  ),
+                ),
                 SizedBox(height: height * 0.03),
                 Text('salon Vishu',
                     style: TextStyle(
@@ -204,6 +223,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: TextStyle(
                         fontSize: height * 0.022, color: Colors.black54),
                   ),
+                SizedBox(height: height * 0.1),
               ],
             ),
           );

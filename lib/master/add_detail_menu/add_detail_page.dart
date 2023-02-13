@@ -31,7 +31,6 @@ class _AddDetailPageState extends State<AddDetailPage> {
                 return model.willPopCallback(context);
               },
               child: Scaffold(
-                resizeToAvoidBottomInset: false,
                 backgroundColor: HexColor('#fcf8f6'),
                 appBar: vishuAppBar(appBarTitle: 'メニュー編集', isJapanese: true),
                 body: Focus(

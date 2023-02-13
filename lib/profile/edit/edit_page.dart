@@ -23,7 +23,6 @@ class _EditPageState extends State<EditPage> {
     return ChangeNotifierProvider<EditModel>(
       create: (_) => EditModel(profile: widget.profile),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: vishuAppBar(appBarTitle: 'my page'),
         body: Consumer<EditModel>(
           builder: (context, model, child) {
@@ -112,11 +111,6 @@ class _EditPageState extends State<EditPage> {
                                 hintText: '名前'),
                             guidListTile(
                                 model: model,
-                                width: 60,
-                                controller: model.emailController,
-                                hintText: 'メール'),
-                            guidListTile(
-                                model: model,
                                 width: 40,
                                 isNumberOnly: true,
                                 controller: model.telephoneNumberController,
@@ -137,46 +131,55 @@ class _EditPageState extends State<EditPage> {
                                   border: Border(
                                       bottom: BorderSide(
                                           color: HexColor('#7e796e')))),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const SizedBox(width: 20),
-                                  const Text('性別',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black54,
-                                      )),
-                                  const SizedBox(width: 60),
-                                  SizedBox(
-                                    width: width * 0.33,
-                                    child: RadioListTile(
-                                      title: const Text("男性"),
-                                      value: "男性",
-                                      groupValue: model.gender,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          model.gender = value.toString();
-                                        });
-                                      },
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: width * 0.33,
+                                      child: RadioListTile(
+                                        title: const Text("男性"),
+                                        value: "男性",
+                                        groupValue: model.gender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            model.gender = value.toString();
+                                          });
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: width * 0.33,
-                                    child: RadioListTile(
-                                      title: const Text("女性"),
-                                      value: "女性",
-                                      groupValue: model.gender,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          model.gender = value.toString();
-                                        });
-                                      },
+                                    SizedBox(
+                                      width: width * 0.33,
+                                      child: RadioListTile(
+                                        title: const Text("女性"),
+                                        value: "女性",
+                                        groupValue: model.gender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            model.gender = value.toString();
+                                          });
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    SizedBox(
+                                      width: width * 0.35,
+                                      child: RadioListTile(
+                                        title: const Text("その他"),
+                                        value: "その他",
+                                        groupValue: model.gender,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            model.gender = value.toString();
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                            SizedBox(height: height * 0.06),
+                            SizedBox(height: height * 0.1),
                             SizedBox(
                               height: height * 0.06,
                               width: width * 0.5,
@@ -190,7 +193,7 @@ class _EditPageState extends State<EditPage> {
                                         TextStyle(fontWeight: FontWeight.bold),
                                   )),
                             ),
-                            SizedBox(height: height * 0.23),
+                            SizedBox(height: height * 0.3),
                           ],
                         ),
                         if (model.isLoading)

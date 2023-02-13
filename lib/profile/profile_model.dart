@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -98,5 +99,34 @@ class ProfileModel extends ChangeNotifier {
     } else {
       throw '$urlPolicy';
     }
+  }
+
+  Future<void> deleteAccount(BuildContext context) async {
+    await showDialog(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog(
+            title: const Text('本当にアカウントを削除してもよろしいですか？'),
+            content: const Text('削除後データの復元はできません'),
+            actions: [
+              CupertinoButton(
+                  child: const Text('戻る'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
+              CupertinoButton(
+                  child: const Text('削除する'),
+                  onPressed: () async {
+                    User? user = FirebaseAuth.instance.currentUser;
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(user!.uid)
+                        .delete();
+
+                    await user.delete();
+                  }),
+            ],
+          );
+        });
   }
 }

@@ -65,6 +65,8 @@ class BookerCalendarModel extends ChangeNotifier {
         return 'S';
       case 'パーマ':
         return 'P';
+      case 'ヘッドスパ':
+        return 'H';
       case '髪の長さロング料金':
         return 'O';
       case 'Sa':

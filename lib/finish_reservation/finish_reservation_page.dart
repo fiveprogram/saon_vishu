@@ -129,7 +129,7 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                                 ),
                                 SizedBox(height: height * 0.02),
                                 Text(
-                                  '${menu.afterPrice}円',
+                                  '${menu.afterPrice}円〜',
                                   style: TextStyle(
                                     fontSize: height * 0.016,
                                   ),

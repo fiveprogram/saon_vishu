@@ -12,9 +12,9 @@ class AddMenuModel extends ChangeNotifier {
     'カット',
     'カラー',
     'パーマ',
+    '縮毛矯正',
     'トリートメント',
     'ヘッドスパ',
-    '縮毛矯正',
     'ヘアセット',
     '着付け'
   ];

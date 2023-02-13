@@ -114,10 +114,9 @@ class SignInModel extends ChangeNotifier {
         await FirebaseFirestore.instance.collection('users').doc(user!.uid).set(
           {
             'uid': user.uid,
-            'email': user.email,
             'name': user.displayName,
             'dateOfBirth': '',
-            'telephoneNumber': user.phoneNumber ?? '00000000000',
+            'telephoneNumber': user.phoneNumber ?? '',
             'imgUrl': user.photoURL != '' ? user.photoURL : '',
             'dateTime': createAccountDate,
             'gender': '',
@@ -150,10 +149,9 @@ class SignInModel extends ChangeNotifier {
               .set(
             {
               'uid': user.uid,
-              'email': user.email ?? '',
               'name': 'unknown',
               'dateOfBirth': '',
-              'telephoneNumber': user.phoneNumber ?? '00000000000',
+              'telephoneNumber': user.phoneNumber ?? '',
               'imgUrl': user.photoURL ?? '',
               'dateTime': createAccountDate,
               'gender': '',

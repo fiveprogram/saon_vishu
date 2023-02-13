@@ -22,7 +22,6 @@ class _PassResetPageState extends State<PassResetPage> {
     final focusNode = FocusNode();
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: vishuAppBar(appBarTitle: 'password reset', isJapanese: false),
       body: SingleChildScrollView(
         child: Focus(

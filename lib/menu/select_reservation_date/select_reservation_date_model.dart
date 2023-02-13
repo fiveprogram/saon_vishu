@@ -14,24 +14,7 @@ class SelectReservationDateModel extends ChangeNotifier {
       path: '0721-21-8824',
     );
 
-    await showDialog(
-        context: context,
-        builder: (context) => CupertinoAlertDialog(
-              title: const Text('0721-21-8824'),
-              content: const Text('電話しますか？'),
-              actions: [
-                CupertinoButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("戻る")),
-                CupertinoButton(
-                    onPressed: () {
-                      launchUrl(launchUri);
-                    },
-                    child: const Text("OK"))
-              ],
-            ));
+    await launchUrl(launchUri);
   }
 
   List<Widget> contentsOfHairList(double height) {

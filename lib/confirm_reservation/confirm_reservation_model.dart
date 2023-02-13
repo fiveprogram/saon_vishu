@@ -15,7 +15,6 @@ class ConfirmReservationModel extends ChangeNotifier {
   ConfirmReservationModel({required this.profile}) {
     nameController.text = profile.name;
     telephoneNumberController.text = profile.telephoneNumber;
-    emailController.text = profile.email;
     dateOfBirthController.text = profile.dateOfBirth;
     gender = profile.gender;
     if (profile.lastVisit != null) {
@@ -31,7 +30,6 @@ class ConfirmReservationModel extends ChangeNotifier {
 
   Timestamp? lastVisit;
   final nameController = TextEditingController();
-  final emailController = TextEditingController();
   final telephoneNumberController = TextEditingController();
   final dateOfBirthController = TextEditingController();
   String? gender;

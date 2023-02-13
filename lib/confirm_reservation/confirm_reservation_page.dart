@@ -36,7 +36,6 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
     return ChangeNotifierProvider(
       create: (_) => ConfirmReservationModel(profile: profile)..fetchDeviceId(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: HexColor('#fcf8f6'),
         appBar: vishuAppBar(appBarTitle: '予約確認', isJapanese: true),
         body: Consumer<ConfirmReservationModel>(
@@ -81,7 +80,6 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   'lastVisit': model.lastVisit,
                   'userImage': model.userImage,
                   'deviceIdList': deviceIdList,
-                  'email': model.emailController.text,
                 },
               );
               await FirebaseFirestore.instance
@@ -96,7 +94,6 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   .collection('users')
                   .doc(model.user!.uid)
                   .set({
-                'email': model.emailController.text,
                 'name': model.nameController.text,
                 'dateOfBirth': model.dateOfBirthController.text,
                 'telephoneNumber': model.telephoneNumberController.text,
@@ -113,7 +110,6 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                 {required BuildContext context,
                 required String reservationDate}) async {
               if (model.nameController.text == '' ||
-                  model.emailController.text == '' ||
                   model.telephoneNumberController.text == '' ||
                   model.dateOfBirthController.text == '' ||
                   model.gender == '' ||
@@ -258,7 +254,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                                       ),
                                     const Text('▷'),
                                     Text(
-                                      '${menu.afterPrice}円',
+                                      '${menu.afterPrice}円〜',
                                       style: const TextStyle(
                                           fontSize: 17,
                                           fontWeight: FontWeight.bold),
@@ -281,40 +277,6 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                           ],
                         ),
                         Divider(height: height * 0.04),
-                        Text(
-                          '決済方法',
-                          style: TextStyle(
-                              fontSize: height * 0.024,
-                              color: Colors.black87,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: height * 0.01),
-                        Text(
-                          '💳クレジットカード',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: height * 0.018,
-                              color: Colors.black87),
-                        ),
-                        Text(
-                          'Mastercard / Visa / JCB \nAmerican Express / Diners Club',
-                          style: TextStyle(
-                              fontSize: height * 0.016, color: Colors.black87),
-                        ),
-                        SizedBox(height: height * 0.01),
-                        Text(
-                          '💳その他決済',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: height * 0.018,
-                              color: Colors.black87),
-                        ),
-                        Text(
-                          'PayPay / LINE Pay',
-                          style: TextStyle(
-                              fontSize: height * 0.016, color: Colors.black87),
-                        ),
-                        SizedBox(height: height * 0.03),
                         Text(
                           '決済時期',
                           style: TextStyle(
@@ -590,12 +552,6 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                         model.guidListTile(
                             height: height * 0.07,
                             width: width,
-                            deviceWidth: 50,
-                            controller: model.emailController,
-                            hintText: 'メール'),
-                        model.guidListTile(
-                            height: height * 0.07,
-                            width: width,
                             deviceWidth: 35,
                             isNumberOnly: true,
                             controller: model.telephoneNumberController,
@@ -614,45 +570,52 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                               border: Border(
                                   bottom:
                                       BorderSide(color: HexColor('#7e796e')))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const SizedBox(width: 15),
-                              const Text(
-                                '性別',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black87,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: width * 0.33,
+                                  child: RadioListTile(
+                                    title: const Text("男性"),
+                                    value: "男性",
+                                    groupValue: model.gender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        model.gender = value.toString();
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 50),
-                              SizedBox(
-                                width: width * 0.32,
-                                child: RadioListTile(
-                                  title: const Text("男性"),
-                                  value: "男性",
-                                  groupValue: model.gender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      model.gender = value.toString();
-                                    });
-                                  },
+                                SizedBox(
+                                  width: width * 0.33,
+                                  child: RadioListTile(
+                                    title: const Text("女性"),
+                                    value: "女性",
+                                    groupValue: model.gender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        model.gender = value.toString();
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: width * 0.32,
-                                child: RadioListTile(
-                                  title: const Text("女性"),
-                                  value: "女性",
-                                  groupValue: model.gender,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      model.gender = value.toString();
-                                    });
-                                  },
+                                SizedBox(
+                                  width: width * 0.35,
+                                  child: RadioListTile(
+                                    title: const Text("その他"),
+                                    value: "その他",
+                                    groupValue: model.gender,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        model.gender = value.toString();
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(height: height * 0.04),

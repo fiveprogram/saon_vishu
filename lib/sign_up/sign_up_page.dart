@@ -30,7 +30,6 @@ class _SignUpPageState extends State<SignUpPage> {
       Version version = model.version!;
 
       return Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: vishuAppBar(
           appBarTitle: 'salon Vishu',
         ),
@@ -196,7 +195,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 17),
                                   ),
-                                  SizedBox(width: deviceWidth * 0.1),
+                                  SizedBox(width: deviceWidth * 0.01),
                                   Radio(
                                       value: '女性',
                                       groupValue: model.gender,
@@ -207,6 +206,21 @@ class _SignUpPageState extends State<SignUpPage> {
                                       }),
                                   const Text(
                                     '女性',
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17),
+                                  ),
+                                  Radio(
+                                      value: 'その他',
+                                      groupValue: model.gender,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          model.gender = value;
+                                        });
+                                      }),
+                                  const Text(
+                                    'その他',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontWeight: FontWeight.bold,

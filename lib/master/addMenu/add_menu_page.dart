@@ -164,7 +164,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
                             surfaceTintColor: Colors.white,
                             elevation: 5,
                             child: Padding(
-                              padding: const EdgeInsets.all(13.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -244,12 +244,12 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                                         ),
                                                       const Text('▷'),
                                                       Text(
-                                                          '${menu.afterPrice}円',
+                                                          '${menu.afterPrice}円〜',
                                                           style: TextStyle(
                                                               fontSize: height *
                                                                   0.016)),
                                                       SizedBox(
-                                                          width: width * 0.02),
+                                                          width: width * 0.01),
                                                     ],
                                                   ),
                                                   Text(
@@ -262,28 +262,22 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                                               FontWeight.bold)),
                                                 ],
                                               ),
-                                              SizedBox(width: width * 0.04),
-                                              SizedBox(
-                                                width: width * 0.25,
-                                                child: ElevatedButton.icon(
-                                                  style:
-                                                      ElevatedButton.styleFrom(
-                                                          foregroundColor:
-                                                              Colors.white70,
-                                                          backgroundColor:
-                                                              Colors.black26),
-                                                  onPressed: () {
-                                                    model.menuDelete(
-                                                        menu, context);
-                                                  },
-                                                  icon:
-                                                      const Icon(Icons.delete),
-                                                  label: const Text(
-                                                    '削除',
-                                                    style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                    ),
+                                              SizedBox(width: width * 0.02),
+                                              ElevatedButton.icon(
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        Colors.white70,
+                                                    backgroundColor:
+                                                        Colors.black26),
+                                                onPressed: () {
+                                                  model.menuDelete(
+                                                      menu, context);
+                                                },
+                                                icon: const Icon(Icons.delete),
+                                                label: const Text(
+                                                  '削除',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
                                               ),

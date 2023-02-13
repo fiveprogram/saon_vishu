@@ -280,7 +280,9 @@ class _MyAppState extends State<MyApp> {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasData) {
-                  if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2') {
+                  if (snapshot.data!.uid == 'pQKtcv6IqHVA4heqhYb2idBExXO2' ||
+                      snapshot.data!.uid == 'WifOh89TR6bCHrBVqmT0IOuSiqf2' ||
+                      snapshot.data!.uid == 'LLDpe0jHvdar5gOTtAEthOHVqVA2') {
                     return const MasterSelectPage();
                   }
                   return const MainSelectPage();

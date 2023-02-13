@@ -89,7 +89,6 @@ class SignUpModel extends ChangeNotifier {
           .doc(userCredential.user!.uid)
           .set({
         'uid': userCredential.user!.uid,
-        'email': emailController.text,
         'name': nameController.text,
         'dateOfBirth': dateOfBirthController.text,
         'telephoneNumber': telephoneNumberController.text,

@@ -171,7 +171,7 @@ class _MenuCardState extends State<MenuCard> {
                                         ),
                                       const Text('▷'),
                                       Text(
-                                        '${menu.afterPrice}円',
+                                        '${menu.afterPrice}円〜',
                                         style: TextStyle(
                                           fontSize: height * 0.016,
                                         ),
@@ -186,7 +186,7 @@ class _MenuCardState extends State<MenuCard> {
                                           fontWeight: FontWeight.bold)),
                                 ],
                               ),
-                              SizedBox(width: width * 0.07),
+                              SizedBox(width: width * 0.04),
                               SizedBox(
                                 width: width * 0.2,
                                 child: ElevatedButton(

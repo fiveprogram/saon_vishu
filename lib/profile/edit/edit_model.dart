@@ -15,7 +15,6 @@ class EditModel extends ChangeNotifier {
   EditModel({required this.profile}) {
     nameController.text = profile.name;
     telephoneNumberController.text = profile.telephoneNumber;
-    emailController.text = profile.email;
     dateOfBirthController.text = profile.dateOfBirth;
     gender = profile.gender;
   }
@@ -27,7 +26,6 @@ class EditModel extends ChangeNotifier {
   final focusNode = FocusNode();
 
   final nameController = TextEditingController();
-  final emailController = TextEditingController();
   final telephoneNumberController = TextEditingController();
   final dateOfBirthController = TextEditingController();
 
@@ -159,8 +157,7 @@ class EditModel extends ChangeNotifier {
 
     ///最低限入力項目
     try {
-      if (emailController.text == '' ||
-          nameController.text == '' ||
+      if (nameController.text == '' ||
           dateOfBirthController.text == '' ||
           telephoneNumberController.text == '' ||
           gender == '') {
@@ -184,7 +181,6 @@ class EditModel extends ChangeNotifier {
       if (file == null) {
         await usersPath.update({
           'name': nameController.text,
-          'email': emailController.text,
           'telephoneNumber': telephoneNumberController.text,
           'dateOfBirth': dateOfBirthController.text,
           'imgUrl': profile.imgUrl,
@@ -192,11 +188,6 @@ class EditModel extends ChangeNotifier {
           'gender': gender,
           'dateTime': profile.dateTime
         });
-
-        if (profile.email != emailController.text) {
-          await FirebaseAuth.instance.currentUser!
-              .updateEmail(emailController.text);
-        }
       }
       if (file != null) {
         final task = await FirebaseStorage.instance
@@ -207,7 +198,6 @@ class EditModel extends ChangeNotifier {
 
         await usersPath.update({
           'name': nameController.text,
-          'email': emailController.text,
           'telephoneNumber': telephoneNumberController.text,
           'dateOfBirth': dateOfBirthController.text,
           'imgUrl': imgUrl,
@@ -216,10 +206,6 @@ class EditModel extends ChangeNotifier {
           'uid': user!.uid,
         });
 
-        if (profile.email != emailController.text) {
-          await FirebaseAuth.instance.currentUser!
-              .updateEmail(emailController.text);
-        }
         notifyListeners();
       }
       Navigator.pop(context);

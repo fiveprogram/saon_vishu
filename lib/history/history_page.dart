@@ -196,7 +196,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                             ),
                                           const Text('▷'),
                                           Text(
-                                            '${reservation.afterPrice}円',
+                                            '${reservation.afterPrice}円〜',
                                             style: TextStyle(
                                               fontSize: height * 0.016,
                                             ),

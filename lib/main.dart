@@ -172,6 +172,7 @@ class _MyAppState extends State<MyApp> {
       if (usingVersionIntList[i] < minAvailableVersionIntList[i]) {
         if (mounted) {
           return showDialog(
+            barrierDismissible: false,
             context: context,
             builder: (context) => CupertinoAlertDialog(
               title: const Text('新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。'),

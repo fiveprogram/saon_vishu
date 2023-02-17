@@ -5,19 +5,22 @@ import 'package:flutter/material.dart';
 import '../domain/menu.dart';
 
 class MenuModel extends ChangeNotifier {
-  List<Menu> menuList = [];
-  List<Menu> filteredMenuList = [];
-  List<String> filteredTreatmentTypeList = [];
+  List<Menu> allMenuList = [];
+  List<Menu> filteredDefaultMenuList = [];
+  List<Menu> filteredCouponMenuList = [];
+
+  String treatmentType = '';
   List<String> treatmentTypeList = [
     'すべて',
     'カット',
+    'クーポン',
     'カラー',
     'パーマ',
     '縮毛矯正',
     'トリートメント',
     'ヘッドスパ',
     'ヘアセット',
-    '着付け'
+    '着付け',
   ];
 
   //fetchMenuList
@@ -29,7 +32,7 @@ class MenuModel extends ChangeNotifier {
         .snapshots();
 
     menuStream.listen((snapshot) {
-      menuList = snapshot.docs.map((DocumentSnapshot doc) {
+      allMenuList = snapshot.docs.map((DocumentSnapshot doc) {
         return Menu.fromFireStore(doc);
       }).toList();
 
@@ -39,29 +42,32 @@ class MenuModel extends ChangeNotifier {
 
   int? treatmentListIndex = 0;
   //カット条件のフィルタリング
-  void filteringMenuList(int index) {
-    filteredTreatmentTypeList.clear();
-    filteredMenuList.clear();
 
-    filteredTreatmentTypeList.add(treatmentTypeList[index]);
+  void filteringMenuList(int index) {
+    treatmentType = '';
+    filteredDefaultMenuList.clear();
+    filteredCouponMenuList.clear();
+
+    treatmentType = treatmentTypeList[index];
     treatmentListIndex = index;
-    for (String treatment in filteredTreatmentTypeList) {
-      for (Menu menu in menuList) {
-        if (menu.treatmentDetailList.contains(treatment)) {
-          filteredMenuList.add(menu);
-        }
+
+    for (Menu menu in allMenuList) {
+      if (menu.treatmentDetailList.first == treatmentType &&
+          menu.treatmentDetailList.length == 1) {
+        filteredDefaultMenuList.add(menu);
+      } else if (menu.treatmentDetailList.length >= 2 &&
+          treatmentType == 'クーポン') {
+        filteredCouponMenuList.add(menu);
       }
     }
     notifyListeners();
   }
 
-  void deletingFilteringMenuList(String name) {
+  void deletingFilteringMenuList() {
     treatmentListIndex = null;
-    for (Menu menu in menuList) {
-      if (menu.treatmentDetailList.contains(name)) {
-        filteredMenuList.remove(menu);
-      }
-    }
+    filteredDefaultMenuList.clear();
+    filteredCouponMenuList.clear();
+
     notifyListeners();
   }
 }

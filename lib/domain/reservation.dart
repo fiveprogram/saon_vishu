@@ -6,7 +6,7 @@ class Reservation {
   Reservation(
       {required this.startTime,
       required this.finishTime,
-      required this.targetMember,
+      this.targetMember,
       required this.treatmentDetailList,
       required this.treatmentDetail,
       required this.reservationId,
@@ -30,7 +30,7 @@ class Reservation {
   Timestamp startTime;
   Timestamp finishTime;
   Timestamp? lastVisit;
-  String targetMember;
+  String? targetMember;
   List<dynamic> treatmentDetailList;
   String treatmentDetail;
   int? beforePrice;

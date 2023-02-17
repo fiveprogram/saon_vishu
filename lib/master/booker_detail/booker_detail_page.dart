@@ -21,44 +21,9 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
     final width = MediaQuery.of(context).size.width;
 
     if (widget.reservation == null) {
-      return const CircularProgressIndicator();
+      return const Center(child: CircularProgressIndicator());
     }
     Reservation reservation = widget.reservation!;
-
-    //対象者を表す
-    Widget targetCard() {
-      HexColor targetColor(String targetMember) {
-        switch (targetMember) {
-          case '新規':
-            return HexColor('#344eba');
-          case '再来':
-            return HexColor('#73e600');
-          case '全員':
-            return HexColor('#e28e7a');
-          default:
-            return HexColor('#ff8db4');
-        }
-      }
-
-      return Container(
-        width: width * 0.12,
-        padding: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(3)),
-          color: targetColor(reservation.targetMember),
-          border: Border.all(
-            color: targetColor(reservation.targetMember),
-          ),
-        ),
-        child: Center(
-          child: Text(
-            reservation.targetMember,
-            style: const TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-        ),
-      );
-    }
 
     return Scaffold(
       backgroundColor: HexColor('#fcf8f6'),
@@ -167,10 +132,6 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          targetCard(),
-                          SizedBox(
-                            width: width * 0.09,
-                          ),
                           Expanded(
                             child: Align(
                               alignment: Alignment.centerLeft,
@@ -185,9 +146,9 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
                                             borderRadius:
                                                 const BorderRadius.all(
                                                     Radius.circular(4)),
-                                            color: HexColor('#989593'),
+                                            color: HexColor('#7a3425'),
                                             border: Border.all(
-                                              color: HexColor('#989593'),
+                                              color: HexColor('#7a3425'),
                                             ),
                                           ),
                                           child: Text(

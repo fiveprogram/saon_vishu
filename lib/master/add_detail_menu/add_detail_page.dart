@@ -92,64 +92,6 @@ class _AddDetailPageState extends State<AddDetailPage> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold),
                                 )),
-                            const Divider(),
-                            const Text('・対象者',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black54,
-                                    fontWeight: FontWeight.bold)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Radio(
-                                    value: '全員',
-                                    groupValue: model.targetMember,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        model.targetMember = value;
-                                      });
-                                    }),
-                                const Text(
-                                  '全員',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
-                                ),
-                                SizedBox(width: width * 0.1),
-                                Radio(
-                                    value: '新規',
-                                    groupValue: model.targetMember,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        model.targetMember = value;
-                                      });
-                                    }),
-                                const Text(
-                                  '新規',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
-                                ),
-                                SizedBox(width: width * 0.1),
-                                Radio(
-                                    value: '再来',
-                                    groupValue: model.targetMember,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        model.targetMember = value;
-                                      });
-                                    }),
-                                const Text(
-                                  '再来',
-                                  style: TextStyle(
-                                      color: Colors.black54,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17),
-                                ),
-                              ],
-                            ),
                             Divider(
                               height: height * 0.05,
                             ),

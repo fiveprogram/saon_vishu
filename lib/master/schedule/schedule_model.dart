@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
@@ -19,16 +22,38 @@ class ScheduleModel extends ChangeNotifier {
     return today.add(Duration(days: -7 * previousWeek));
   }
 
+  List<DateTime> holidayList = [];
+  Future<void> getHolidayList() async {
+    try {
+      final dio = Dio();
+      final url = Uri.parse('https://holidays-jp.github.io/api/v1/date.json');
+      final response = await dio.getUri(url);
+
+      Map<String, dynamic> map = jsonDecode(response.toString());
+      final holidayStringList = map.keys.toList();
+      holidayList = holidayStringList.map((e) => DateTime.parse(e)).toList();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   ///曜日によって色を帰るメソッド
-  HexColor dowBoxColor(String dow) {
+  HexColor dowBoxColor(String dow, DateTime holidayCheck) {
+    final holidayFormatter = DateFormat('yyyyMd');
     switch (dow) {
       case '土':
         return HexColor('#90caf9');
       case '日':
         return HexColor('#f7d9db');
-      default:
-        return HexColor('#e1e1e1');
     }
+
+    for (final holiday in holidayList) {
+      if (holidayFormatter.format(holiday).toString() ==
+          holidayFormatter.format(holidayCheck).toString()) {
+        return HexColor('#f7d9db');
+      }
+    }
+    return HexColor('#e1e1e1');
   }
 
   ///weekDayList

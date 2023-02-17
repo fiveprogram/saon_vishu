@@ -44,7 +44,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
             final width = MediaQuery.of(context).size.width;
 
             if (model.deviceTokenIdList.isEmpty) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
             final deviceIdList =
                 model.deviceTokenIdList.map((e) => e.deviceId).toList();
@@ -60,7 +60,6 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   'startTime': startTime,
                   'finishTime':
                       startTime.add(Duration(minutes: menu.treatmentTime)),
-                  'targetMember': menu.targetMember,
                   'treatmentDetailList': menu.treatmentDetailList,
                   'beforePrice':
                       menu.beforePrice == null ? null : menu.beforePrice!,

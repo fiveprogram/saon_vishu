@@ -218,14 +218,16 @@ class _MyAppState extends State<MyApp> {
             create: (_) => CalendarModel()
               ..fetchProfile()
               ..fetchReservationList()
-              ..fetchRestList()),
+              ..fetchRestList()
+              ..getHolidayList()),
         ChangeNotifierProvider(
             create: (_) => HistoryModel()..fetchReservationList()),
         ChangeNotifierProvider(create: (_) => FinishReservationModel()),
         ChangeNotifierProvider(
             create: (_) => ScheduleModel()
               ..fetchRestList()
-              ..fetchReservationList()),
+              ..fetchReservationList()
+              ..getHolidayList()),
         ChangeNotifierProvider(
           create: (_) => RestDateRegisterModel()
             ..fetchReservationList()

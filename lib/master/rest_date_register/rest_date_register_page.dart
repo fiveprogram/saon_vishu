@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -148,53 +149,86 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
                       ],
                     ),
                     ...model.weekDayList(model.currentDisplayDate()).map(
-                          (weekDay) => Column(
-                            children: [
-                              Container(
-                                height: height * 0.05,
-                                width: width * 0.12,
-                                decoration: BoxDecoration(
-                                  color: model.dowBoxColor(
-                                      model.dayOfWeekFormatter.format(weekDay)),
-                                  border: Border.all(color: Colors.black38),
+                          (weekDay) => InkWell(
+                            onTap: () async {
+                              await showDialog(
+                                  context: context,
+                                  builder: (dialogContext) {
+                                    return CupertinoAlertDialog(
+                                      title: const Text('1日単位での登録'),
+                                      actions: [
+                                        CupertinoButton(
+                                            child: const Text('戻る'),
+                                            onPressed: () {
+                                              Navigator.pop(dialogContext);
+                                            }),
+                                        CupertinoButton(
+                                            child: const Text('休日を登録する'),
+                                            onPressed: () async {
+                                              model.registerAllDayRest(weekDay);
+                                              Navigator.pop(dialogContext);
+                                            }),
+                                        CupertinoButton(
+                                            child: const Text('休日を解除する'),
+                                            onPressed: () async {
+                                              model.allDayDelete(weekDay);
+                                              Navigator.pop(dialogContext);
+                                            }),
+                                      ],
+                                    );
+                                  });
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: height * 0.05,
+                                  width: width * 0.12,
+                                  decoration: BoxDecoration(
+                                    color: model.dowBoxColor(
+                                        model.dayOfWeekFormatter
+                                            .format(weekDay),
+                                        weekDay),
+                                    border: Border.all(color: Colors.black38),
+                                  ),
+                                  child: Text(
+                                    '${weekDay.day}日\n${model.dayOfWeekFormatter.format(weekDay)}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: height * 0.016,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                                child: Text(
-                                  '${weekDay.day}日\n${model.dayOfWeekFormatter.format(weekDay)}',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: height * 0.016,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              ...model.separateThirtyMinutes(weekDay).map(
-                                (thirtyMinute) {
-                                  return InkWell(
-                                    onTap:
-                                        model.isNotAlreadyReserved(thirtyMinute)
-                                            ? () {
-                                                model.onCellTap(thirtyMinute);
-                                              }
-                                            : null,
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      height: height * 0.06,
-                                      width: width * 0.12,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border:
-                                            Border.all(color: Colors.black38),
+                                ...model.separateThirtyMinutes(weekDay).map(
+                                  (thirtyMinute) {
+                                    return InkWell(
+                                      onTap: model.isNotAlreadyReserved(
+                                              thirtyMinute)
+                                          ? () {
+                                              model.onCellTap(thirtyMinute);
+                                            }
+                                          : null,
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: height * 0.06,
+                                        width: width * 0.12,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border:
+                                              Border.all(color: Colors.black38),
+                                        ),
+                                        child: Text(
+                                            model.cellLabel(thirtyMinute),
+                                            style: TextStyle(
+                                                color: HexColor('#8f948a'),
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                            textAlign: TextAlign.center),
                                       ),
-                                      child: Text(model.cellLabel(thirtyMinute),
-                                          style: TextStyle(
-                                              color: HexColor('#8f948a'),
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                          textAlign: TextAlign.center),
-                                    ),
-                                  );
-                                },
-                              )
-                            ],
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
                           ),
                         ),
                   ],

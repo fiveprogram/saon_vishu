@@ -53,11 +53,11 @@ class _ProfilePageState extends State<ProfilePage> {
       body: Consumer<ProfileModel>(
         builder: (context, model, child) {
           if (model.profile == null) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (model.version == null) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
           Version version = model.version!;
 

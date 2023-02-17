@@ -120,7 +120,8 @@ class _SchedulePageState extends State<SchedulePage> {
                                 width: width * 0.12,
                                 decoration: BoxDecoration(
                                   color: model.dowBoxColor(
-                                      model.dayOfWeekFormatter.format(weekDay)),
+                                      model.dayOfWeekFormatter.format(weekDay),
+                                      weekDay),
                                   border: Border.all(color: Colors.black38),
                                 ),
                                 child: Text(

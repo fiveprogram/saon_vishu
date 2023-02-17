@@ -11,7 +11,6 @@ import 'calendar_model.dart';
 class CalenderWidget extends StatefulWidget {
   Menu menu;
   CalenderWidget({required this.menu, Key? key}) : super(key: key);
-
   @override
   State<CalenderWidget> createState() => _CalenderWidgetState();
 }
@@ -26,7 +25,7 @@ class _CalenderWidgetState extends State<CalenderWidget> {
       builder: (context, model, child) {
         Profile? profile = model.profile;
         if (profile == null) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
 
         return SingleChildScrollView(
@@ -114,7 +113,8 @@ class _CalenderWidgetState extends State<CalenderWidget> {
                               width: width * 0.12,
                               decoration: BoxDecoration(
                                 color: model.dowBoxColor(
-                                    model.dayOfWeekFormatter.format(weekDay)),
+                                    model.dayOfWeekFormatter.format(weekDay),
+                                    weekDay),
                                 border: Border.all(color: Colors.black38),
                               ),
                               child: Text(

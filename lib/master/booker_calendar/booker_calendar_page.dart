@@ -26,7 +26,7 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
 
     return Consumer<BookerCalendarModel>(builder: (context, model, child) {
       if (model.reservationList.isEmpty) {
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       }
       selectedEvents = ValueNotifier(model.getEventsForDay(model.focusedDate));
 
@@ -182,32 +182,6 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
                                     SizedBox(height: height * 0.01),
                                     Row(
                                       children: [
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 1),
-                                          child: Container(
-                                            height: height * 0.03,
-                                            width: width * 0.06,
-                                            decoration: BoxDecoration(
-                                              color: model.targetColor(
-                                                  reservation.targetMember),
-                                              border: Border.all(
-                                                color: model.targetColor(
-                                                    reservation.targetMember),
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Text(
-                                              reservation.targetMember,
-                                              style: TextStyle(
-                                                  fontSize: height * 0.02,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ),
                                         SizedBox(width: width * 0.02),
                                         Text(
                                           reservation.name,

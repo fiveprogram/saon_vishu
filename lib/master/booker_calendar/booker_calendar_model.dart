@@ -6,10 +6,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 import 'package:salon_vishu/domain/reservation.dart';
+import 'package:salon_vishu/main.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../firebase_options.dart';
-import '../../main.dart';
 
 class BookerCalendarModel extends ChangeNotifier {
   CalendarFormat calendarFormat = CalendarFormat.month;
@@ -112,12 +112,13 @@ class BookerCalendarModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('はい'),
                   onPressed: () async {
+                    await googleSignOut();
+                    await FirebaseAuth.instance.signOut();
+
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => const MyApp()),
                         (route) => false);
-                    await googleSignOut();
-                    await FirebaseAuth.instance.signOut();
                   }),
             ],
           );

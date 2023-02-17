@@ -50,8 +50,7 @@ class _MenuPageState extends State<MenuPage> {
                             });
                           } else {
                             setState(() {
-                              model.deletingFilteringMenuList(
-                                  model.treatmentTypeList[index]);
+                              model.deletingFilteringMenuList();
                             });
                           }
                         },
@@ -60,7 +59,7 @@ class _MenuPageState extends State<MenuPage> {
               ),
               const Divider(),
               Text(
-                  '全${model.filteredMenuList.isEmpty ? model.menuList.length : model.filteredMenuList.length}件',
+                  '全${model.filteredDefaultMenuList.isEmpty && model.filteredCouponMenuList.isEmpty ? model.allMenuList.length : model.filteredCouponMenuList.isEmpty ? model.filteredDefaultMenuList.length : model.filteredCouponMenuList.length}件',
                   style: TextStyle(
                       fontSize: height * 0.017,
                       color: Colors.black54,
@@ -69,9 +68,12 @@ class _MenuPageState extends State<MenuPage> {
                 child: Scrollbar(
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: model.filteredMenuList.isEmpty
-                        ? model.menuList.length
-                        : model.filteredMenuList.length,
+                    itemCount: model.filteredDefaultMenuList.isEmpty &&
+                            model.filteredCouponMenuList.isEmpty
+                        ? model.allMenuList.length
+                        : model.filteredCouponMenuList.isEmpty
+                            ? model.filteredDefaultMenuList.length
+                            : model.filteredCouponMenuList.length,
                     itemBuilder: (context, index) {
                       return MenuCard(menuIndex: index);
                     },

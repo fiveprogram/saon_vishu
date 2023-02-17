@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -80,16 +83,96 @@ class RestDateRegisterModel extends ChangeNotifier {
     return today.add(Duration(days: -7 * previousWeek));
   }
 
+  ///ボタンひとつで1日単位での休日を設定
+  final businessHour = const BusinessHours(9, 00, 18, 00);
+
+  Future<void> registerAllDayRest(DateTime date) async {
+    var businessStartTime = DateTime(date.year, date.month, date.day,
+        businessHour.openTimeHour, businessHour.openTimeMinute);
+
+    var businessCloseTime = DateTime(date.year, date.month, date.day,
+        businessHour.closeTimeHour, businessHour.closeTimeMinute);
+
+    final oneDaySeparateThirtyMinuteList = <DateTime>[businessStartTime];
+
+    while (businessStartTime != businessCloseTime) {
+      businessStartTime = businessStartTime.add(const Duration(minutes: 30));
+      oneDaySeparateThirtyMinuteList.add(businessStartTime);
+    }
+    oneDaySeparateThirtyMinuteList.removeLast();
+
+    for (int i = 0; i < oneDaySeparateThirtyMinuteList.length; i++) {
+      final idFormat = DateFormat('yyyyMMddhhmm');
+
+      await FirebaseFirestore.instance
+          .collection('rests')
+          .doc(idFormat.format(oneDaySeparateThirtyMinuteList[i]))
+          .set({
+        'startTime': oneDaySeparateThirtyMinuteList[i],
+        'endTime':
+            oneDaySeparateThirtyMinuteList[i].add(const Duration(minutes: 30)),
+        'restId': idFormat.format(oneDaySeparateThirtyMinuteList[i])
+      });
+    }
+  }
+
+  Future<void> allDayDelete(DateTime date) async {
+    var businessStartTime = DateTime(date.year, date.month, date.day,
+        businessHour.openTimeHour, businessHour.openTimeMinute);
+
+    var businessCloseTime = DateTime(date.year, date.month, date.day,
+        businessHour.closeTimeHour, businessHour.closeTimeMinute);
+
+    final oneDaySeparateThirtyMinuteList = <DateTime>[businessStartTime];
+
+    while (businessStartTime != businessCloseTime) {
+      businessStartTime = businessStartTime.add(const Duration(minutes: 30));
+      oneDaySeparateThirtyMinuteList.add(businessStartTime);
+    }
+    oneDaySeparateThirtyMinuteList.removeLast();
+
+    for (int i = 0; i < oneDaySeparateThirtyMinuteList.length; i++) {
+      final idFormat = DateFormat('yyyyMMddhhmm');
+
+      await FirebaseFirestore.instance
+          .collection('rests')
+          .doc(idFormat.format(oneDaySeparateThirtyMinuteList[i]))
+          .delete();
+    }
+  }
+
+  List<DateTime> holidayList = [];
+  Future<void> getHolidayList() async {
+    try {
+      final dio = Dio();
+      final url = Uri.parse('https://holidays-jp.github.io/api/v1/date.json');
+      final response = await dio.getUri(url);
+
+      Map<String, dynamic> map = jsonDecode(response.toString());
+      final holidayStringList = map.keys.toList();
+      holidayList = holidayStringList.map((e) => DateTime.parse(e)).toList();
+    } catch (e) {
+      print(e);
+    }
+  }
+
   ///曜日によって色を帰るメソッド
-  HexColor dowBoxColor(String dow) {
+  HexColor dowBoxColor(String dow, DateTime holidayCheck) {
+    final holidayFormatter = DateFormat('yyyyMd');
     switch (dow) {
       case '土':
         return HexColor('#90caf9');
       case '日':
         return HexColor('#f7d9db');
-      default:
-        return HexColor('#e1e1e1');
     }
+
+    for (final holiday in holidayList) {
+      if (holidayFormatter.format(holiday).toString() ==
+          holidayFormatter.format(holidayCheck).toString()) {
+        return HexColor('#f7d9db');
+      }
+    }
+    return HexColor('#e1e1e1');
   }
 
   ///weekDayList
@@ -100,9 +183,6 @@ class RestDateRegisterModel extends ChangeNotifier {
     }
     return weekList;
   }
-
-  ///営業時間の決め打ち
-  final businessHour = const BusinessHours(9, 00, 18, 00);
 
   ///引数に与えるのはcurrentDisplayDate
   List<DateTime> separateThirtyMinutes(DateTime date) {

@@ -1,8 +1,8 @@
 import 'dart:core';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -67,12 +67,13 @@ class ProfileModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('はい'),
                   onPressed: () async {
+                    await googleSignOut();
+                    await FirebaseAuth.instance.signOut();
+
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => const MyApp()),
                         (route) => false);
-                    await googleSignOut();
-                    await FirebaseAuth.instance.signOut();
                   }),
             ],
           );
@@ -117,13 +118,23 @@ class ProfileModel extends ChangeNotifier {
               CupertinoButton(
                   child: const Text('削除する'),
                   onPressed: () async {
-                    User? user = FirebaseAuth.instance.currentUser;
-                    await FirebaseFirestore.instance
-                        .collection('users')
-                        .doc(user!.uid)
-                        .delete();
+                    await FirebaseFunctions.instance
+                        .httpsCallable('authDelete')
+                        .call();
 
-                    await user.delete();
+                    await googleSignOut();
+                    await FirebaseAuth.instance.signOut();
+
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => const MyApp()),
+                        (route) => false);
+                    // await FirebaseFirestore.instance
+                    //     .collection('users')
+                    //     .doc(user!.uid)
+                    //     .delete();
+                    //
+                    // await FirebaseAuth.instance.signOut();
                   }),
             ],
           );

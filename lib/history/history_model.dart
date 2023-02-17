@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../domain/reservation.dart';
@@ -30,40 +29,5 @@ class HistoryModel extends ChangeNotifier {
           .toList();
       notifyListeners();
     });
-  }
-
-  ///menuCardの中で新規と
-  Widget targetCard(Reservation reservation, double width) {
-    HexColor targetColor(String targetMember) {
-      switch (targetMember) {
-        case '新規':
-          return HexColor('#344eba');
-        case '再来':
-          return HexColor('#73e600');
-        case '全員':
-          return HexColor('#e28e7a');
-        default:
-          return HexColor('#ff8db4');
-      }
-    }
-
-    return Container(
-      width: width * 0.12,
-      padding: const EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(3)),
-        color: targetColor(reservation.targetMember),
-        border: Border.all(
-          color: targetColor(reservation.targetMember),
-        ),
-      ),
-      child: Center(
-        child: Text(
-          reservation.targetMember,
-          style:
-              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-      ),
-    );
   }
 }

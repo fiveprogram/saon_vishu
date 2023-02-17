@@ -20,7 +20,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
     return Consumer<AddMenuModel>(
       builder: (context, model, child) {
         if (model.menuList.isEmpty) {
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         }
 
         //カット内容のリスト
@@ -33,55 +33,22 @@ class _AddMenuPageState extends State<AddMenuPage> {
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(4)),
-                      color: HexColor('#989593'),
+                      color: HexColor('#7a3425'),
                       border: Border.all(
-                        color: HexColor('#989593'),
+                        color: HexColor('#7a3425'),
                       ),
                     ),
                     child: Text(
                       treatmentDetail,
                       style: TextStyle(
-                          fontSize: height * 0.016, color: Colors.white),
+                          fontSize: height * 0.016,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               )
               .toList();
-        }
-
-        //対象者を表す
-        Widget targetCard(Menu menu, double width) {
-          HexColor targetColor(String targetMember) {
-            switch (targetMember) {
-              case '新規':
-                return HexColor('#344eba');
-              case '再来':
-                return HexColor('#73e600');
-              case '全員':
-                return HexColor('#e28e7a');
-              default:
-                return HexColor('#ff8db4');
-            }
-          }
-
-          return Container(
-            width: width * 0.12,
-            padding: const EdgeInsets.all(2),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(3)),
-              color: targetColor(menu.targetMember),
-              border: Border.all(
-                color: targetColor(menu.targetMember),
-              ),
-            ),
-            child: Center(
-              child: Text(
-                menu.targetMember,
-                style: const TextStyle(
-                    color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
-          );
         }
 
         final height = MediaQuery.of(context).size.height;
@@ -172,10 +139,6 @@ class _AddMenuPageState extends State<AddMenuPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      targetCard(menu, width),
-                                      SizedBox(
-                                        width: width * 0.09,
-                                      ),
                                       Expanded(
                                         child: Align(
                                           alignment: Alignment.centerLeft,

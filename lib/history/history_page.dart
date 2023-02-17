@@ -60,8 +60,6 @@ class _HistoryPageState extends State<HistoryPage> {
                                       builder: (context) =>
                                           SelectReservationDatePage(
                                               menu: Menu(
-                                                  targetMember:
-                                                      reservation.targetMember,
                                                   treatmentDetailList:
                                                       reservation
                                                           .treatmentDetailList,
@@ -111,10 +109,6 @@ class _HistoryPageState extends State<HistoryPage> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  model.targetCard(reservation, width),
-                                  SizedBox(
-                                    width: width * 0.09,
-                                  ),
                                   Expanded(
                                     child: Align(
                                       alignment: Alignment.centerLeft,
@@ -132,10 +126,10 @@ class _HistoryPageState extends State<HistoryPage> {
                                                     borderRadius:
                                                         const BorderRadius.all(
                                                             Radius.circular(4)),
-                                                    color: HexColor('#989593'),
+                                                    color: HexColor('#7a3425'),
                                                     border: Border.all(
                                                       color:
-                                                          HexColor('#989593'),
+                                                          HexColor('#7a3425'),
                                                     ),
                                                   ),
                                                   child: Text(

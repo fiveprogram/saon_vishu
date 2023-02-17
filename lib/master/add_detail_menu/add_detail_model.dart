@@ -10,7 +10,6 @@ import 'package:salon_vishu/domain/menu.dart';
 class AddDetailModel extends ChangeNotifier {
   AddDetailModel(Menu? menu) {
     if (menu != null) {
-      targetMember = menu.targetMember;
       treatmentDetailController.text = menu.treatmentDetail;
       if (menu.beforePrice != null) {
         beforePriceController.text = menu.beforePrice.toString();
@@ -27,7 +26,6 @@ class AddDetailModel extends ChangeNotifier {
   }
 
   Menu? menu;
-  String? targetMember;
   final treatmentDetailController = TextEditingController();
   final beforePriceController = TextEditingController();
   final afterPriceController = TextEditingController();
@@ -123,13 +121,9 @@ class AddDetailModel extends ChangeNotifier {
 
   ///完了ボタン
   Future<void> menuAddButton(BuildContext context) async {
-    startLoading();
-    print(isLoading);
-
     ///最低限入力項目
     try {
-      if (targetMember == '' ||
-          selectedTypeList == [] ||
+      if (selectedTypeList == [] ||
           treatmentDetailController.text == '' ||
           afterPriceController.text == '' ||
           menuIntroductionController.text == '' ||
@@ -167,6 +161,7 @@ class AddDetailModel extends ChangeNotifier {
                     child: const Text('はい'),
                     onPressed: () async {
                       startLoading();
+                      print(isLoading);
                       if (file == null && imgUrl == null) {
                         return await showDialog(
                           context: context,
@@ -187,12 +182,12 @@ class AddDetailModel extends ChangeNotifier {
 
                       ///もともとメニューがあり、画像の変更を行わない場合
                       if (file == null && imgUrl != null) {
+                        print('もともとメニューがあり、画像の変更を行わない場合');
                         await FirebaseFirestore.instance
                             .collection('menu')
                             .doc(menuId)
                             .set(
                           {
-                            'targetMember': targetMember,
                             'treatmentDetailList': selectedTypeList,
                             'treatmentDetail': treatmentDetailController.text,
                             'afterPrice': int.parse(afterPriceController.text),
@@ -210,8 +205,9 @@ class AddDetailModel extends ChangeNotifier {
                         );
                       }
 
-                      ///もともと画像が用意されており、且つ画像を変更したい場合
+                      ///もともとメニューがあり、画像の変更したい場合
                       if (file != null && imgUrl != null) {
+                        print('もともと画像が用意されており、且つ画像を変更したい場合');
                         final task = await FirebaseStorage.instance
                             .ref(
                                 'menu/${FirebaseFirestore.instance.collection('menu').doc().id}')
@@ -222,7 +218,6 @@ class AddDetailModel extends ChangeNotifier {
                             .collection('menu')
                             .doc(menuId)
                             .update({
-                          'targetMember': targetMember,
                           'treatmentDetailList': selectedTypeList,
                           'treatmentDetail': treatmentDetailController.text,
                           'afterPrice': int.parse(afterPriceController.text),
@@ -233,14 +228,16 @@ class AddDetailModel extends ChangeNotifier {
                               int.parse(treatmentTimeController.text),
                           'menuIntroduction': menuIntroductionController.text,
                           'menuImageUrl': imgUrl,
-                          'priority': 999,
+                          'priority': priority,
                           'isNeedExtraMoney': isNeedExtraMoney,
                           'menuId': menuId
                         });
                       }
 
                       ///新規で作成される場合
-                      if (file != null && imgUrl == '') {
+                      if (file != null && imgUrl == null) {
+                        print('新規で作成される場合');
+
                         final task = await FirebaseStorage.instance
                             .ref(
                                 'menu/${FirebaseFirestore.instance.collection('menu').doc().id}')
@@ -250,7 +247,6 @@ class AddDetailModel extends ChangeNotifier {
                         final result = await FirebaseFirestore.instance
                             .collection('menu')
                             .add({
-                          'targetMember': targetMember,
                           'treatmentDetailList': selectedTypeList,
                           'treatmentDetail': treatmentDetailController.text,
                           'afterPrice': int.parse(afterPriceController.text),
@@ -272,6 +268,8 @@ class AddDetailModel extends ChangeNotifier {
                       }
 
                       notifyListeners();
+                      Navigator.pop(dialogContext);
+
                       Navigator.pop(context);
                     },
                   ),

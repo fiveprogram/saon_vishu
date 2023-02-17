@@ -64,10 +64,6 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            model.targetCard(menu, width),
-                            SizedBox(
-                              width: width * 0.09,
-                            ),
                             Expanded(
                               child: Align(
                                 alignment: Alignment.centerLeft,
@@ -82,9 +78,9 @@ class _FinishReservationPageState extends State<FinishReservationPage> {
                                               borderRadius:
                                                   const BorderRadius.all(
                                                       Radius.circular(4)),
-                                              color: HexColor('#989593'),
+                                              color: HexColor('#7a3425'),
                                               border: Border.all(
-                                                color: HexColor('#989593'),
+                                                color: HexColor('#7a3425'),
                                               ),
                                             ),
                                             child: Text(

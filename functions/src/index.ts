@@ -21,6 +21,13 @@ export const pushNotificationWhenCreateReservation = functions.firestore.documen
   const registrationToken = reservationData.deviceIdList;
   const dateFormat = reservationData.startTime.toDate();
 
+  registrationToken.push("eB1Vq51F0Evwib_C-1d_r-:APA91bEZpxuaZ0JsJ0PnkyB04OsA9reAk3frz4uiG3pR9JQJS-bD0JGs80boCEIBHc6W3BnaoELNqP6bKQmBSoSU7bSH0sGhFDh8baV31X4CXPbrCzw3SyF3S6OSbwacHWg97JM_m8di",
+      "dDfTLu2g9kesrTptL25E_D:APA91bELY1SIHeCqWO3LS9d0xkxi02VDk1nHdPbcKHCGstjz99eYM4DQZAKawbXdtw_G3VeJvfPb7E9Xlo8qJTA5tyUI3Ie01nMkYDeaKgdQ6EGrdXBsmgw25TulKWLiG4DD4P2gZrC1",
+      "fBPuuFeBTUHinRgwzGhzyB:APA91bGUxQ0QNq4JVk5RPgB-WjQmn1vxujMS6lLC4RknMXf51cBOeveODD89hK87hV0w_bGkC3ckehA76hkfPm8GB3bu3rx6xuG867lc_V2oq2tU3vE-V41f_l_V3XfBQn0X6t-WP09a");
+
+
+  console.log(registrationToken.length);
+  console.log(registrationToken);
   const year = dateFormat.getFullYear().toString();
   const month = (dateFormat.getMonth() + 1).toString();
   const day = dateFormat.getDate().toString();
@@ -36,6 +43,11 @@ export const pushNotificationWhenDeleteReservation = functions.firestore.documen
   const reservationData : DocumentData = snapshot.data();
   const registrationToken = reservationData.deviceIdList;
   const dateFormat = reservationData.startTime.toDate();
+
+  registrationToken.push("eB1Vq51F0Evwib_C-1d_r-:APA91bEZpxuaZ0JsJ0PnkyB04OsA9reAk3frz4uiG3pR9JQJS-bD0JGs80boCEIBHc6W3BnaoELNqP6bKQmBSoSU7bSH0sGhFDh8baV31X4CXPbrCzw3SyF3S6OSbwacHWg97JM_m8di",
+      "dDfTLu2g9kesrTptL25E_D:APA91bELY1SIHeCqWO3LS9d0xkxi02VDk1nHdPbcKHCGstjz99eYM4DQZAKawbXdtw_G3VeJvfPb7E9Xlo8qJTA5tyUI3Ie01nMkYDeaKgdQ6EGrdXBsmgw25TulKWLiG4DD4P2gZrC1",
+      "fBPuuFeBTUHinRgwzGhzyB:APA91bGUxQ0QNq4JVk5RPgB-WjQmn1vxujMS6lLC4RknMXf51cBOeveODD89hK87hV0w_bGkC3ckehA76hkfPm8GB3bu3rx6xuG867lc_V2oq2tU3vE-V41f_l_V3XfBQn0X6t-WP09a");
+
 
   const year = dateFormat.getFullYear().toString();
   const month = (dateFormat.getMonth() + 1).toString();
@@ -127,4 +139,11 @@ exports.automaticDelete = functions.pubsub.schedule("* * 1 * *").timeZone( "Asia
     const ref = remove.ref;
     await ref.delete();
   }
+});
+
+
+exports.authDelete = functions.https.onCall( async (data, context) => {
+  const contextUid = context.auth?.uid;
+
+  await admin.auth().deleteUser(contextUid ?? "");
 });

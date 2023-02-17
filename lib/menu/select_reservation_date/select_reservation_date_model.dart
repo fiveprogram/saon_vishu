@@ -25,9 +25,9 @@ class SelectReservationDateModel extends ChangeNotifier {
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(4)),
-            color: HexColor('#7e796e'),
+            color: HexColor('#7a3425'),
             border: Border.all(
-              color: HexColor('#7e796e'),
+              color: HexColor('#7a3425'),
             ),
           ),
           child: Text(
@@ -37,39 +37,5 @@ class SelectReservationDateModel extends ChangeNotifier {
         ),
       );
     }).toList();
-  }
-
-  //対象者を表す
-  Widget targetCard(double height, double width) {
-    HexColor targetColor(String targetMember) {
-      switch (targetMember) {
-        case '新規':
-          return HexColor('#344eba');
-        case '再来':
-          return HexColor('#73e600');
-        case '全員':
-          return HexColor('#e28e7a');
-        default:
-          return HexColor('#ff8db4');
-      }
-    }
-
-    return Container(
-      width: width * 0.12,
-      padding: const EdgeInsets.all(2),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(3)),
-        color: targetColor(menu.targetMember),
-        border: Border.all(
-          color: targetColor(menu.targetMember),
-        ),
-      ),
-      child: Center(
-        child: Text(
-          menu.targetMember,
-          style: TextStyle(color: Colors.white, fontSize: height * 0.018),
-        ),
-      ),
-    );
   }
 }

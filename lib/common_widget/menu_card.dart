@@ -22,13 +22,17 @@ class _MenuCardState extends State<MenuCard> {
     final width = MediaQuery.of(context).size.width;
 
     return Consumer<MenuModel>(builder: (context, model, child) {
-      if (model.menuList.isEmpty) {
-        return const CircularProgressIndicator();
+      if (model.allMenuList.isEmpty) {
+        return const Center(child: CircularProgressIndicator());
       }
-      Menu menu = model.menuList[widget.menuIndex];
+      Menu menu = model.allMenuList[widget.menuIndex];
 
-      if (model.filteredMenuList.isNotEmpty) {
-        menu = model.filteredMenuList[widget.menuIndex];
+      if (model.filteredDefaultMenuList.isNotEmpty &&
+          model.filteredCouponMenuList.isEmpty) {
+        menu = model.filteredDefaultMenuList[widget.menuIndex];
+      } else if (model.filteredDefaultMenuList.isEmpty &&
+          model.filteredCouponMenuList.isNotEmpty) {
+        menu = model.filteredCouponMenuList[widget.menuIndex];
       }
 
       //カット内容のリスト
@@ -41,9 +45,9 @@ class _MenuCardState extends State<MenuCard> {
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(4)),
-                    color: HexColor('#989593'),
+                    color: HexColor('#7a3425'),
                     border: Border.all(
-                      color: HexColor('#989593'),
+                      color: HexColor('#7a3425'),
                     ),
                   ),
                   child: Text(
@@ -55,41 +59,6 @@ class _MenuCardState extends State<MenuCard> {
               ),
             )
             .toList();
-      }
-
-      //対象者を表す
-      Widget targetCard() {
-        HexColor targetColor(String targetMember) {
-          switch (targetMember) {
-            case '新規':
-              return HexColor('#344eba');
-            case '再来':
-              return HexColor('#7a3425');
-            case '全員':
-              return HexColor('#e28e7a');
-            default:
-              return HexColor('#e28e7a');
-          }
-        }
-
-        return Container(
-          width: width * 0.12,
-          padding: const EdgeInsets.all(2),
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(3)),
-            color: targetColor(menu.targetMember),
-            border: Border.all(
-              color: targetColor(menu.targetMember),
-            ),
-          ),
-          child: Center(
-            child: Text(
-              menu.targetMember,
-              style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-        );
       }
 
       return Padding(
@@ -114,10 +83,6 @@ class _MenuCardState extends State<MenuCard> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      targetCard(),
-                      SizedBox(
-                        width: width * 0.09,
-                      ),
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerLeft,

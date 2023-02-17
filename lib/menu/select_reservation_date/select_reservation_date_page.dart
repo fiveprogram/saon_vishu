@@ -46,7 +46,9 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                               fontWeight: FontWeight.bold)),
                     ],
                   ),
-                  const Divider(),
+                  const Divider(
+                    thickness: 2,
+                  ),
                   SizedBox(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,8 +58,6 @@ class _SelectReservationDatePageState extends State<SelectReservationDatePage> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            model.targetCard(height, width),
-                            SizedBox(height: height * 0.007),
                             Container(
                               height: height * 0.12,
                               width: width * 0.22,

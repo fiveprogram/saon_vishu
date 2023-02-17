@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Menu {
-  String targetMember;
+  String? targetMember;
   List<dynamic> treatmentDetailList;
   String treatmentDetail;
   int? beforePrice;
@@ -14,7 +14,7 @@ class Menu {
   bool isNeedExtraMoney;
 
   Menu(
-      {required this.targetMember,
+      {this.targetMember,
       required this.treatmentDetailList,
       required this.treatmentDetail,
       this.beforePrice,

@@ -35,14 +35,14 @@ class _EditPageState extends State<EditPage> {
               onWillPop: () async {
                 return model.willPopCallback(context);
               },
-              child: SingleChildScrollView(
-                child: Focus(
-                  focusNode: model.focusNode,
-                  child: GestureDetector(
-                    onTap: model.focusNode.requestFocus,
-                    child: Stack(
-                      children: [
-                        Column(
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Focus(
+                      focusNode: model.focusNode,
+                      child: GestureDetector(
+                        onTap: model.focusNode.requestFocus,
+                        child: Column(
                           children: [
                             const SizedBox(height: 20),
                             if (model.file != null)
@@ -196,17 +196,17 @@ class _EditPageState extends State<EditPage> {
                             SizedBox(height: height * 0.3),
                           ],
                         ),
-                        if (model.isLoading)
-                          Container(
-                            color: Colors.black26,
-                            child: const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          )
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                  if (model.isLoading)
+                    Container(
+                      color: Colors.black26,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    )
+                ],
               ),
             );
           },

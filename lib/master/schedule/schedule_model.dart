@@ -32,6 +32,7 @@ class ScheduleModel extends ChangeNotifier {
       Map<String, dynamic> map = jsonDecode(response.toString());
       final holidayStringList = map.keys.toList();
       holidayList = holidayStringList.map((e) => DateTime.parse(e)).toList();
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -149,7 +150,6 @@ class ScheduleModel extends ChangeNotifier {
             .map((DocumentSnapshot doc) => Rest.fromFirestore(doc))
             .toList();
 
-        print(restList.length);
         notifyListeners();
       },
     );
@@ -168,7 +168,6 @@ class ScheduleModel extends ChangeNotifier {
         reservationList = snapshot.docs
             .map((DocumentSnapshot doc) => Reservation.fromFirestore(doc))
             .toList();
-        print(reservationList.length);
 
         notifyListeners();
       },

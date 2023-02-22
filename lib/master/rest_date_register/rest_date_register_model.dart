@@ -151,6 +151,7 @@ class RestDateRegisterModel extends ChangeNotifier {
       Map<String, dynamic> map = jsonDecode(response.toString());
       final holidayStringList = map.keys.toList();
       holidayList = holidayStringList.map((e) => DateTime.parse(e)).toList();
+      notifyListeners();
     } catch (e) {
       print(e);
     }

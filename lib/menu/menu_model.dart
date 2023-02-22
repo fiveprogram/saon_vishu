@@ -55,8 +55,7 @@ class MenuModel extends ChangeNotifier {
       if (menu.treatmentDetailList.first == treatmentType &&
           menu.treatmentDetailList.length == 1) {
         filteredDefaultMenuList.add(menu);
-      } else if (menu.treatmentDetailList.length >= 2 &&
-          treatmentType == 'クーポン') {
+      } else if (menu.beforePrice != null && treatmentType == 'クーポン') {
         filteredCouponMenuList.add(menu);
       }
     }

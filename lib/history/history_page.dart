@@ -60,6 +60,7 @@ class _HistoryPageState extends State<HistoryPage> {
                                       builder: (context) =>
                                           SelectReservationDatePage(
                                               menu: Menu(
+                                                  isCallable: false,
                                                   treatmentDetailList:
                                                       reservation
                                                           .treatmentDetailList,

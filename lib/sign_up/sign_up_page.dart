@@ -173,7 +173,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             SizedBox(width: deviceWidth * 0.03),
                             Container(
                               height: deviceHeight * 0.05,
-                              width: deviceWidth * 0.71,
+                              width: deviceWidth * 0.72,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(4),
                                   color: HexColor('#fcf8f6'),
@@ -188,12 +188,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                           model.gender = value;
                                         });
                                       }),
-                                  const Text(
+                                  Text(
                                     '男性',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 17),
+                                        fontSize: deviceHeight * 0.02),
                                   ),
                                   SizedBox(width: deviceWidth * 0.01),
                                   Radio(
@@ -204,12 +204,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                           model.gender = value;
                                         });
                                       }),
-                                  const Text(
+                                  Text(
                                     '女性',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 17),
+                                        fontSize: deviceHeight * 0.02),
                                   ),
                                   Radio(
                                       value: 'その他',
@@ -219,12 +219,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                           model.gender = value;
                                         });
                                       }),
-                                  const Text(
+                                  Text(
                                     'その他',
                                     style: TextStyle(
                                         color: Colors.black54,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 17),
+                                        fontSize: deviceHeight * 0.02),
                                   ),
                                 ],
                               ),

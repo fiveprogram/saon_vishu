@@ -278,6 +278,22 @@ class _AddDetailPageState extends State<AddDetailPage> {
                                 const Text('発生する'),
                               ],
                             ),
+                            SizedBox(height: height * 0.05),
+                            const Text('電話予約のみ受付可能にしますか？'),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Checkbox(
+                                    value: model.isCallable ?? false,
+                                    onChanged: (bool? value) {
+                                      setState(() {
+                                        model.isCallable = value!;
+                                        print(model.isCallable);
+                                      });
+                                    }),
+                                const Text('電話予約のみ'),
+                              ],
+                            ),
                             SizedBox(height: height * 0.02),
                             SizedBox(
                               width: width * 0.4,

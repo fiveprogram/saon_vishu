@@ -127,7 +127,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     pageWidget: const CancelGuidePage(),
                     tileName: 'キャンセル方法について'),
                 myPageListTile(
-                  tileName: 'オーナー&サロン紹介',
+                  tileName: 'サロン紹介',
                   pageWidget: const SalonInfoPage(),
                 ),
                 Container(

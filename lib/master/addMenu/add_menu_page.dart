@@ -19,7 +19,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
   Widget build(BuildContext context) {
     return Consumer<AddMenuModel>(
       builder: (context, model, child) {
-        if (model.menuList.isEmpty) {
+        if (model.allMenuList.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -84,8 +84,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
                             });
                           } else {
                             setState(() {
-                              model.deletingFilteringMenuList(
-                                  model.treatmentTypeList[index]);
+                              model.deletingFilteringMenuList();
                             });
                           }
                         },
@@ -94,26 +93,33 @@ class _AddMenuPageState extends State<AddMenuPage> {
               ),
               const Divider(),
               Text(
-                  '全${model.filteredMenuList.isEmpty ? model.menuList.length : model.filteredMenuList.length}件',
+                  '全${model.filteredDefaultMenuList.isEmpty && model.filteredCouponMenuList.isEmpty ? model.allMenuList.length : model.filteredCouponMenuList.isEmpty ? model.filteredDefaultMenuList.length : model.filteredCouponMenuList.length}件',
                   style: TextStyle(
                       fontSize: height * 0.017,
-                      color: Colors.black54,
+                      color: Colors.black87,
                       fontWeight: FontWeight.bold)),
               Expanded(
                 child: Scrollbar(
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: model.filteredMenuList.isEmpty
-                        ? model.menuList.length
-                        : model.filteredMenuList.length,
+                    itemCount: model.filteredDefaultMenuList.isEmpty &&
+                            model.filteredCouponMenuList.isEmpty
+                        ? model.allMenuList.length
+                        : model.filteredCouponMenuList.isEmpty
+                            ? model.filteredDefaultMenuList.length
+                            : model.filteredCouponMenuList.length,
                     itemBuilder: (context, index) {
-                      if (model.menuList.isEmpty) {
-                        return const CircularProgressIndicator();
+                      if (model.allMenuList.isEmpty) {
+                        return const Center(child: CircularProgressIndicator());
                       }
-                      Menu menu = model.menuList[index];
+                      Menu menu = model.allMenuList[index];
 
-                      if (model.filteredMenuList.isNotEmpty) {
-                        menu = model.filteredMenuList[index];
+                      if (model.filteredDefaultMenuList.isNotEmpty &&
+                          model.filteredCouponMenuList.isEmpty) {
+                        menu = model.filteredDefaultMenuList[index];
+                      } else if (model.filteredDefaultMenuList.isEmpty &&
+                          model.filteredCouponMenuList.isNotEmpty) {
+                        menu = model.filteredCouponMenuList[index];
                       }
 
                       return GestureDetector(

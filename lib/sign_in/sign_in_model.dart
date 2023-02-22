@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,6 +12,15 @@ import '../firebase_options.dart';
 class SignInModel extends ChangeNotifier {
   final emailController = TextEditingController();
   final passController = TextEditingController();
+
+  CarouselController buttonCarouselController = CarouselController();
+  int activeIndex = 0;
+
+  List<String> signInImageList = [
+    'images/third_sign_in_image.png',
+    'images/second_sign_in_image.png',
+    'images/first_sign_in_image.png',
+  ];
 
   DateTime createAccountDate = DateTime.now();
 

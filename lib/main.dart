@@ -217,20 +217,21 @@ class _MyAppState extends State<MyApp> {
               ..fetchVersion()),
         ChangeNotifierProvider(
             create: (_) => CalendarModel()
+              ..getHolidayList()
               ..fetchProfile()
               ..fetchReservationList()
-              ..fetchRestList()
-              ..getHolidayList()),
+              ..fetchRestList()),
         ChangeNotifierProvider(
             create: (_) => HistoryModel()..fetchReservationList()),
         ChangeNotifierProvider(create: (_) => FinishReservationModel()),
         ChangeNotifierProvider(
             create: (_) => ScheduleModel()
+              ..getHolidayList()
               ..fetchRestList()
-              ..fetchReservationList()
-              ..getHolidayList()),
+              ..fetchReservationList()),
         ChangeNotifierProvider(
           create: (_) => RestDateRegisterModel()
+            ..getHolidayList()
             ..fetchReservationList()
             ..fetchRestList(),
         ),
@@ -253,6 +254,8 @@ class _MyAppState extends State<MyApp> {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
+
+        ///
         supportedLocales: const [Locale('ja', 'JP')],
         debugShowCheckedModeBanner: false,
         title: 'salon "Vishu"',

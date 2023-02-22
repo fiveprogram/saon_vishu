@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../domain/menu.dart';
 import '../menu/menu_model.dart';
@@ -64,13 +66,37 @@ class _MenuCardState extends State<MenuCard> {
       return Padding(
         padding: const EdgeInsets.all(12.0),
         child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    fullscreenDialog: true,
-                    builder: (context) =>
-                        SelectReservationDatePage(menu: menu)));
+          onTap: () async {
+            menu.isCallable == false
+                ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SelectReservationDatePage(menu: menu)))
+                : await showDialog(
+                    context: context,
+                    builder: (dialogContext) {
+                      return CupertinoAlertDialog(
+                        title: const Text('このメニューは電話予約のみ予約可能です'),
+                        actions: [
+                          CupertinoButton(
+                              child: const Text('戻る'),
+                              onPressed: () {
+                                Navigator.pop(dialogContext);
+                              }),
+                          CupertinoButton(
+                              child: const Text('電話をかける'),
+                              onPressed: () async {
+                                final Uri launchUri = Uri(
+                                  scheme: 'tel',
+                                  path: '0721-21-8824',
+                                );
+
+                                await launchUrl(launchUri);
+                              })
+                        ],
+                      );
+                    });
           },
           child: Card(
             surfaceTintColor: Colors.white,
@@ -159,13 +185,43 @@ class _MenuCardState extends State<MenuCard> {
                                     foregroundColor: Colors.white,
                                     backgroundColor: Colors.black26,
                                   ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SelectReservationDatePage(
-                                                    menu: menu)));
+                                  onPressed: () async {
+                                    menu.isCallable == false
+                                        ? Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SelectReservationDatePage(
+                                                        menu: menu)))
+                                        : await showDialog(
+                                            context: context,
+                                            builder: (dialogContext) {
+                                              return CupertinoAlertDialog(
+                                                title: const Text(
+                                                    'このメニューは電話予約のみ予約可能です'),
+                                                actions: [
+                                                  CupertinoButton(
+                                                      child: const Text('戻る'),
+                                                      onPressed: () {
+                                                        Navigator.pop(
+                                                            dialogContext);
+                                                      }),
+                                                  CupertinoButton(
+                                                      child:
+                                                          const Text('電話をかける'),
+                                                      onPressed: () async {
+                                                        final Uri launchUri =
+                                                            Uri(
+                                                          scheme: 'tel',
+                                                          path: '0721-21-8824',
+                                                        );
+
+                                                        await launchUrl(
+                                                            launchUri);
+                                                      })
+                                                ],
+                                              );
+                                            });
                                   },
                                   child: const Text(
                                     '予約',

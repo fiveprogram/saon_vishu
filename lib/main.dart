@@ -114,6 +114,7 @@ class _MyAppState extends State<MyApp> {
     firebaseMessaging.getToken().then((String? token) {
       setState(() {
         tokenId = token!;
+        print(tokenId);
       });
     });
 
@@ -254,8 +255,6 @@ class _MyAppState extends State<MyApp> {
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
-
-        ///
         supportedLocales: const [Locale('ja', 'JP')],
         debugShowCheckedModeBanner: false,
         title: 'salon "Vishu"',

@@ -22,10 +22,7 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    Container informationListTile(
-        {required String column,
-        required String detail,
-        required double tileMargin}) {
+    Container dataRow({required String column, required String columnContent}) {
       return Container(
         width: width,
         padding: const EdgeInsets.all(10),
@@ -38,13 +35,17 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
         ),
         child: Row(
           children: [
-            Text(column,
-                style:
-                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
-            SizedBox(width: tileMargin),
-            Expanded(
+            SizedBox(
+              width: width * 0.3,
+              child: Text(column,
+                  style: const TextStyle(
+                      fontSize: 17, fontWeight: FontWeight.bold)),
+            ),
+            SizedBox(width: width * 0.04),
+            SizedBox(
+              width: width * 0.5,
               child: Text(
-                detail,
+                columnContent,
                 style: const TextStyle(
                   fontSize: 16,
                 ),
@@ -278,62 +279,33 @@ class _SalonInfoPageState extends State<SalonInfoPage> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold)),
                 ),
-                informationListTile(
-                    column: 'サロン情報',
-                    detail: ' Salon Vishu\n【サロンヴィッシュ】',
-                    tileMargin: width * 0.05),
-                informationListTile(
-                    column: '電話番号',
-                    detail: '0721-21-8824',
-                    tileMargin: width * 0.1),
-                informationListTile(
-                    column: '住所',
-                    detail: '大阪府河内長野市荘園町18-14',
-                    tileMargin: width * 0.18),
-                informationListTile(
-                    column: 'アクセス',
-                    detail: '南海高野線千代田駅から荘園町行きバス15分　荘園町下車徒歩3分',
-                    tileMargin: width * 0.1),
-                informationListTile(
+                dataRow(
+                    column: 'サロン情報', columnContent: ' Salon Vishu\n【サロンヴィッシュ】'),
+                dataRow(column: '電話番号', columnContent: '0721-21-8824'),
+                dataRow(column: '住所', columnContent: '大阪府河内長野市荘園町18-14'),
+                dataRow(
+                    column: 'アクセス', columnContent: '南海高野線千代田駅から荘園町行きバス15分f'),
+                dataRow(
                     column: '道案内',
-                    detail:
-                        '170号線を河内長野警察方面へ曲がり直進赤峰交差点小山田小学校前直進荘園橋を渡り酒屋を越えて一つ目の筋を右へ道なりに十字路３つ越えてY字路左にカーブした角すぐの白と黒の建物です。310号線からの場合千代田駅をスーパー西友方面へ曲がり寺ヶ池方面へ赤峰交差点右に小山田小学前を通り荘園橋を渡り酒屋を越えて一つ目の筋を右へ道なりに十字路３つ越えてY字路左にカーブした角すぐの白と黒の建物です。★農道は危険です ',
-                    tileMargin: width * 0.14),
-                informationListTile(
-                    column: '営業時間',
-                    detail: '9:00～18:00（カット最終17:00）',
-                    tileMargin: width * 0.1),
-                informationListTile(
-                    column: '定休日',
-                    detail: '不定休　（お問い合わせください）',
-                    tileMargin: width * 0.14),
-                informationListTile(
-                    column: '支払い方法',
-                    detail: 'VISA／MasterCard／JCB／American Express／PayPay ',
-                    tileMargin: width * 0.05),
-                informationListTile(
-                    column: 'カット価格',
-                    detail: '¥3,800 ',
-                    tileMargin: width * 0.05),
-                informationListTile(
-                    column: '席数', detail: 'セット面1席 ', tileMargin: width * 0.18),
-                informationListTile(
-                    column: 'スタッフ数',
-                    detail: 'スタイリスト1人',
-                    tileMargin: width * 0.05),
-                informationListTile(
-                    column: '駐車場', detail: '店前砂利駐車場', tileMargin: width * 0.14),
-                informationListTile(
+                    columnContent:
+                        '170号線を河内長野警察方面へ曲がり直進赤峰交差点小山田小学校前直進荘園橋を渡り酒屋を越えて一つ目の筋を右へ道なりに十字路３つ越えてY字路左にカーブした角すぐの白と黒の建物です。'),
+                dataRow(
+                    column: '営業時間', columnContent: '9:00～18:00（カット最終17:00）'),
+                dataRow(column: '定休日', columnContent: '不定休（お問い合わせください）'),
+                dataRow(column: '支払い方法', columnContent: '可能な限り現金'),
+                dataRow(column: 'カット価格', columnContent: '¥3,800 '),
+                dataRow(column: '席数', columnContent: 'セット面1席'),
+                dataRow(column: 'スタッフ数', columnContent: 'スタイリスト1人'),
+                dataRow(column: '駐車場', columnContent: '店前砂利駐車場'),
+                dataRow(
                     column: 'こだわり条件',
-                    detail:
-                        '４席以下の小型サロン／駐車場あり／一人のスタイリストが仕上げまで担当／ヘアセット／着付け／朝１０時前でも受付OK／カード支払いOK／禁煙／完全予約制',
-                    tileMargin: width * 0.05),
-                informationListTile(
+                    columnContent:
+                        '４席以下の小型サロン／駐車場あり／一人のスタイリストが仕上げまで担当／ヘアセット／着付け／朝１０時前でも受付OK／カード支払いOK／禁煙／完全予約制'),
+                dataRow(
                     column: '備考',
-                    detail:
-                        'お車でお越しの方へ,ナビゲーションが案内する農道は危険なので通らないで下さい。赤峰交差点、小山田小学校前を通ってお越し下さい。お願い致します。',
-                    tileMargin: width * 0.18),
-                SizedBox(height: height * 0.02),
+                    columnContent:
+                        'お車でお越しの方へ,ナビゲーションが案内する農道は危険なので通らないで下さい。赤峰交差点、小山田小学校前を通ってお越し下さい。お願い致します。'),
+                SizedBox(height: height * 0.03),
                 const Text('salon Vishu',
                     style: TextStyle(
                         fontSize: 40,

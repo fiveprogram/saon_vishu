@@ -32,6 +32,8 @@ class ConfirmReservationModel extends ChangeNotifier {
   final nameController = TextEditingController();
   final telephoneNumberController = TextEditingController();
   final dateOfBirthController = TextEditingController();
+  final customerHopeController = TextEditingController();
+
   String? gender;
   String? userImage;
 

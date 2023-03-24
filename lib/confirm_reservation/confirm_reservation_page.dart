@@ -78,6 +78,7 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                   'uid': model.user!.uid,
                   'lastVisit': model.lastVisit,
                   'userImage': model.userImage,
+                  'customerHope': model.customerHopeController.text,
                   'deviceIdList': deviceIdList,
                 },
               );
@@ -284,7 +285,9 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          '来店時支払い',
+                          menu.treatmentDetailList.length > 1
+                              ? '来店時支払い\n*クーポン併用不可'
+                              : '来店時支払い',
                           style: TextStyle(
                               fontSize: height * 0.016, color: Colors.black87),
                         ),
@@ -616,6 +619,26 @@ class _ConfirmReservationPageState extends State<ConfirmReservationPage> {
                               ],
                             ),
                           ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: height * 0.05,
+                          decoration: BoxDecoration(
+                              color: HexColor('#fcf8f6'),
+                              border: const Border(
+                                  top: BorderSide(color: Colors.black26))),
+                          child: const Text('ご要望(任意)',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                        TextFormField(
+                          controller: model.customerHopeController,
+                          maxLines: 2,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10))),
                         ),
                         SizedBox(height: height * 0.04),
                         Center(

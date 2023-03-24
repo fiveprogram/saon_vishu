@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -93,6 +95,16 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
                     contentText('性別'),
                     const Expanded(child: SizedBox()),
                     profileText(width, reservation.gender),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    contentText('ご要望'),
+                    const Expanded(child: SizedBox()),
+                    profileText(width, reservation.customerHope ?? 'なし'),
                   ],
                 ),
               ),
@@ -238,18 +250,47 @@ class _BookerDetailPageState extends State<BookerDetailPage> {
                   style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white70,
                       backgroundColor: Colors.black26),
-                  onPressed: () {
-                    Navigator.pop(context);
+                  onPressed: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (dialogContext) {
+                        return CupertinoAlertDialog(
+                          title: const Text('予約を削除しますか？'),
+                          actions: [
+                            CupertinoButton(
+                              child: const Text('戻る'),
+                              onPressed: () {
+                                Navigator.pop(dialogContext);
+                              },
+                            ),
+                            CupertinoButton(
+                              child: const Text('削除する'),
+                              onPressed: () async {
+                                await FirebaseFirestore.instance
+                                    .collection('users')
+                                    .doc(reservation.uid)
+                                    .collection('reservations')
+                                    .doc(reservation.reservationId)
+                                    .delete();
+
+                                Navigator.pop(dialogContext);
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: const Text(
-                    '戻る',
+                    '予約を削除する',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: height * 0.05),
+              SizedBox(height: height * 0.1),
             ],
           ),
         );

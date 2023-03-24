@@ -184,7 +184,7 @@ class _BookerCalendarPageState extends State<BookerCalendarPage> {
                                       children: [
                                         SizedBox(width: width * 0.02),
                                         Text(
-                                          reservation.name,
+                                          '${reservation.name}様',
                                           style: TextStyle(
                                               fontSize: height * 0.02,
                                               fontWeight: FontWeight.bold),

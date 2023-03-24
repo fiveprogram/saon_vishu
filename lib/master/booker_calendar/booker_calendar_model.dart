@@ -17,7 +17,7 @@ class BookerCalendarModel extends ChangeNotifier {
 
   DateTime? selectedDate;
   DateTime focusedDate = DateTime.now();
-  DateFormat startTimeFormatter = DateFormat('HH:mm〜');
+  DateFormat startTimeFormatter = DateFormat('HH:mm~');
   DateFormat endTimeFormatter = DateFormat('HH:mm');
   DateFormat lastVisitFormatter = DateFormat('yyyy年M月d日');
   List<Reservation> reservationList = [];

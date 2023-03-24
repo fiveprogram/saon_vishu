@@ -1,14 +1,17 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
+import 'package:salon_vishu/profile/salon_info/salon_info_page.dart';
 import 'package:salon_vishu/sign_in/pass_reset/pass_reset_page.dart';
 import 'package:salon_vishu/sign_in/sign_in_model.dart';
 
 import '../common_widget/auth_form_field.dart';
-import '../common_widget/vishu_app_bar.dart';
 import '../sign_up/sign_up_page.dart';
 
 class SignInPage extends StatefulWidget {
@@ -37,8 +40,37 @@ class _SignInPageState extends State<SignInPage> {
     }
 
     return Scaffold(
-      appBar: vishuAppBar(
-        appBarTitle: 'salon Vishu',
+      appBar: PreferredSize(
+        preferredSize: const Size(
+          double.infinity,
+          56.0,
+        ),
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
+            child: AppBar(
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SalonInfoPage()));
+                    },
+                    icon: const Icon(Icons.info_outline))
+              ],
+              systemOverlayStyle: SystemUiOverlayStyle.light,
+              backgroundColor: HexColor("#989593"),
+              title: const Text('salon vishu',
+                  style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                      fontFamily: 'Dancing_Script')),
+              elevation: 10.0,
+            ),
+          ),
+        ),
       ),
       body: Consumer<SignInModel>(
         builder: (context, model, child) {

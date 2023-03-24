@@ -11,6 +11,7 @@ function payload(title: string, content: string):MessagingPayload {
     notification: {
       title: title,
       body: content,
+      sound: "default",
     },
   };
   return message;

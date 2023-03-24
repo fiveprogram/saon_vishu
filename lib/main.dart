@@ -35,29 +35,36 @@ import 'history/history_model.dart';
 import 'master/schedule/schedule_model.dart';
 import 'menu/menu_model.dart';
 
-// 通知インスタンスの生成
+/// 通知インスタンスの生成
 final FlutterLocalNotificationsPlugin localPlugin =
     FlutterLocalNotificationsPlugin();
 
-//バックグラウンドでメッセージを受け取った時のイベント(トップレベルに定義)
+///バックグラウンドでメッセージを受け取った時のイベントを定義（メイン関数で発火）
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   RemoteNotification? notification = message.notification;
   localPlugin.initialize(const InitializationSettings(
+      iOS: DarwinInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+      ),
       android: AndroidInitializationSettings('@mipmap/ic_launcher')));
 
   if (notification == null) {
     return;
   }
-  // 通知
+
+  /// NotificationDetails クラスを使用して、通知チャンネルの詳細を設定します。ここで通知チャンネルのID、
+  /// 名前、説明、重要度、優先度、サウンドなどを指定。
   localPlugin.show(
       notification.hashCode,
       "${notification.title}",
       notification.body,
       const NotificationDetails(
-        android: AndroidNotificationDetails(
-          'channel_id',
-          'channel_name',
-        ),
+        iOS: DarwinNotificationDetails(
+            presentSound: true, presentAlert: true, presentBadge: true),
+        android: AndroidNotificationDetails('channel_id', 'channel_name',
+            playSound: true),
       ),
       payload: '1000');
 }
@@ -72,6 +79,7 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  ///バックグラウンドでの通知
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
@@ -85,6 +93,7 @@ void main() async {
     sound: true,
   );
 
+  ///フォアグラウンドでの通知
   await firebaseMessaging.setForegroundNotificationPresentationOptions(
     alert: true, // Required to display a heads up notification
     badge: true,
@@ -120,9 +129,9 @@ class _MyAppState extends State<MyApp> {
 
     const DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
     );
 
     //フォアグラウンドでメッセージを受け取った時のイベント
@@ -137,25 +146,25 @@ class _MyAppState extends State<MyApp> {
 
       AndroidNotification? android = message.notification?.android;
 
-      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-          FlutterLocalNotificationsPlugin();
-
       if (android != null) {
-        flutterLocalNotificationsPlugin.show(
+        localPlugin.show(
             notification.hashCode,
             notification.title,
             notification.body,
             NotificationDetails(
-              android: AndroidNotificationDetails(
-                'channel.id',
-                'channel.name',
-                icon: android.smallIcon,
+              iOS: const DarwinNotificationDetails(
+                presentBadge: true,
+                presentAlert: true,
+                presentSound: true,
               ),
+              android: AndroidNotificationDetails('channel.id', 'channel.name',
+                  icon: android.smallIcon, playSound: true),
             ));
       }
     });
   }
 
+  ///強制アップデート機能
   Future<void> forceUpdate(
       String iosVersion, String androidVersion, BuildContext context) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

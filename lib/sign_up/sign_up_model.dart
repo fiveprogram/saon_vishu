@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:salon_vishu/main_select_page.dart';
 
 import '../domain/version.dart';
@@ -34,20 +33,23 @@ class SignUpModel extends ChangeNotifier {
 
   ///cupertinoPicker 生年月日
   Future<void> dateOfBirthPicker(BuildContext context) async {
-    DatePicker.showDatePicker(context,
-        showTitleActions: true,
-        minTime: DateTime(1920, 3, 5),
-        maxTime: DateTime.now(), onChanged: (date) {
-      null;
-    }, onConfirm: (date) {
-      dateOfBirthController.text = '${date.year}年${date.month}月${date.day}日';
-      registerDateOfBirth = date;
-      notifyListeners();
-    },
-        currentTime: dateOfBirthController.text.isEmpty
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        firstDate: DateTime(1980, 1, 1),
+        lastDate: DateTime.now(),
+        initialDate: dateOfBirthController.text == ''
             ? DateTime(1980, 1, 1)
-            : registerDateOfBirth,
-        locale: LocaleType.jp);
+            : registerDateOfBirth!,
+        currentDate: DateTime.now());
+
+    if (picked == null || registerDateOfBirth == picked) {
+      return;
+    }
+
+    registerDateOfBirth = picked;
+    dateOfBirthController.text =
+        '${picked.year}年${picked.month}月${picked.day}日';
+    notifyListeners();
   }
 
   ///signUpMethod
@@ -97,6 +99,7 @@ class SignUpModel extends ChangeNotifier {
         'dateTime': createAccountDate,
       });
       notifyListeners();
+
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => MainSelectPage()),

@@ -179,7 +179,7 @@ class _MenuCardState extends State<MenuCard> {
                               ),
                               SizedBox(width: width * 0.04),
                               SizedBox(
-                                width: width * 0.2,
+                                width: width * 0.22,
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     foregroundColor: Colors.white,

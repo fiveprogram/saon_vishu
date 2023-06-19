@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "689319200957",
+    "project_id": "salon-vishu",
+    "storage_bucket": "salon-vishu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689319200957:android:4398fc9c1ff504566a4fd4",
+        "android_client_info": {
+          "package_name": "com.itsukage.salonVishu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689319200957-7sden1ofrhedflps0oejscvj0eq6kril.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.itsukage.salonVishu",
+            "certificate_hash": "b1e53764a49c4b61051914a9d63e181083692e85"
+          }
+        },
+        {
+          "client_id": "689319200957-87cihn6vl3hq7sdehopdmv65qh2csu80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_6T-fkpYBs0oblu1rlP6-rEbSWdTkhA8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689319200957-87cihn6vl3hq7sdehopdmv65qh2csu80.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "689319200957-c5c2c3om3a25enmdf996hs5oip85el9r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.salonVishu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

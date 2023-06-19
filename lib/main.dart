@@ -74,6 +74,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -123,7 +124,6 @@ class _MyAppState extends State<MyApp> {
     firebaseMessaging.getToken().then((String? token) {
       setState(() {
         tokenId = token!;
-        print(tokenId);
       });
     });
 

@@ -17,9 +17,9 @@ class RestDateRegisterModel extends ChangeNotifier {
   List<Reservation> reservationList = [];
 
   ///データベースのRest情報
-  List<Rest> registeredRestList = [];
+  List<Rest> alreadyRegisteredRestList = [];
 
-  ///restTime
+  ///新規の
   List<Rest> willAddRegisteredRestList = [];
 
   ///これからRestから削除する情報
@@ -35,20 +35,19 @@ class RestDateRegisterModel extends ChangeNotifier {
 
     restStream.listen(
       (snapshot) {
-        registeredRestList = snapshot.docs
+        alreadyRegisteredRestList = snapshot.docs
             .map((DocumentSnapshot doc) => Rest.fromFirestore(doc))
             .toList();
 
-        ///データベースにある情報を全てRestTimeListに放り込んでいる
-        for (final registered in registeredRestList) {
-          if (registered.endTime.toDate().isBefore(today)) {
+        ///過去文のrest情報を全て削除する
+        for (final alreadyRegistered in alreadyRegisteredRestList) {
+          if (alreadyRegistered.endTime.toDate().isBefore(today)) {
             FirebaseFirestore.instance
                 .collection('rests')
-                .doc(registered.restId)
+                .doc(alreadyRegistered.restId)
                 .delete();
           }
         }
-
         notifyListeners();
       },
     );
@@ -83,24 +82,29 @@ class RestDateRegisterModel extends ChangeNotifier {
     return today.add(Duration(days: -7 * previousWeek));
   }
 
-  ///ボタンひとつで1日単位での休日を設定
   final businessHour = const BusinessHours(9, 00, 18, 00);
 
+  ///1日の休憩時間を30分おきに全て登録
   Future<void> registerAllDayRest(DateTime date) async {
+    ///営業開始
     var businessStartTime = DateTime(date.year, date.month, date.day,
         businessHour.openTimeHour, businessHour.openTimeMinute);
 
+    ///営業終了
     var businessCloseTime = DateTime(date.year, date.month, date.day,
         businessHour.closeTimeHour, businessHour.closeTimeMinute);
 
+    ///30分おきに区切られた1日の時間枠
     final oneDaySeparateThirtyMinuteList = <DateTime>[businessStartTime];
 
+    ///30分区切りの時間枠
     while (businessStartTime != businessCloseTime) {
       businessStartTime = businessStartTime.add(const Duration(minutes: 30));
       oneDaySeparateThirtyMinuteList.add(businessStartTime);
     }
     oneDaySeparateThirtyMinuteList.removeLast();
 
+    ///30分おきに登録
     for (int i = 0; i < oneDaySeparateThirtyMinuteList.length; i++) {
       final idFormat = DateFormat('yyyyMMddhhmm');
 
@@ -116,6 +120,7 @@ class RestDateRegisterModel extends ChangeNotifier {
     }
   }
 
+  ///登録されてる1日分の休息を全て削除
   Future<void> allDayDelete(DateTime date) async {
     var businessStartTime = DateTime(date.year, date.month, date.day,
         businessHour.openTimeHour, businessHour.openTimeMinute);
@@ -206,17 +211,20 @@ class RestDateRegisterModel extends ChangeNotifier {
   ///時間の形を整えるformatter
   final businessTimeFormatter = DateFormat('HH :mm');
 
-  ///引数で与えるのはweekDay
+  ///まだ予約されていない枠を明確にする
   bool isNotAlreadyReserved(DateTime date) {
     final startTime = date;
     final endTime = startTime.add(const Duration(minutes: 1));
-    //現在時刻より前は予約できない。
+
+    //現時点より前に開始時間が来ている場合false
     if (startTime.isBefore(today)) {
       return false;
     }
-    //営業終了時間
-    ///以下のどちらかでないと予約はできない。
-    ///１つでも満たしていれば予約可能な条件の余事象
+    //下記４点、どれか一つでも当てはまればfalse
+    //①開始時間より前に終了時間が来ていない
+    //②開始時間と終了時間が同時
+    //③終了時間より前に開始する
+    //④終了時間と開始時間が同時
     for (final reservation in reservationList) {
       if (!(endTime.isBefore(reservation.startTime.toDate()) ||
           endTime.isAtSameMomentAs(reservation.startTime.toDate()) ||
@@ -239,7 +247,7 @@ class RestDateRegisterModel extends ChangeNotifier {
     final rest = Rest(Timestamp.fromDate(startTime),
         Timestamp.fromDate(endTime), idFormat.format(thirtyMinute));
 
-    for (final registeredRest in registeredRestList) {
+    for (final registeredRest in alreadyRegisteredRestList) {
       if (registeredRest.startTime.toDate().isAtSameMomentAs(startTime)) {
         for (final willRemoveRegisteredRest in willRemoveRegisteredRestList) {
           if (willRemoveRegisteredRest.startTime
@@ -287,7 +295,7 @@ class RestDateRegisterModel extends ChangeNotifier {
       }
     }
 
-    for (final registered in registeredRestList) {
+    for (final registered in alreadyRegisteredRestList) {
       if (registered.startTime.toDate().isAtSameMomentAs(thirtyMinute)) {
         registeredRest = registered;
       }
@@ -412,12 +420,3 @@ class RestDateRegisterModel extends ChangeNotifier {
     }
   }
 }
-
-/// - 現行のカレンダーのセル判定ロジック
-/// - 以下の条件を満たす場合、「予」を返す。
-///     - そのセルの時刻がregisteredFireReservationListに含まれていること
-/// - 以下の条件を満たす場合、「×(赤色)」を返す。
-///     - そのセルの時刻がregisteredFireRestListに含まれていること
-/// - 以下の条件を満たす場合、「×(黒色)」を返す。
-///     - そのセルの時刻がwillAddFireRestListに含まれていること
-/// - 以上の条件のどれにも該当しない場合、「〇」を返す。

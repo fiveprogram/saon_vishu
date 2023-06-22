@@ -206,7 +206,7 @@ class _RestDateRegisterPageState extends State<RestDateRegisterPage> {
                                           ? () {
                                               model.onCellTap(thirtyMinute);
                                             }
-                                          : null,
+                                          : () {},
                                       child: Container(
                                         alignment: Alignment.center,
                                         height: height * 0.06,

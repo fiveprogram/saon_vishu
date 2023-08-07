@@ -178,39 +178,42 @@ class _MyAppState extends State<MyApp> {
     final minAvailableVersionStringList = minAvailableVersion.split('.');
     final minAvailableVersionIntList =
         minAvailableVersionStringList.map((e) => int.parse(e)).toList();
+
     for (int i = 0; i < 3; i++) {
-      if (usingVersionIntList[i] < minAvailableVersionIntList[i]) {
-        if (mounted) {
-          return showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) => CupertinoAlertDialog(
-              title: const Text('新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。'),
-              actions: [
-                CupertinoButton(
-                  child: const Text('今すぐ更新'),
-                  onPressed: () async {
-                    if (Platform.isAndroid || Platform.isIOS) {
-                      final appId = Platform.isAndroid
-                          ? 'com.itsukage.salonVishu'
-                          : '1666140616';
-                      final url = Uri.parse(
-                        Platform.isAndroid
-                            ? "https://play.google.com/store/apps/details?id=$appId"
-                            : "https://apps.apple.com/app/id$appId",
-                      );
-                      launchUrl(
-                        url,
-                        mode: LaunchMode.externalApplication,
-                      );
-                    }
-                  },
-                )
-              ],
-            ),
-          );
-        }
+      if (usingVersionIntList[i] > minAvailableVersionIntList[i]) {
+        return;
       }
+    }
+
+    if (mounted) {
+      return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => CupertinoAlertDialog(
+          title: const Text('新しいバージョンのアプリが利用可能です。ストアより更新版を入手して、ご利用下さい。'),
+          actions: [
+            CupertinoButton(
+              child: const Text('今すぐ更新'),
+              onPressed: () async {
+                if (Platform.isAndroid || Platform.isIOS) {
+                  final appId = Platform.isAndroid
+                      ? 'com.itsukage.salonVishu'
+                      : '1666140616';
+                  final url = Uri.parse(
+                    Platform.isAndroid
+                        ? "https://play.google.com/store/apps/details?id=$appId"
+                        : "https://apps.apple.com/app/id$appId",
+                  );
+                  launchUrl(
+                    url,
+                    mode: LaunchMode.externalApplication,
+                  );
+                }
+              },
+            )
+          ],
+        ),
+      );
     }
   }
 

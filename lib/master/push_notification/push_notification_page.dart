@@ -15,12 +15,12 @@ class PushNotificationPage extends StatefulWidget {
 }
 
 class _PushNotificationPageState extends State<PushNotificationPage> {
+  Profile? profile;
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-
-    Profile? profile;
 
     return Consumer<PushNotificationModel>(builder: (context, model, child) {
       return Scaffold(
@@ -65,6 +65,7 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
                                   return;
                                 }
                                 profile = value;
+                                print(profile!.name);
                                 model.targetController.text = profile!.name;
                               });
                             },
@@ -139,11 +140,14 @@ class _PushNotificationPageState extends State<PushNotificationPage> {
                               ),
                             ),
                             onPressed: () {
+                              print('0${profile!.name}');
                               if (model.targetController.text == '') {
+                                print('1');
                                 model.sendPushNotification(context);
                               }
                               if (model.targetController.text != '' &&
                                   profile != null) {
+                                print('2');
                                 model.sendSpecificPushNotification(
                                     context, profile!);
                               }

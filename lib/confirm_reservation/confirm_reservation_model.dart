@@ -24,6 +24,17 @@ class ConfirmReservationModel extends ChangeNotifier {
     }
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    nameController.dispose();
+    telephoneNumberController.dispose();
+    dateOfBirthController.dispose();
+    customerHopeController.dispose();
+
+    super.dispose();
+  }
+
   User? user = FirebaseAuth.instance.currentUser;
   String? errorText;
 

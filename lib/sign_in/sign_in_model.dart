@@ -14,6 +14,14 @@ class SignInModel extends ChangeNotifier {
   final passController = TextEditingController();
 
   CarouselController buttonCarouselController = CarouselController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passController.dispose();
+    super.dispose();
+  }
+
   int activeIndex = 0;
 
   List<String> signInImageList = [

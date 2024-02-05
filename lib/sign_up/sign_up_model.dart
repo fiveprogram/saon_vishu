@@ -13,6 +13,17 @@ class SignUpModel extends ChangeNotifier {
   final dateOfBirthController = TextEditingController();
   final telephoneNumberController = TextEditingController();
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    emailController.dispose();
+    passController.dispose();
+    nameController.dispose();
+    dateOfBirthController.dispose();
+    telephoneNumberController.dispose();
+    super.dispose();
+  }
+
   String? gender;
 
   final focusNode = FocusNode();

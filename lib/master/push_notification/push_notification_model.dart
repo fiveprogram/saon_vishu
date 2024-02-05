@@ -10,6 +10,15 @@ class PushNotificationModel extends ChangeNotifier {
   final targetController = TextEditingController();
   final focusNode = FocusNode();
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    notificationTitleController.dispose();
+    notificationContentController.dispose();
+    targetController.dispose();
+    super.dispose();
+  }
+
   List<DeviceTokenId> deviceTokenIdList = [];
 
   Future<void> fetchDeviceIds() async {

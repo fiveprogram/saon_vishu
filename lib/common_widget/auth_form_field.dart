@@ -34,6 +34,12 @@ class AuthFormField extends StatefulWidget {
 
 class _AuthFormFieldState extends State<AuthFormField> {
   @override
+  void dispose() {
+    widget.textEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,

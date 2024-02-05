@@ -28,6 +28,15 @@ class EditModel extends ChangeNotifier {
   final telephoneNumberController = TextEditingController();
   final dateOfBirthController = TextEditingController();
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    nameController.dispose();
+    telephoneNumberController.dispose();
+    dateOfBirthController.dispose();
+    super.dispose();
+  }
+
   ///前のページに戻る
   Future<bool> willPopCallback(BuildContext context) async {
     ///あとで、registeredRestListの要素が減っていなければっていう制御も必要

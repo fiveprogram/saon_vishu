@@ -10,16 +10,23 @@ class PassResetPage extends StatefulWidget {
 }
 
 class _PassResetPageState extends State<PassResetPage> {
+  final resetMailController = TextEditingController();
+
+  final auth = AuthPassReset();
+
+  final focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    resetMailController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-
-    final resetMailController = TextEditingController();
-
-    final auth = AuthPassReset();
-
-    final focusNode = FocusNode();
 
     return Scaffold(
       appBar: vishuAppBar(appBarTitle: 'password reset', isJapanese: false),
